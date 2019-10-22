@@ -27,11 +27,10 @@ class AppLocalizations {
       return MapEntry(key, value.toString());
     });
     
-
     return true;
   }
 
-  String translate(String key, [Map<String, String> params]) {
+  String translate(String key, [Map<String, String> params = const {}]) {
     var str = _localizedStrings[key];
     for (var e in params.entries) {
       str = str.replaceAll('{{${e.key}}}', e.value);
@@ -55,7 +54,6 @@ class _AppLocalizationsDelegate
 
   @override
   Future<AppLocalizations> load(Locale locale) async {
-    print(locale);
     // AppLocalizations class is where the JSON loading actually runs
     AppLocalizations localizations = new AppLocalizations(locale);
     await localizations.load();

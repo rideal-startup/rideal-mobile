@@ -18,9 +18,9 @@ class MyApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
         AppLocalizations.delegate
       ],
-       supportedLocales: [
+      supportedLocales: [
         const Locale('es'),
-        const Locale('en'), 
+        const Locale('en'),
       ],
       localeResolutionCallback: (locale, supportedLocales) {
         for (var supportedLocale in supportedLocales) {
@@ -32,7 +32,10 @@ class MyApp extends StatelessWidget {
         return supportedLocales.first;
       },
       title: 'Flutter Demo',
-      theme: appTheme(),
+      theme: ThemeData(
+        fontFamily: 'Montserrat',
+        brightness: Brightness.dark,
+      ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -60,23 +63,27 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-    var translate = {'name': 'Guillem'};
     return Scaffold(
       bottomNavigationBar: CurvedNavigationBar(
-        backgroundColor: Colors.blueAccent,
+        color: Colors.grey[900],
+        backgroundColor: Colors.grey[850],
         items: <Widget>[
-          Icon(Icons.add, size: 30),
-          Icon(Icons.list, size: 30),
-          Icon(Icons.compare_arrows, size: 30),
+          Icon(
+            Icons.add,
+            size: 30,
+            color: Colors.pink[200],
+          ),
+          Icon(Icons.list, size: 30, color: Colors.pink[200]),
+          Icon(Icons.compare_arrows, size: 30, color: Colors.pink[200]),
         ],
         onTap: (index) {
           print(index.toString());
         },
       ),
       body: Container(
-        color: Colors.blueAccent,
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -96,48 +103,3 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-/*
-BASIC SCAFOLD EXAMPLE:
-  return Scaffold(
-    appBar: AppBar(
-      // Here we take the value from the MyHomePage object that was created by
-      // the App.build method, and use it to set our appbar title.
-      title: Text(widget.title),
-    ),
-    body: Center(
-      // Center is a layout widget. It takes a single child and positions it
-      // in the middle of the parent.
-      child: Column(
-        // Column is also a layout widget. It takes a list of children and
-        // arranges them vertically. By default, it sizes itself to fit its
-        // children horizontally, and tries to be as tall as its parent.
-        //
-        // Invoke "debug painting" (press "p" in the console, choose the
-        // "Toggle Debug Paint" action from the Flutter Inspector in Android
-        // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-        // to see the wireframe for each widget.
-        //
-        // Column has various properties to control how it sizes itself and
-        // how it positions its children. Here we use mainAxisAlignment to
-        // center the children vertically; the main axis here is the vertical
-        // axis because Columns are vertical (the cross axis would be
-        // horizontal).
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(
-            'You have pushed the button this many times:',
-          ),
-          Text(
-            '$_counter',
-            style: Theme.of(context).textTheme.display1,
-          ),
-        ],
-      ),
-    ),
-    floatingActionButton: FloatingActionButton(
-      onPressed: _incrementCounter,
-      tooltip: 'Increment',
-      child: Icon(Icons.add),
-    ), // This trailing comma makes auto-formatting nicer for build methods.
-  );
-*/
