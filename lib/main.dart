@@ -1,8 +1,6 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:rideal/widgets/Loading.dart';
+import 'package:rideal/screens/home/login.dart';
 import 'package:rideal/services/i18n.dart';
-import 'package:rideal/theme/theme.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:rideal/widgets/Navbar.dart';
 
