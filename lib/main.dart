@@ -4,6 +4,7 @@ import 'package:rideal/widgets/Loading.dart';
 import 'package:rideal/services/i18n.dart';
 import 'package:rideal/theme/theme.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:rideal/widgets/Navbar.dart';
 
 void main() => runApp(MyApp());
 
@@ -55,17 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: CurvedNavigationBar(
-        backgroundColor: Colors.blueAccent,
-        items: <Widget>[
-          Icon(Icons.supervised_user_circle, size: 30),
-          Icon(Icons.pin_drop, size: 30),
-          Icon(Icons.monetization_on, size: 30),
-        ],
-        onTap: (index) {
-          print(index.toString());
-        },
-      ),
+      bottomNavigationBar: Navbar(),
       body: Container(
         color: Colors.blueAccent,
         child: Center(
