@@ -20,6 +20,7 @@ dependencies:
   flutter:
     sdk: flutter
   curved_navigation_bar: ^0.1.2 #latest version
+  flutter_spinkit: "^2.1.0"
 
   flutter_localizations:
     sdk: flutter

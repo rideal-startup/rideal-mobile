@@ -1,6 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:rideal/widgets/HelloWorld.dart';
+import 'package:rideal/widgets/Loading.dart';
 import 'package:rideal/services/i18n.dart';
 import 'package:rideal/theme/theme.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -67,9 +67,9 @@ class _MyHomePageState extends State<MyHomePage> {
       bottomNavigationBar: CurvedNavigationBar(
         backgroundColor: Colors.blueAccent,
         items: <Widget>[
-          Icon(Icons.add, size: 30),
-          Icon(Icons.list, size: 30),
-          Icon(Icons.compare_arrows, size: 30),
+          Icon(Icons.supervised_user_circle, size: 30),
+          Icon(Icons.pin_drop, size: 30),
+          Icon(Icons.monetization_on, size: 30),
         ],
         onTap: (index) {
           print(index.toString());
@@ -81,14 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(
-                'You have pushed the button this many times:',
-              ),
-              Text(
-                '$_counter',
-                style: Theme.of(context).textTheme.display1,
-              ),
-              HelloWorld()
+              Loading()
             ],
           ),
         ),
