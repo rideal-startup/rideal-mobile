@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:rideal/services/i18n.dart';
 
 class HelloWorld extends StatelessWidget {
   const HelloWorld({Key key}) : super(key: key);
@@ -9,7 +10,7 @@ class HelloWorld extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Text(
-            "HelloWorld",
+            AppLocalizations.of(context).translate("welcome", {'name':"mrcl"}),
             style: TextStyle(fontSize: 20),
             ),
         ],
