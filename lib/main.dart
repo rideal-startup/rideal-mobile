@@ -1,5 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:rideal/screens/map/map.dart';
 import 'package:rideal/widgets/HelloWorld.dart';
 import 'package:rideal/services/i18n.dart';
 import 'package:rideal/theme/theme.dart';
@@ -83,23 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
           print(index.toString());
         },
       ),
-      body: Container(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                'You have pushed the button this many times:',
-              ),
-              Text(
-                '$_counter',
-                style: Theme.of(context).textTheme.display1,
-              ),
-              HelloWorld()
-            ],
-          ),
-        ),
-      ),
+      body: MapScreen()
     );
   }
 }
