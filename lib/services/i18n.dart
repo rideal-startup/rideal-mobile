@@ -27,7 +27,6 @@ class AppLocalizations {
       return MapEntry(key, value.toString());
     });
     
-
     return true;
   }
 
@@ -55,7 +54,6 @@ class _AppLocalizationsDelegate
 
   @override
   Future<AppLocalizations> load(Locale locale) async {
-    print(locale);
     // AppLocalizations class is where the JSON loading actually runs
     AppLocalizations localizations = new AppLocalizations(locale);
     await localizations.load();

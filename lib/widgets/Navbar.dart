@@ -3,7 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Navbar extends StatefulWidget {
-  Navbar({Key key}) : super(key: key);
+  final Function callback;
+
+  Navbar({Key key, this.callback}) : super(key: key);
 
   @override
   _NavbarState createState() => _NavbarState();
@@ -12,16 +14,17 @@ class Navbar extends StatefulWidget {
 class _NavbarState extends State<Navbar> {
   @override
   Widget build(BuildContext context) {
+    
     return CurvedNavigationBar(
-        backgroundColor: Colors.blueAccent,
+        color: Colors.grey[900],
+        index: 1,
+        backgroundColor: Colors.grey[850],
         items: <Widget>[
-          Icon(Icons.supervised_user_circle, size: 30),
-          Icon(Icons.pin_drop, size: 30),
-          Icon(Icons.monetization_on, size: 30),
+          Icon(Icons.supervised_user_circle,size: 30,color: Colors.pink[200]),
+          Icon(Icons.pin_drop, size: 30, color: Colors.pink[200]),
+          Icon(Icons.monetization_on, size: 30, color: Colors.pink[200]),
         ],
-        onTap: (index) {
-          print(index.toString());
-        },
+        onTap: this.widget.callback,
       );
   }
 }
