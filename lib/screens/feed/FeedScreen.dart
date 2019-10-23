@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:rideal/widgets/FeedEntry.dart';
+import 'package:rideal/screens/feed/FeedEntry.dart';
+
 
 class FeedScreen extends StatefulWidget {
   FeedScreen({Key key}) : super(key: key);
