@@ -27,14 +27,14 @@ class AppLocalizations {
       return MapEntry(key, value.toString());
     });
     
-
     return true;
   }
 
-  String translate(String key, [Map<String, String> params]) {
+  String translate(String key, [Map<String, String> params = const {}]) {
     var str = _localizedStrings[key];
-    for (var e in params.entries)
-      str.replaceAll('{{${e.key}}}', e.value);
+    for (var e in params.entries) {
+      str = str.replaceAll('{{${e.key}}}', e.value);
+    }
     return str;
   }
 

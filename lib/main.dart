@@ -1,7 +1,10 @@
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:rideal/widgets/Loading.dart';
 import 'package:rideal/services/i18n.dart';
 import 'package:rideal/theme/theme.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:rideal/widgets/Navbar.dart';
 
 void main() => runApp(MyApp());
 
@@ -16,9 +19,9 @@ class MyApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
         AppLocalizations.delegate
       ],
-       supportedLocales: [
-        const Locale('en'), 
+      supportedLocales: [
         const Locale('es'),
+        const Locale('en'),
       ],
       localeResolutionCallback: (locale, supportedLocales) {
         for (var supportedLocale in supportedLocales) {
@@ -30,7 +33,10 @@ class MyApp extends StatelessWidget {
         return supportedLocales.first;
       },
       title: 'Flutter Demo',
-      theme: appTheme(),
+      theme: ThemeData(
+        fontFamily: 'Montserrat',
+        brightness: Brightness.dark,
+      ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -46,45 +52,34 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   void initState() {
     super.initState();
   }
+
+  int index = 1;
+  // [FeedScreen, HomeScreen, LadeboardScreen]
+  final screens = [Text("fsf"), Text("fsd"), Text("dddd")];
+
   @override
   Widget build(BuildContext context) {
-    var translate = {'name': 'Guillem'};
+    final currentScreen = screens[index];
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              AppLocalizations.of(context).translate('welcome', {'name': 'Guillem'}),
-              style: TextStyle(color: Colors.white),
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
-          ],
+      bottomNavigationBar: Navbar(callback:(index) {
+          this.setState(() { this.index = index; });
+        },),
+      body: Container(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              LoadingScreen(),
+              currentScreen
+            ],
+          ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
