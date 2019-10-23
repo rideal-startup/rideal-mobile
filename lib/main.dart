@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rideal/screens/home/login.dart';
+import 'package:rideal/screens/map/map.dart';
 import 'package:rideal/services/i18n.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:rideal/widgets/Navbar.dart';
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Montserrat',
         brightness: Brightness.dark,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: LoadingScreen(),
     );
   }
 }
@@ -56,8 +57,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   int index = 1;
-  // [FeedScreen, HomeScreen, LadeboardScreen]
-  final screens = [Text("fsf"), Text("fsd"), Text("dddd")];
+  // [FeedScreen, MapScreen, LadeboardScreen]
+  final screens = [Text("fsf"), MapScreen(), Text("dddd")];
 
   @override
   Widget build(BuildContext context) {
@@ -68,15 +69,9 @@ class _MyHomePageState extends State<MyHomePage> {
           this.setState(() { this.index = index; });
         },),
       body: Container(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              LoadingScreen(),
+        child: 
               currentScreen
-            ],
-          ),
-        ),
+          
       ),
     );
   }
