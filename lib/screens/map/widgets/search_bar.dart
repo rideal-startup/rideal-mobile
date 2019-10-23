@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rideal/services/i18n.dart';
 
 class SearchBar extends StatefulWidget {
   @override
@@ -15,14 +16,13 @@ class _SearchBarState extends State<SearchBar> {
       child: Container(
         // color: Colors.transparent,
         decoration: BoxDecoration(
-          color: Theme.of(context).cardColor,
-          borderRadius: BorderRadius.all(Radius.circular(10))
-        ),
+            color: Theme.of(context).cardColor,
+            borderRadius: BorderRadius.all(Radius.circular(10))),
         child: Row(
           children: <Widget>[
             IconButton(
               splashColor: Colors.grey,
-              icon: Icon(Icons.menu),
+              icon: Icon(Icons.search),
               onPressed: () {},
             ),
             Expanded(
@@ -31,18 +31,12 @@ class _SearchBarState extends State<SearchBar> {
                 keyboardType: TextInputType.text,
                 textInputAction: TextInputAction.go,
                 decoration: InputDecoration(
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.symmetric(horizontal: 15),
-                    hintText: "Search..."),
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                  hintText: AppLocalizations.of(context).translate('search-hint')
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: CircleAvatar(
-                backgroundColor: Colors.blue,
-                child: Text('RD'),
-              ),
-            ),
+            )
           ],
         ),
       ),
