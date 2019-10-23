@@ -1,8 +1,8 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:rideal/widgets/FeedScreen.dart';
 import 'package:rideal/widgets/HelloWorld.dart';
 import 'package:rideal/services/i18n.dart';
-import 'package:rideal/theme/theme.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() => runApp(MyApp());
@@ -51,17 +51,16 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
 
   @override
   void initState() {
     super.initState();
+  }
+
+  Future navigateToSubPage(context, index) async {
+    if(index == 0) {
+      Navigator.push(context, MaterialPageRoute(builder: (context) => FeedScreen()));
+    }
   }
 
   @override
@@ -80,6 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
           Icon(Icons.compare_arrows, size: 30, color: Colors.pink[200]),
         ],
         onTap: (index) {
+          navigateToSubPage(context, index);
           print(index.toString());
         },
       ),
@@ -92,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 'You have pushed the button this many times:',
               ),
               Text(
-                '$_counter',
+                ":D",
                 style: Theme.of(context).textTheme.display1,
               ),
               HelloWorld()
