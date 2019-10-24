@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rideal/screens/leaderboard/LeaderboardBody.dart';
 import 'package:rideal/screens/leaderboard/LeaderboardHeader.dart';
 
 class LeaderboardScreen extends StatelessWidget {
@@ -16,6 +17,7 @@ class LeaderboardScreen extends StatelessWidget {
           child: Column(
             children: <Widget>[
               new LeaderboardHeader(),
+              new LeaderBoardBody(),
             ],
           ),
         ));
