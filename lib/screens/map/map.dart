@@ -32,7 +32,7 @@ class _MapScreenState extends State<MapScreen> {
   Widget build(BuildContext context) {
     return Container(
       child: Stack(
-      children: <Widget>[
+      children: <Widget>[  
         GoogleMap(
           onMapCreated: _onMapCreated,
           onCameraMove: _onCameraMove,
