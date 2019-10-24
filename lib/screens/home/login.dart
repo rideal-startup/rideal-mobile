@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:rideal/services/i18n.dart';
 
 import '../../main.dart';
@@ -20,13 +21,19 @@ class LoadingScreen extends StatefulWidget {
 class _LoadingScreenState extends State<LoadingScreen> {
   @override
   void initState() {
-    super.initState();
-    Timer(Duration(seconds: 3), () {
-      Navigator.pushReplacement(
-        context,
-        FadingRoute(builder: (context) => MyHomePage()),
-      );
+    PermissionHandler().requestPermissions([
+      PermissionGroup.location,
+      PermissionGroup.locationAlways,
+      PermissionGroup.locationWhenInUse
+    ]).then((val) {
+      Timer(Duration(seconds: 3), () {
+        Navigator.pushReplacement(
+          context,
+          FadingRoute(builder: (context) => MyHomePage()),
+        );
+      });
     });
+    super.initState();
   }
 
   @override
