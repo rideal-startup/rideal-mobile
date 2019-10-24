@@ -1,9 +1,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:rideal/screens/map/map.dart';
-import 'package:rideal/widgets/HelloWorld.dart';
 import 'package:rideal/services/i18n.dart';
-import 'package:rideal/theme/theme.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() => runApp(MyApp());
@@ -52,39 +50,34 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   void initState() {
     super.initState();
   }
 
+  int index = 1;
+  // [FeedScreen, HomeScreen, LadeboardScreen]
+  final screens = [Text("fsf"), Text("fsd"), Text("dddd")];
+
   @override
   Widget build(BuildContext context) {
+    final currentScreen = screens[index];
+
     return Scaffold(
-      bottomNavigationBar: CurvedNavigationBar(
-        color: Colors.grey[900],
-        backgroundColor: Colors.grey[850],
-        items: <Widget>[
-          Icon(
-            Icons.add,
-            size: 30,
-            color: Colors.pink[200],
+      bottomNavigationBar: Navbar(callback:(index) {
+          this.setState(() { this.index = index; });
+        },),
+      body: Container(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              LoadingScreen(),
+              currentScreen
+            ],
           ),
-          Icon(Icons.list, size: 30, color: Colors.pink[200]),
-          Icon(Icons.compare_arrows, size: 30, color: Colors.pink[200]),
-        ],
-        onTap: (index) {
-          print(index.toString());
-        },
+        ),
       ),
-      body: MapScreen()
     );
   }
 }
