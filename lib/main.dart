@@ -52,7 +52,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   @override
   void initState() {
     super.initState();
@@ -67,14 +66,14 @@ class _MyHomePageState extends State<MyHomePage> {
     final currentScreen = screens[index];
 
     return Scaffold(
-      bottomNavigationBar: Navbar(callback:(index) {
-          this.setState(() { this.index = index; });
-        },),
-      body: Container(
-        child: 
-              currentScreen
-          
+      bottomNavigationBar: Navbar(
+        callback: (index) {
+          this.setState(() {
+            this.index = index;
+          });
+        },
       ),
+      body: Container(child: currentScreen),
     );
   }
 }
