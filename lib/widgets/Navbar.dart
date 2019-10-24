@@ -18,7 +18,7 @@ class _NavbarState extends State<Navbar> {
     return CurvedNavigationBar(
         color: Colors.grey[900],
         index: 1,
-        backgroundColor: Colors.grey[850],
+        backgroundColor: Colors.transparent,
         items: <Widget>[
           Icon(Icons.supervised_user_circle,size: 30,color: Colors.pink[200]),
           Icon(Icons.pin_drop, size: 30, color: Colors.pink[200]),
