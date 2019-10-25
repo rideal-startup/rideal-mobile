@@ -5,7 +5,7 @@ import 'package:rideal/screens/profile/profile.dart';
 import 'package:rideal/widgets/FeedScreen.dart';
 import 'package:rideal/services/i18n.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:rideal/widgets/Navbar.dart';
+import 'package:rideal/widgets/navBar/curved_navigation_bar.dart';
 
 void main() => runApp(MyApp());
 
@@ -59,20 +59,33 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   int index = 1;
+
   // [FeedScreen, MapScreen, LadeboardScreen]
-  final screens = [FeedScreen(), MapScreen(), Text("dddd"),Profile()];
+  final screens = [FeedScreen(), MapScreen(), Text("dddd"), Profile()];
 
   @override
   Widget build(BuildContext context) {
     final currentScreen = screens[index];
 
     return Scaffold(
-      bottomNavigationBar: Navbar(
-        callback: (index) {
-          this.setState(() {
-            this.index = index;
-          });
-        },
+      
+      bottomNavigationBar: Container(
+          width: MediaQuery.of(context).size.width+300,
+          child: CurvedNavigationBar(
+          color: Colors.grey[900],
+          index: index,
+          backgroundColor: Colors.transparent,
+          items: <Widget>[
+            Icon(Icons.supervised_user_circle,size: 30,color: Colors.pink[200]),
+            Icon(Icons.pin_drop, size: 30, color: Colors.pink[200]),
+            Icon(Icons.monetization_on, size: 30, color: Colors.pink[200]),
+            Icon(Icons.monetization_on, size: 30, color: Colors.red[200]),
+          ],
+          onTap: (index) {
+            print("ontap: ${this.index}");
+            this.setState(() {this.index = index; });
+          },
+        ),
       ),
       drawer: Drawer(
         // Add a ListView to the drawer. This ensures the user can scroll
@@ -90,7 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   icon: Icon(Icons.people),
                   onPressed: () {
                     this.setState(() {
-                      this.index = 3;
+                     this.setState(() {this.index = 3; });
                     });
                     
                   },
