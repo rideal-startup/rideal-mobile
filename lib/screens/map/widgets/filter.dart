@@ -53,9 +53,9 @@ class FilterTransport extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          PublicTransportEnabler(FontAwesomeIcons.shuttleVan),
-          PublicTransportEnabler(FontAwesomeIcons.busAlt),
-          PublicTransportEnabler(FontAwesomeIcons.train),
+          PublicTransportEnabler(FontAwesomeIcons.subway),
+          PublicTransportEnabler(FontAwesomeIcons.bus),
+          PublicTransportEnabler(FontAwesomeIcons.tram),
         ],
       )
     );
