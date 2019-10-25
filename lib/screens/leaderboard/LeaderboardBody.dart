@@ -1,42 +1,51 @@
 import 'package:flutter/material.dart';
+import 'package:rideal/screens/leaderboard/LeaderboardEntry.dart';
 
-class LeaderBoardBody extends StatelessWidget {
-  const LeaderBoardBody({Key key}) : super(key: key);
+class LeaderboardBody extends StatelessWidget {
+  const LeaderboardBody({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: SizedBox(
-        height: 500,
-        child: ListView(
+    final List<String> users = <String>[
+      "Jorge Nitales",
+      "Jorge Nitales",
+      "Jorge Nitales",
+      "Jorge Nitales",
+      "Jorge Nitales",
+      "Jorge Nitales",
+      "Jorge Nitales",
+      "Jorge Nitales",
+      "Jorge Nitales"
+    ];
+    final List<String> punctuations = <String>[
+      "15000",
+      "15000",
+      "15000",
+      "15000",
+      "15000",
+      "15000",
+      "15000",
+      "15000",
+      "15000",
+      "15000",
+    ];
+    return Expanded(
+      flex: 1,
+      child: ListView(
+        shrinkWrap: true,
+        physics: AlwaysScrollableScrollPhysics(),
+        children: <Widget>[
+          Column(
             children: <Widget>[
-              Container(
-                height: 90,
-                color: Colors.amber[600],
-                child: Row(
-                  children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
-                        child: Text("1"),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(50, 0, 0, 0),
-                        child: Icon(Icons.account_circle, size: 70),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                        child: Text("Jorge Nitales"),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(40, 0, 0, 0),
-                        child: Text("15000"),
-                      ),
-                  ]
-                ),
-              ),
+              for (int index = 0; index < users.length; index++)
+                LeaderboardEntry(
+                    index: index.toString(),
+                    userName: users[index],
+                    punctuation: punctuations[index])
             ],
           ),
-        ),
-      );
+        ],
+      ),
+    );
   }
 }
