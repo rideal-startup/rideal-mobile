@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rideal/screens/leaderboard/LeaderboardBody.dart';
+import 'package:rideal/screens/leaderboard/LeaderboardFilter.dart';
 import 'package:rideal/screens/leaderboard/LeaderboardHeader.dart';
 
 class LeaderboardScreen extends StatelessWidget {
@@ -16,6 +17,7 @@ class LeaderboardScreen extends StatelessWidget {
       body: Column(
         children: <Widget>[
           LeaderboardHeader(),
+          LeaderboardFilter(),
           LeaderboardBody(),
         ],
       ),

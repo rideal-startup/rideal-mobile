@@ -7,19 +7,26 @@ class LeaderboardHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(50, 10, 0, 0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: <Widget>[
-          Icon(
-            Icons.account_circle,
-            size: 150,
+    return Row(
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.fromLTRB(100, 10, 0, 0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
+              Icon(
+                Icons.account_circle,
+                size: 150,
+              ),
+              Text(
+                "#15",
+                style: TextStyle(fontSize: 45),
+              ),
+            ],
           ),
-          Text("#15", style: TextStyle(fontSize: 45),),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
