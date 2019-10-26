@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rideal/models/line.dart';
 import 'package:rideal/models/stop.dart';
+import 'package:rideal/screens/line_detail/line_detail.dart';
 
 
 class LineSelector extends StatefulWidget {
@@ -95,7 +96,12 @@ class _LineSelectorState extends State<LineSelector>
           RaisedButton(
             color: l.color,
             shape: CircleBorder(),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => LineDetailScreen()),
+              );
+            },
             child: Padding(
               padding: const EdgeInsets.all(15.0),
               child: Icon(FontAwesomeIcons.subway, color: Colors.white,)
