@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rideal/screens/profile/widgets/profile_body.dart';
 import 'package:rideal/screens/profile/widgets/profile_header.dart';
 
 class Profile extends StatefulWidget {
@@ -15,6 +16,7 @@ class _ProfileState extends State<Profile> {
       child: Column(
         children: <Widget>[
           ProfileHeader(),
+          ProfileBody(),
         ],
       ),
     );
