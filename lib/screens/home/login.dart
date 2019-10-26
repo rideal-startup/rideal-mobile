@@ -51,7 +51,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
               Padding(
                 padding: const EdgeInsets.all(40),
                 child: Text(
-                  AppLocalizations.of(context).translate("loading"),
+                  I18n.of(context).translate("loading"),
                   style: TextStyle(fontSize: 20),
                 ),
               ),

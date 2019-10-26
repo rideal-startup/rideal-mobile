@@ -1,32 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:rideal/models/line.dart';
+import 'package:rideal/models/stop.dart';
 
-class Line extends StatelessWidget {
-  final Color color;
-
-  const Line({Key key, this.color}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: RaisedButton(
-          shape: CircleBorder(),
-          onPressed: () {},
-          color: color,
-          textColor: Colors.white,
-          child: Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Icon(FontAwesomeIcons.subway),
-          )),
-    );
-  }
-}
 
 class LineSelector extends StatefulWidget {
   bool show;
-  List<Line> lines;
-  LineSelector({this.lines = const [], this.show = false});
+  final Stop stop;
+
+  LineSelector({this.stop, this.show = false});
 
   @override
   _LineSelectorState createState() => _LineSelectorState();
@@ -58,6 +40,7 @@ class _LineSelectorState extends State<LineSelector>
       _controller.reset();
       _controller.forward();
     }
+    
     super.didUpdateWidget(oldWidget);
   }
 
@@ -66,6 +49,7 @@ class _LineSelectorState extends State<LineSelector>
     _controller.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     if (!this.widget.show)
@@ -77,12 +61,47 @@ class _LineSelectorState extends State<LineSelector>
         crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.end,
-        children: this.widget.lines.map((l) {
+        children: this.widget.stop.lines.map((l) {
           return Transform.translate(
             offset: Offset(offset, 0 ), 
-            child: l
+            child: _drawLine(l)
           );
         }).toList()
+      ),
+    );
+  }
+
+
+  Widget _drawLine(Line l) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
+          Container(
+            padding: EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(5)),
+              color: Colors.black38,
+            ),
+            child: Text(
+              l.name, 
+              style: TextStyle(
+                fontWeight: FontWeight.bold, 
+                color: Colors.white, 
+              ),
+            ),
+          ),
+          RaisedButton(
+            color: l.color,
+            shape: CircleBorder(),
+            onPressed: () {},
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Icon(FontAwesomeIcons.subway, color: Colors.white,)
+            ) 
+          ),
+        ],
       ),
     );
   }

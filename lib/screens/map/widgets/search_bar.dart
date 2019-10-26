@@ -35,7 +35,7 @@ class _SearchBarState extends State<SearchBar> {
                     border: InputBorder.none,
                     contentPadding: EdgeInsets.symmetric(horizontal: 15),
                     hintText:
-                        AppLocalizations.of(context).translate('search-hint')),
+                        I18n.of(context).translate('search-hint')),
               ),
             )
           ],
