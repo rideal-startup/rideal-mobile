@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:rideal/screens/map/map.dart';
 import 'package:rideal/screens/home/login.dart';
+import 'package:rideal/screens/map/lineDetail.dart';
+import 'package:rideal/screens/map/map.dart';
 import 'package:rideal/theme/theme.dart';
 import 'package:rideal/widgets/FeedScreen.dart';
 import 'package:rideal/services/i18n.dart';
@@ -57,7 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   int index = 1;
   // [FeedScreen, MapScreen, LadeboardScreen]
-  final screens = [FeedScreen(), MapScreen(), Text("dddd")];
+  final screens = [FeedScreen(), MapScreen(), LineDetailScreen()];
 
   @override
   Widget build(BuildContext context) {
