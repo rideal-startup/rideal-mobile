@@ -14,21 +14,23 @@ class ProfileBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return DefaultTabController(
         length: 2,
-        child: Scaffold(
-          appBar: AppBar(
-            bottom: TabBar(
-              tabs: [
-                Tab(icon: Icon(Icons.directions_car)),
-                Tab(icon: Icon(Icons.directions_transit))
+        child: Expanded(
+          child: Scaffold(
+            appBar: AppBar(
+              bottom: TabBar(
+                tabs: [
+                  Tab(icon: Icon(Icons.directions_car)),
+                  Tab(icon: Icon(Icons.directions_transit))
+                ],
+              ),
+              title: Text('Flutter Tabs Example'),
+            ),
+            body: TabBarView(
+              children: [
+              Testtab1(),
+              Testtab2(),
               ],
             ),
-            title: Text('Flutter Tabs Example'),
-          ),
-          body: TabBarView(
-            children: [
-            Testtab1(),
-            Testtab2(),
-            ],
           ),
         ),
       );
