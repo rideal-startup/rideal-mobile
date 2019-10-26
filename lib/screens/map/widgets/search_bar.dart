@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:rideal/services/i18n.dart';
 
 class SearchBar extends StatefulWidget {
+  final Function onFilterPress;
+
+  const SearchBar({Key key, this.onFilterPress}) : super(key: key);
   @override
   _SearchBarState createState() => _SearchBarState();
 }
@@ -8,22 +12,19 @@ class SearchBar extends StatefulWidget {
 class _SearchBarState extends State<SearchBar> {
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      top: 30,
-      right: 15,
-      left: 15,
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 30, 20, 0),
       child: Container(
         // color: Colors.transparent,
         decoration: BoxDecoration(
-          color: Theme.of(context).cardColor,
-          borderRadius: BorderRadius.all(Radius.circular(10))
-        ),
+            color: Theme.of(context).cardColor,
+            borderRadius: BorderRadius.all(Radius.circular(10))),
         child: Row(
           children: <Widget>[
             IconButton(
               splashColor: Colors.grey,
-              icon: Icon(Icons.menu),
-              onPressed: () {},
+              icon: Icon(Icons.filter_list),
+              onPressed: this.widget.onFilterPress,
             ),
             Expanded(
               child: TextField(
@@ -33,16 +34,10 @@ class _SearchBarState extends State<SearchBar> {
                 decoration: InputDecoration(
                     border: InputBorder.none,
                     contentPadding: EdgeInsets.symmetric(horizontal: 15),
-                    hintText: "Search..."),
+                    hintText:
+                        I18n.of(context).translate('search-hint')),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: CircleAvatar(
-                backgroundColor: Colors.blue,
-                child: Text('RD'),
-              ),
-            ),
+            )
           ],
         ),
       ),

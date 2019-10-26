@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:rideal/screens/feed/feed_screen.dart';
 import 'package:rideal/screens/home/login.dart';
+import 'package:rideal/screens/leaderboard/leaderboard_screen.dart';
 import 'package:rideal/screens/map/map.dart';
 import 'package:rideal/screens/profile/profile.dart';
-import 'package:rideal/widgets/FeedScreen.dart';
+import 'package:rideal/theme/theme.dart';
 import 'package:rideal/services/i18n.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:rideal/widgets/navBar/curved_navigation_bar.dart';
@@ -18,26 +20,23 @@ class MyApp extends StatelessWidget {
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
-        AppLocalizations.delegate
+        I18n.delegate
       ],
       supportedLocales: [
         const Locale('es'),
         const Locale('en'),
       ],
-      localeResolutionCallback: (locale, supportedLocales) {
-        for (var supportedLocale in supportedLocales) {
-          if (supportedLocale.languageCode == locale.languageCode &&
-              supportedLocale.countryCode == locale.countryCode) {
-            return supportedLocale;
-          }
-        }
-        return supportedLocales.first;
-      },
+      // localeResolutionCallback: (locale, supportedLocales) {
+      //   for (var supportedLocale in supportedLocales) {
+      //     if (supportedLocale.languageCode == locale.languageCode &&
+      //         supportedLocale.countryCode == locale.countryCode) {
+      //       return supportedLocale;
+      //     }
+      //   }
+      //   return supportedLocales.first;
+      // },
       title: 'Flutter Demo',
-      theme: ThemeData(
-        fontFamily: 'Montserrat',
-        brightness: Brightness.dark,
-      ),
+      theme: appTheme(),
       home: LoadingScreen(),
     );
   }
@@ -61,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int index = 1;
 
   // [FeedScreen, MapScreen, LadeboardScreen]
-  final screens = [FeedScreen(), MapScreen(), Text("dddd"), Profile()];
+  final screens = [FeedScreen(), MapScreen(), LeaderboardScreen(), Profile()];
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +115,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             ListTile(
-              title: Text('Configuración y privacidad'),
+              title: Text('Configuraci�n y privacidad'),
               onTap: () {
                 // Update the state of the app
                 // ...
