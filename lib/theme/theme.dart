@@ -5,5 +5,7 @@ ThemeData appTheme() {
     fontFamily: 'Montserrat',
     brightness: Brightness.dark,
     
+    accentColor: Colors.pink[200],
+    // accentColorBrightness: Brightness.light,
   );
 }

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:rideal/screens/feed/feed_screen.dart';
 import 'package:rideal/screens/home/login.dart';
+import 'package:rideal/screens/leaderboard/leaderboard_screen.dart';
 import 'package:rideal/screens/map/map.dart';
 import 'package:rideal/theme/theme.dart';
-import 'package:rideal/widgets/FeedScreen.dart';
 import 'package:rideal/services/i18n.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:rideal/widgets/Navbar.dart';
@@ -24,15 +25,15 @@ class MyApp extends StatelessWidget {
         const Locale('es'),
         const Locale('en'),
       ],
-      localeResolutionCallback: (locale, supportedLocales) {
-        for (var supportedLocale in supportedLocales) {
-          if (supportedLocale.languageCode == locale.languageCode &&
-              supportedLocale.countryCode == locale.countryCode) {
-            return supportedLocale;
-          }
-        }
-        return supportedLocales.first;
-      },
+      // localeResolutionCallback: (locale, supportedLocales) {
+      //   for (var supportedLocale in supportedLocales) {
+      //     if (supportedLocale.languageCode == locale.languageCode &&
+      //         supportedLocale.countryCode == locale.countryCode) {
+      //       return supportedLocale;
+      //     }
+      //   }
+      //   return supportedLocales.first;
+      // },
       title: 'Flutter Demo',
       theme: appTheme(),
       home: LoadingScreen(),
@@ -57,7 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   int index = 1;
   // [FeedScreen, MapScreen, LadeboardScreen]
-  final screens = [FeedScreen(), MapScreen(), Text('dfasdf')];
+  final screens = [FeedScreen(), MapScreen(), LeaderboardScreen()];
 
   @override
   Widget build(BuildContext context) {

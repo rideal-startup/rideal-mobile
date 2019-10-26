@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rideal/widgets/FeedEntry.dart';
+import 'package:rideal/screens/feed/widgets/feed_entry.dart';
 
 class FeedScreen extends StatefulWidget {
   FeedScreen({Key key}) : super(key: key);
@@ -11,13 +11,9 @@ class FeedScreen extends StatefulWidget {
 class _FeedScreen extends State<FeedScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Feed"),
-        backgroundColor: Colors.pink[200],
-        centerTitle: true,
-      ),
-      body: SingleChildScrollView(
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.only(top: 30.0),
         child: Column(
           children: <Widget>[
             Row(children: <Widget>[FeedEntry(userName: "Apetusio Disousa", date: "10/10/1994", bodyText: "Has won a prize del copon!",),]),
@@ -25,8 +21,8 @@ class _FeedScreen extends State<FeedScreen> {
             Row(children: <Widget>[FeedEntry(userName: "Apetusio Disousa", date: "10/10/1994", bodyText: "Has won a prize del copon!",),]),
             Row(children: <Widget>[FeedEntry(userName: "Apetusio Disousa", date: "10/10/1994", bodyText: "Has won a prize del copon!",),]),
           ],
-        )
-      ),
+        ),
+      )
     );
   }
 }
