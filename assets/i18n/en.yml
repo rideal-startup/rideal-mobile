@@ -2,3 +2,8 @@ welcome: Hello! My name is {{name}}
 search-hint: Search...
 loading: Loading Rideal...
 i-am-in: I'm in!
+
+# Navbar strings
+profile: Profile
+setting-privacy: Settings & privacy
+help-centre: Help Centre

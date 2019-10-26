@@ -54,6 +54,7 @@ flutter:
   assets:
     - assets/i18n/en.yml
     - assets/i18n/es.yml
+    - assets/images/profile.jpg
 
   fonts:
     - family: Montserrat

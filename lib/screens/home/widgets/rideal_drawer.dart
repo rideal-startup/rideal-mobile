@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:rideal/services/i18n.dart';
+import 'package:rideal/widgets/circle_image.dart';
 
 class RidealDrawer extends StatelessWidget {
   final Function onProfileNavigation;
@@ -8,43 +11,67 @@ class RidealDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-        // Add a ListView to the drawer. This ensures the user can scroll
-        // through the options in the drawer if there isn't enough vertical
-        // space to fit everything.
-        child: ListView(
-          // Important: Remove any padding from the ListView.
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-              child: Column(children: <Widget>[
-                IconButton(
-                  iconSize: 100,
-                  splashColor: Colors.grey,
-                  icon: Icon(Icons.people),
-                  onPressed: onProfileNavigation,
+      // Add a ListView to the drawer. This ensures the user can scroll
+      // through the options in the drawer if there isn't enough vertical
+      // space to fit everything.
+      child: ListView(
+        // Important: Remove any padding from the ListView.
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          DrawerHeader(
+            padding: EdgeInsets.fromLTRB(15, 8, 0, 0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                    onProfileNavigation();
+                  },
+                  child: CircleImage('assets/images/profile.jpg'),
                 ),
-                Text('Profile')
-              ]),
-              decoration: BoxDecoration(
-                color: Colors.grey,
-              ),
+                Padding(padding: EdgeInsets.all(7),),
+                Text(
+                  'Guillermo Diaz', 
+                  style: TextStyle(fontWeight: FontWeight.w800, fontSize: 18),
+                ),
+                Text(
+                  '@willyrexYT', 
+                  style: TextStyle(fontWeight: FontWeight.w300, fontSize: 15),
+                )
+              ]
             ),
-            ListTile(
-              title: Text('Configuraci�n y privacidad'),
-              onTap: () {
-                // Then close the drawer
-                Navigator.pop(context);
-              },
+            decoration: BoxDecoration(
+              color: Colors.transparent,
             ),
-            ListTile(
-              title: Text('Centro de Ayuda'),
-              onTap: () {
-                // Then close the drawer
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        ),
-      );
+          ),
+          ListTile(
+            leading: Icon(FontAwesomeIcons.user),
+            title: Text(I18n.of(context).translate('profile')),
+            onTap: () {
+              Navigator.pop(context);
+              onProfileNavigation();
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.settings),
+            title: Text(I18n.of(context).translate('setting-privacy')),
+            onTap: () {
+              // Then close the drawer
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.help),
+            title: Text(I18n.of(context).translate('help-centre')),
+            onTap: () {
+              // Then close the drawer
+              Navigator.pop(context);
+            },
+          ),
+          Divider(),
+        ],
+      ),
+    );
   }
 }
