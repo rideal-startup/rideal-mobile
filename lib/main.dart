@@ -70,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       
       bottomNavigationBar: Container(
-          width: MediaQuery.of(context).size.width+300,
+          width: MediaQuery.of(context).size.width+(MediaQuery.of(context).size.width/4),
           child: CurvedNavigationBar(
           color: Colors.grey[900],
           index: index,

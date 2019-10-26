@@ -51,12 +51,12 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar>
     _icon = widget.items[widget.index];
     _length = widget.items.length;
     _pos = widget.index / _length;
-    _startingPos = widget.index / _length;
+    _startingPos = widget.index / (_length);
     _animationController = AnimationController(vsync: this, value: _pos);
     _animationController.addListener(() {
       setState(() {
         _pos = _animationController.value;
-        final endingPos = _endingIndex / widget.items.length;
+        final endingPos = _endingIndex / (widget.items.length);
         final middle = (endingPos + _startingPos) / 2;
         if ((endingPos - _pos).abs() < (_startingPos - _pos).abs()) {
           _icon = widget.items[_endingIndex];
@@ -73,8 +73,8 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar>
     //if (oldWidget.index != widget.index) {
     print("Hola buttonTap ${widget.index}");
 
-      if(widget.index == 3){print("index 3 detected"); return;}
-      final newPosition = widget.index / _length;
+      //if(widget.index == 3){print("index 3 detected"); return;}
+      final newPosition = widget.index / (_length);
       _startingPos = _pos;
       _endingIndex = widget.index;
       _animationController.animateTo(newPosition,
@@ -90,7 +90,7 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar>
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.of(context).size*1.3;
     return Container(
       color: widget.backgroundColor,
       height: widget.height,
@@ -106,7 +106,7 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar>
             right: Directionality.of(context) == TextDirection.rtl
                 ? _pos * size.width
                 : null,
-            width: size.width / _length,
+            width: (size.width) / (_length),
             child: Center(
               child: Transform.translate(
                 offset: Offset(
@@ -126,11 +126,11 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar>
           ),
           Positioned(
             left: 0,
-            right: 0,
+            right: -110,
             bottom: 0 - (75.0 - widget.height),
             child: CustomPaint(
               painter: NavCustomPainter(
-                  _pos, _length, widget.color, Directionality.of(context)),
+                  _pos, (_length), widget.color, Directionality.of(context)),
               child: Container(
                 height: 75.0,
               ),
@@ -138,7 +138,7 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar>
           ),
           Positioned(
             left: 0,
-            right: 0,
+            right: -130,
             bottom: 0 - (75.0 - widget.height),
             child: SizedBox(
                 height: 100.0,
