@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rideal/screens/leaderboard/widgets/leaderboard_entry.dart';
 import 'package:rideal/screens/profile/widgets/profile_info_entry.dart';
 
@@ -32,7 +33,7 @@ class BasicINfoProfile extends StatelessWidget {
                     ),
                     ProfileInfoEntry(
                     header: "City",
-                    info: "Lleia",
+                    info: "Lleida",
                     icon: Icons.location_city
                     ),
                     ProfileInfoEntry(
@@ -47,8 +48,18 @@ class BasicINfoProfile extends StatelessWidget {
                     ),
                     ProfileInfoEntry(
                     header: "Friends",
-                    info: "12",
+                    info: "5",
                     icon: Icons.people,
+                    ),
+                    ProfileInfoEntry(
+                    header: "Trophys",
+                    info: "3",
+                    icon: FontAwesomeIcons.award,
+                    ), 
+                    ProfileInfoEntry(
+                    header: "Transports rided",
+                    info: "43",
+                    icon: Icons.train,
                     ),   
             ],
           ),
