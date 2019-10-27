@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:rideal/screens/home/home.dart';
 import 'package:rideal/screens/line_detail/widgets/line_header.dart';
 import 'package:rideal/services/i18n.dart';
+import 'package:rideal/widgets/navBar/curved_navigation_bar.dart';
 
 class LineDetailScreen extends StatefulWidget {
   @override
@@ -120,6 +122,66 @@ class _LineDetailScreenState extends State<LineDetailScreen> {
               ],
             ),
           ),
+          Positioned(
+            child: Align(
+              alignment: FractionalOffset.bottomCenter,
+              child: CurvedNavigationBar(
+                color: Colors.grey[900],
+                index: 1,
+                backgroundColor: Colors.transparent,
+                items: <Widget>[
+                  Icon(Icons.supervised_user_circle,size: 30,color: Colors.pink[200]),
+                  Icon(Icons.pin_drop, size: 30, color: Colors.pink[200]),
+                  Icon(Icons.monetization_on, size: 30, color: Colors.pink[200]),
+                  Icon(Icons.monetization_on, size: 30, color: Colors.red[200]),
+                ],
+                onTap: (index) {
+                  switch(index) {
+                    case 0:
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => HomePage(index: 0,)),
+                      );
+                      break;
+                    case 1:
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => HomePage(index: 1,)),
+                      );
+                    break;
+                    case 2:
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => HomePage(index: 2,)),
+                      );
+                    break;
+                    default:
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => HomePage(index: 1,)),
+                      );
+                    }
+                  },
+              ),
+            ),
+          ),
+          Positioned(
+            child: Padding(
+              padding: const EdgeInsets.only(bottom:11.0),
+              child: Align(
+                alignment: FractionalOffset.bottomCenter,
+                child: Container(
+                  width: 50,
+                  height: 50,
+                  child: FloatingActionButton(
+                    elevation: 0,
+                    backgroundColor: Colors.transparent,
+                    onPressed: () => {Navigator.pop(context)}
+                  ),
+                ),
+              ),
+            ),
+          ),
         ],
       )
     );
@@ -127,7 +189,7 @@ class _LineDetailScreenState extends State<LineDetailScreen> {
 
   Widget _imInButton() {
     return AnimatedContainer(
-      height: selected ? 000.0 : 75.0,
+      height: selected ? 000.0 : 125.0,
       color: selected ? Colors.green : Colors.blue,
       alignment: 
         selected ? Alignment.center : AlignmentDirectional.topCenter,
@@ -150,7 +212,7 @@ class _LineDetailScreenState extends State<LineDetailScreen> {
 
   Widget _ridealingButton() {
     return AnimatedContainer(
-      height: selected ? 75.0 : 0.0,
+      height: selected ? 125.0 : 0.0,
       color: selected ? Colors.green : Colors.blue,
       alignment:
       selected ? Alignment.topCenter : AlignmentDirectional.topCenter,

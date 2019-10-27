@@ -3,17 +3,16 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rideal/widgets/navbar/curved_navigation_bar.dart';
 
 class BottomNavbar extends StatefulWidget {
-  int index = 1;
+  final int index;
   final Function callback;
 
-  BottomNavbar({this.index, this.callback});
+  BottomNavbar({this.callback, this.index});
 
   @override
   _BottomNavbarState createState() => _BottomNavbarState();
 }
 
 class _BottomNavbarState extends State<BottomNavbar> {
-
   @override
   Widget build(BuildContext context) {
     return Container(
