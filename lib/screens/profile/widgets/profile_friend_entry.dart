@@ -23,8 +23,8 @@ class ProfileFriendEntry extends StatelessWidget {
               width: MediaQuery.of(context).size.width*0.95,
                 child: Row(children: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
-                    child: Icon(this._icon, size: 40),
+                    padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
+                    child: Icon(this._icon, size: 35),
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
@@ -37,17 +37,17 @@ class ProfileFriendEntry extends StatelessWidget {
                   Expanded(child: SizedBox()),
                   if(_state=="Friend")
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
+                      padding: const EdgeInsets.fromLTRB(5, 5, 7, 5),
                       child: Icon(Icons.delete, size: 30),
                     ),
                   if(_state=="WaitingResponce")
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
+                      padding: const EdgeInsets.fromLTRB(5, 5, 7, 5),
                       child: Icon(Icons.av_timer, size: 30),
                     ),
                   if(_state=="Pending")
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
+                      padding: const EdgeInsets.fromLTRB(5, 5, 10, 5),
                       child: Icon(Icons.person_add, size: 30),
                     ),
               

@@ -1,6 +1,7 @@
 // SecondScreen.dart
 
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rideal/screens/profile/widgets/profile_trophy_entry.dart';
 
 class TrophyListProfile extends StatelessWidget {
@@ -27,8 +28,8 @@ class TrophyListProfile extends StatelessWidget {
               width: MediaQuery.of(context).size.width*0.95,
                 child: Row(children: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
-                    child: Icon(Icons.monetization_on, size: 40,color:Colors.grey[600] ,),
+                    padding: const EdgeInsets.fromLTRB(10, 5, 5, 5),
+                    child: Icon(FontAwesomeIcons.award, size: 30,color:Colors.grey[600] ,),
                   ),
                   
             Expanded(
@@ -43,8 +44,8 @@ class TrophyListProfile extends StatelessWidget {
               ),
             ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
-                    child: Icon(Icons.find_in_page, size: 40,color:Colors.grey[600]),
+                    padding: const EdgeInsets.fromLTRB(5, 5, 10, 10),
+                    child: Icon(FontAwesomeIcons.search, size: 30,color:Colors.grey[600]),
                   ),
               
                 ],

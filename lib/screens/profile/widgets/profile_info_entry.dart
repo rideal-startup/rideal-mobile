@@ -22,7 +22,7 @@ class ProfileInfoEntry extends StatelessWidget {
               width: MediaQuery.of(context).size.width*0.95,
                 child: Row(children: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                    padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
                     child: Icon(this._icon, size: 40),
                   ),
                   Padding(

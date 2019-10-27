@@ -1,6 +1,7 @@
 // main.dart
 
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rideal/screens/profile/tabs/basic_info_profile.dart';
 import 'package:rideal/screens/profile/tabs/friends_list_profile.dart';
 import 'package:rideal/screens/profile/tabs/trophy_list_profile.dart';
@@ -26,7 +27,7 @@ class ProfileBody extends StatelessWidget {
                   tabs: [
                     Tab(icon: Icon(Icons.person)),
                     Tab(icon: Icon(Icons.people)),
-                    Tab(icon: Icon(Icons.monetization_on))
+                    Tab(icon: Icon(FontAwesomeIcons.award))
                   ],
                 ),
               ),

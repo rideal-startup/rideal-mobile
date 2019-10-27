@@ -1,4 +1,20 @@
 welcome: Hola mi nombre es {{name}}
+
+# Utils
 search-hint: Buscar...
 loading: Cargando Rideal...
+close: Cerrar
+
+# Rideal buttons
 i-am-in: Estoy viajando!
+
+# Navbar strings
+profile: Perfil
+setting-privacy: Ajustes y privacidad
+help-centre: Centro de ayuda
+sign-out: Cerrar sesión
+language: Cambiar de idioma
+
+# Languages
+spanish: Español
+english: Inglés

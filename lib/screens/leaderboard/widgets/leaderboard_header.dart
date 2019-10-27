@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rideal/widgets/circle_image.dart';
 
 class LeaderboardHeader extends StatelessWidget {
   const LeaderboardHeader({
@@ -15,10 +16,7 @@ class LeaderboardHeader extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
-              Icon(
-                Icons.account_circle,
-                size: 150,
-              ),
+              CircleImage('assets/images/profile.jpg', size: 150),
               Text(
                 "#15",
                 style: TextStyle(fontSize: 45),
