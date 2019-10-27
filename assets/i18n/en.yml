@@ -1,4 +1,20 @@
 welcome: Hello! My name is {{name}}
+
+# Utils
 search-hint: Search...
 loading: Loading Rideal...
+close: Close
+
+# Rideal Buttons
 i-am-in: I'm in!
+
+# Navbar strings
+profile: Profile
+setting-privacy: Settings & privacy
+help-centre: Help Centre
+sign-out: Sign Out
+language: Change language
+
+# Languages
+spanish: Spanish
+english: English
