@@ -4,6 +4,7 @@ import 'package:rideal/theme/theme.dart';
 import 'package:rideal/services/i18n.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:rideal/utils.dart';
+import 'dart:ui' as ui;
 
 void main() => runApp(MyApp());
 
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamBuilder(
       stream: localeSubject.stream,
-      initialData: Locale('es'),
+      initialData: Locale(ui.window.locale.languageCode),
       builder: (context, snapshot) {
         return MaterialApp(
           localizationsDelegates: [

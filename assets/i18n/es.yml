@@ -15,6 +15,19 @@ help-centre: Centro de ayuda
 sign-out: Cerrar sesión
 language: Cambiar de idioma
 
+# Leaderboard
+# Leaderboard filter
+dropdown-national: Nacional
+dropdown-friends: Amigos
+ranking: Clasificación
+
+# Feed
+# Feed Achievements
+feed-achievement-first-time: Ha utilizado rideal por primera vez!
+feed-achievement-50km: Ha recorrido 50km con rideal!
+feed-achievement-100km: Ha recorrido 100km con rideal!
+feed-achievement-200km: Ha recorrido 200km con rideal!
+
 # Languages
 spanish: Español
 english: Inglés

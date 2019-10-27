@@ -9,20 +9,41 @@ class FeedScreen extends StatefulWidget {
 }
 
 class _FeedScreen extends State<FeedScreen> {
+  var users = [
+    {
+      "userName": "Apetusio Disousa",
+      "date": "10/10/1994",
+      "bodyText": "feed-achievement-first-time"
+    },
+    {
+      "userName": "Apetusio Disousa",
+      "date": "10/10/1994",
+      "bodyText": "feed-achievement-50km"
+    },
+    {
+      "userName": "Apetusio Disousa",
+      "date": "10/10/1994",
+      "bodyText": "feed-achievement-100km"
+    },
+    {
+      "userName": "Lazarito Disousa",
+      "date": "10/10/1994",
+      "bodyText": "feed-achievement-200km"
+    }
+  ];
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.only(top: 30.0),
-        child: Column(
-          children: <Widget>[
-            Row(children: <Widget>[FeedEntry(userName: "Apetusio Disousa", date: "10/10/1994", bodyText: "Has won a prize del copon!",),]),
-            Row(children: <Widget>[FeedEntry(userName: "Apetusio Disousa", date: "10/10/1994", bodyText: "Has won a prize del copon!",),]),
-            Row(children: <Widget>[FeedEntry(userName: "Apetusio Disousa", date: "10/10/1994", bodyText: "Has won a prize del copon!",),]),
-            Row(children: <Widget>[FeedEntry(userName: "Apetusio Disousa", date: "10/10/1994", bodyText: "Has won a prize del copon!",),]),
-          ],
-        ),
-      )
-    );
+        child: Padding(
+      padding: const EdgeInsets.only(top: 30.0),
+      child: Column(
+        children: users
+            .map<Widget>((user) => FeedEntry(
+                userName: user['userName'],
+                date: user['date'],
+                bodyText: user['bodyText']))
+            .toList(),
+      ),
+    ));
   }
 }

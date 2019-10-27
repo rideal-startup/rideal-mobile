@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:rideal/services/i18n.dart';
 
 class FeedEntry extends StatelessWidget {
   final String _userName;
@@ -13,7 +15,7 @@ class FeedEntry extends StatelessWidget {
     return Column(
       children: <Widget>[
         Padding(
-          padding: EdgeInsets.fromLTRB(0, 10, 80, 0),
+          padding: EdgeInsets.fromLTRB(20, 10, 70, 0),
           child: new TopEntry(userName: this._userName, date: this._date),
         ),
         Padding(
@@ -33,16 +35,17 @@ class BodyEntry extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(children: <Widget>[
       SizedBox(
-        width: 230,
+        width: 250,
+        height: 80,
         child: Card(
           child: Row(
             children: <Widget>[
               Icon(
-                Icons.flag,
-                size: 70,
+                FontAwesomeIcons.award,
+                size: 50,
               ),
               Expanded(
-                child: Text(this._bodyText),
+                child: Text(I18n.of(context).translate(this._bodyText)),
               ),
               Text("  "),
             ],
