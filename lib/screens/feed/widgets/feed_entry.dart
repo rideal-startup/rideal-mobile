@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rideal/services/i18n.dart';
 
 class FeedEntry extends StatelessWidget {
@@ -35,12 +36,13 @@ class BodyEntry extends StatelessWidget {
     return Row(children: <Widget>[
       SizedBox(
         width: 250,
+        height: 80,
         child: Card(
           child: Row(
             children: <Widget>[
               Icon(
-                Icons.flag,
-                size: 70,
+                FontAwesomeIcons.award,
+                size: 50,
               ),
               Expanded(
                 child: Text(I18n.of(context).translate(this._bodyText)),

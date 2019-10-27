@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:rideal/screens/leaderboard/widgets/leaderboard_body.dart';
-import 'package:rideal/screens/leaderboard/widgets/leaderboard_entry.dart';
 import 'package:rideal/screens/leaderboard/widgets/leaderboard_filter.dart';
 import 'package:rideal/screens/leaderboard/widgets/leaderboard_header.dart';
 

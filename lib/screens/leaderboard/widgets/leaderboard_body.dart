@@ -14,12 +14,8 @@ class _LeaderboardBodyState extends State<LeaderboardBody> {
   Widget build(BuildContext context) {
     final List<String> users = <String>[
       "Jorge Nitales",
-      "Jorge Nitales",
-      "Jorge Nitales",
     ];
     final List<String> punctuations = <String>[
-      "15000",
-      "15000",
       "15000",
     ];
     return Container(
@@ -32,8 +28,8 @@ class _LeaderboardBodyState extends State<LeaderboardBody> {
               for (int index = 0; index < 20; index++)
                 LeaderboardEntry(
                     index: (index+1).toString(),
-                    userName: users[1],
-                    punctuation: punctuations[1])
+                    userName: users[0],
+                    punctuation: punctuations[0])
             ],
           ),
         ],

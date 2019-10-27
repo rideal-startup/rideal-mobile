@@ -11,7 +11,7 @@ class LeaderboardEntry extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Padding(
-            padding: const EdgeInsets.fromLTRB(0, 10, 0, 5),
+            padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
             child: Container(
               decoration: BoxDecoration(
                 color: Colors.grey[600],
