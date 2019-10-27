@@ -42,7 +42,7 @@ class FriendsListProfile extends StatelessWidget {
               ),
             ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                    padding: const EdgeInsets.fromLTRB(3, 3, 3, 3),
                     child: Icon(Icons.add, size: 40,color:Colors.grey[600]),
                   ),
               
