@@ -178,11 +178,7 @@ class _LineDetailScreenState extends State<LineDetailScreen> {
                   child: FloatingActionButton(
                     elevation: 0,
                     backgroundColor: Colors.transparent,
-                    onPressed: () => {Navigator.pop(
-                        context,
-                        MaterialPageRoute(builder: (context) => MyHomePage(index: 1,)),
-                      ),
-                    }
+                    onPressed: () => {Navigator.pop(context)}
                   ),
                 ),
               ),
