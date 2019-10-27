@@ -3,6 +3,8 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:rideal/screens/profile/widgets/profile_trophy_popup.dart';
+
 
 class ProfileTrophyEntry extends StatelessWidget {
   final String _name;
@@ -27,7 +29,12 @@ class ProfileTrophyEntry extends StatelessWidget {
               ),
               width: MediaQuery.of(context).size.width*0.95,
                 child: Row(children: <Widget>[
-                  
+                  /*TrophyPopUp(onFilterPress: () {
+                    setState(() {
+                      selectLine = false;
+                      showFilter = !showFilter;
+                    });
+                  }),*/
                   Padding(
                     padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
                     child: Icon(Icons.train, size: 40),
@@ -68,4 +75,6 @@ class ProfileTrophyEntry extends StatelessWidget {
           ),
     );
   }
+  
+  
 }
