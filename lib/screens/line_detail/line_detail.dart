@@ -136,7 +136,6 @@ class _LineDetailScreenState extends State<LineDetailScreen> {
                   Icon(Icons.monetization_on, size: 30, color: Colors.red[200]),
                 ],
                 onTap: (index) {
-                  print("GOTO " + index.toString());
                   switch(index) {
                     case 0:
                       Navigator.push(
