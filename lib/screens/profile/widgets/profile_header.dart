@@ -37,7 +37,7 @@ class ProfileHeader extends StatelessWidget {
                   fontStyle: FontStyle.italic,
                   fontFamily: 'Montserrat'),
             )),
-            Container(
+            /*Container(
                 height: 30.0,
                 width: 200,
                 child: Material(
@@ -55,7 +55,7 @@ class ProfileHeader extends StatelessWidget {
                       ),
                     ),
                   ),
-                )),
+                )),*/
           ],
         )
       ],

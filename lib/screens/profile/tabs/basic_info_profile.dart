@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rideal/screens/leaderboard/widgets/leaderboard_entry.dart';
+import 'package:rideal/screens/profile/widgets/profile_info_entry.dart';
 
 class BasicINfoProfile extends StatelessWidget {
 
@@ -17,24 +18,43 @@ class BasicINfoProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Expanded(
-      flex: 1,
       child: ListView(
         shrinkWrap: true,
         physics: AlwaysScrollableScrollPhysics(),
         children: <Widget>[
           Column(
             children: <Widget>[
-              for (int index = 0; index < users.length; index++)
-                LeaderboardEntry(
-                    index: (index+1).toString(),
-                    userName: users[index],
-                    punctuation: punctuations[index])
+              //first
+          ProfileInfoEntry(
+                    header: "E-mail",
+                    info: "harrydickinson@gmail.com",
+                    icon: Icons.email
+                    ),
+                    ProfileInfoEntry(
+                    header: "City",
+                    info: "Lleia",
+                    icon: Icons.location_city
+                    ),
+                    ProfileInfoEntry(
+                    header: "Score",
+                    info: "100",
+                    icon: Icons.score
+                    ),
+                    ProfileInfoEntry(
+                    header: "Mobile",
+                    info: "690987654",
+                    icon: Icons.phone_android
+                    ),
+                    ProfileInfoEntry(
+                    header: "Friends",
+                    info: "12",
+                    icon: Icons.people,
+                    ),   
             ],
           ),
         ],
       ),
-    ),
+    
     );
   }
 }

@@ -18,7 +18,10 @@ class ProfileBody extends StatelessWidget {
         child: Expanded(
           child: Scaffold(
             appBar: AppBar(
+              
               bottom: TabBar(
+                
+                isScrollable: true,
                 tabs: [
                   Tab(icon: Icon(Icons.person)),
                   Tab(icon: Icon(Icons.people)),
