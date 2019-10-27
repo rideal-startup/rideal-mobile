@@ -6,7 +6,7 @@ class BottomNavbar extends StatefulWidget {
   final int index;
   final Function callback;
 
-  BottomNavbar({this.index, this.callback});
+  BottomNavbar({this.callback, this.index});
 
   @override
   _BottomNavbarState createState() => _BottomNavbarState();
