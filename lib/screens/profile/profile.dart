@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:rideal/screens/profile/tabs/trophy_list_profile.dart';
 import 'package:rideal/screens/profile/widgets/profile_body.dart';
 import 'package:rideal/screens/profile/widgets/profile_header.dart';
 

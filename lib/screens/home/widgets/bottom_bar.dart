@@ -13,7 +13,6 @@ class BottomNavbar extends StatefulWidget {
 }
 
 class _BottomNavbarState extends State<BottomNavbar> {
-
   @override
   Widget build(BuildContext context) {
     return Container(
