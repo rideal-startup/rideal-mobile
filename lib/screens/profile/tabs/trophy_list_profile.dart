@@ -1,11 +1,13 @@
+// SecondScreen.dart
+
 import 'package:flutter/material.dart';
 
-class Testtab1 extends StatelessWidget {
+class TrophyListProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Center(
-        child: Text('Tab 1 Layout'),
+        child: Text('Tab 2 Layout'),
       ),
     );
   }

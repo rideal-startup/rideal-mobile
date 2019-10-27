@@ -1,8 +1,9 @@
 // main.dart
 
 import 'package:flutter/material.dart';
-import 'package:rideal/screens/profile/tabs/testtab1.dart';
-import 'package:rideal/screens/profile/tabs/testtab2.dart';
+import 'package:rideal/screens/profile/tabs/basic_info_profile.dart';
+import 'package:rideal/screens/profile/tabs/friends_list_profile.dart';
+import 'package:rideal/screens/profile/tabs/trophy_list_profile.dart';
 
 
 void main() {
@@ -13,22 +14,23 @@ class ProfileBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-        length: 2,
+        length: 3,
         child: Expanded(
           child: Scaffold(
             appBar: AppBar(
               bottom: TabBar(
                 tabs: [
-                  Tab(icon: Icon(Icons.directions_car)),
-                  Tab(icon: Icon(Icons.directions_transit))
+                  Tab(icon: Icon(Icons.person)),
+                  Tab(icon: Icon(Icons.people)),
+                  Tab(icon: Icon(Icons.monetization_on))
                 ],
               ),
-              title: Text('Flutter Tabs Example'),
             ),
             body: TabBarView(
               children: [
-              Testtab1(),
-              Testtab2(),
+              BasicINfoProfile(),
+              FriendsListProfile(),
+              TrophyListProfile(),
               ],
             ),
           ),

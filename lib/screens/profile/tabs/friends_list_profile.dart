@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-class Testtab2 extends StatelessWidget {
+class FriendsListProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
