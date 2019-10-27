@@ -15,6 +15,17 @@ help-centre: Centro de ayuda
 sign-out: Cerrar sesión
 language: Cambiar de idioma
 
+# Profile
+Complete: Completado
+E-mail: Correo
+City: Ciudad
+Score: Puntuación
+Mobile: Móvil
+Friends: Amigos
+Trophys: Trofeos
+Trophy: Trofeo
+Transports-rided: Transportes utilizados
+
 # Leaderboard
 # Leaderboard filter
 dropdown-national: Nacional

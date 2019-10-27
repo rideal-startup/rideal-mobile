@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:rideal/screens/profile/tabs/trophy_list_profile.dart';
+import 'package:rideal/screens/profile/widgets/profile_body.dart';
+import 'package:rideal/screens/profile/widgets/profile_header.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -8,6 +11,19 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(backgroundColor: Colors.blueAccent);
+
+      return Padding(
+      padding: const EdgeInsets.only(top: 30.0),
+      child: Column(
+        children: <Widget>[
+          ProfileHeader(),
+          ProfileBody(),
+          
+        ],
+      ),
+    );
+
   }
 }
+
+

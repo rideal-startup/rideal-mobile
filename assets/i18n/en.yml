@@ -15,6 +15,16 @@ help-centre: Help Centre
 sign-out: Sign Out
 language: Change language
 
+# Profile
+Complete: Complete
+E-mail: E-mail
+City: City
+Score: Score
+Mobile: Mobile
+Friends: Friends
+Trophys: Trophys
+Trophy: Trophy
+Transports-rided: Transports rided
 # Leaderboard
 # Leaderboard filter
 dropdown-national: National
