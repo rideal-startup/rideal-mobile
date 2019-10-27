@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rideal/screens/profile/widgets/profile_trophy_entry.dart';
+import 'package:rideal/services/i18n.dart';
 
 class TrophyListProfile extends StatelessWidget {
   @override
@@ -54,43 +55,43 @@ class TrophyListProfile extends StatelessWidget {
           ),
     ),
           ProfileTrophyEntry(
-                    name: "Trophy 1",
+                    name: (I18n.of(context).translate("Trophy")).toString()+" 1",
                     trophy_id:"124",
                     state:"Complete",
                     progress: 1.0,
                     ),
                     ProfileTrophyEntry(
-                    name: "Trophy 2",
+                    name: (I18n.of(context).translate("Trophy")).toString()+" 2",
                     trophy_id:"125",
                     state:"Complete",
                     progress: 1.0,
                     ),
                     ProfileTrophyEntry(
-                    name: "Trophy 3",
+                    name: (I18n.of(context).translate("Trophy")).toString()+" 3",
                     trophy_id:"126",
                     state:"Complete",
                     progress: 1.0,
                     ),
                     ProfileTrophyEntry(
-                    name: "Trophy 4",
+                    name: (I18n.of(context).translate("Trophy")).toString()+" 4",
                     trophy_id:"127",
                     state:"InProgress",
                     progress: 0.5,
                     ),
                     ProfileTrophyEntry(
-                    name: "Trophy 5",
+                    name: (I18n.of(context).translate("Trophy")).toString()+" 5",
                     trophy_id:"128",
                     state:"InProgress",
                     progress: 0.7,
                     ),
                     ProfileTrophyEntry(
-                    name: "Trophy 6",
+                    name: (I18n.of(context).translate("Trophy")).toString()+" 6",
                     trophy_id:"129",
                     state:"InProgress",
                     progress: 0.2,
                     ),
                     ProfileTrophyEntry(
-                    name: "Trophy 7",
+                    name: (I18n.of(context).translate("Trophy")).toString()+" 7",
                     trophy_id:"130",
                     state:"InProgress",
                     progress: 0.9,

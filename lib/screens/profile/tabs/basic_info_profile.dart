@@ -2,19 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rideal/screens/leaderboard/widgets/leaderboard_entry.dart';
 import 'package:rideal/screens/profile/widgets/profile_info_entry.dart';
+import 'package:rideal/services/i18n.dart';
 
 class BasicINfoProfile extends StatelessWidget {
-
-      final List<String> users = <String>[
-      "Jorge Nitales",
-      "Jorge Nitales",
-      "Jorge Nitales",
-    ];
-    final List<String> punctuations = <String>[
-      "15000",
-      "15000",
-      "15000",
-    ];
 
   @override
   Widget build(BuildContext context) {
@@ -27,37 +17,37 @@ class BasicINfoProfile extends StatelessWidget {
             children: <Widget>[
               //first
           ProfileInfoEntry(
-                    header: "E-mail",
+                    header: I18n.of(context).translate("E-mail"),
                     info: "harrydickinson@gmail.com",
                     icon: Icons.email
                     ),
                     ProfileInfoEntry(
-                    header: "City",
+                    header: I18n.of(context).translate("City"),
                     info: "Lleida",
                     icon: Icons.location_city
                     ),
                     ProfileInfoEntry(
-                    header: "Score",
+                    header: I18n.of(context).translate("Score"),
                     info: "100",
                     icon: Icons.score
                     ),
                     ProfileInfoEntry(
-                    header: "Mobile",
+                    header: I18n.of(context).translate("Mobile"),
                     info: "690987654",
                     icon: Icons.phone_android
                     ),
                     ProfileInfoEntry(
-                    header: "Friends",
+                    header: I18n.of(context).translate("Friends"),
                     info: "5",
                     icon: Icons.people,
                     ),
                     ProfileInfoEntry(
-                    header: "Trophys",
+                    header: I18n.of(context).translate("Trophys"),
                     info: "3",
                     icon: FontAwesomeIcons.award,
                     ), 
                     ProfileInfoEntry(
-                    header: "Transports rided",
+                    header: I18n.of(context).translate("Transports-rided"),
                     info: "43",
                     icon: Icons.train,
                     ),   

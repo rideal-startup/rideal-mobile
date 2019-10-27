@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:rideal/screens/profile/widgets/profile_trophy_popup.dart';
+import 'package:rideal/services/i18n.dart';
 
 
 class ProfileTrophyEntry extends StatelessWidget {
@@ -52,7 +53,7 @@ class ProfileTrophyEntry extends StatelessWidget {
                   if(_state=="Complete")
                     Padding(
                       padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
-                      child: Text("Complete"),
+                      child: Text(I18n.of(context).translate('Complete')),
                     ),
                   if(_state=="Complete")
                     Padding(
