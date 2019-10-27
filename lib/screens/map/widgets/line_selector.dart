@@ -6,7 +6,7 @@ import 'package:rideal/screens/line_detail/line_detail.dart';
 
 
 class LineSelector extends StatefulWidget {
-  bool show;
+  final bool show;
   final Stop stop;
 
   LineSelector({this.stop, this.show = false});

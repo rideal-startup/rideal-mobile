@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:rideal/screens/leaderboard/widgets/leaderboard_entry.dart';
 import 'package:rideal/screens/profile/widgets/profile_info_entry.dart';
 import 'package:rideal/services/i18n.dart';
 
