@@ -43,9 +43,10 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
   final String title;
+  final int index;
+
+  MyHomePage({Key key, this.title, this.index}) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -56,35 +57,39 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
   }
-
-  int index = 1;
+  
+  int localIndex = 1;
+  bool navigationMode = true;
 
   // [FeedScreen, MapScreen, LadeboardScreen]
   final screens = [FeedScreen(), MapScreen(), LeaderboardScreen(), Profile()];
 
   @override
   Widget build(BuildContext context) {
-    final currentScreen = screens[index];
+    this.localIndex = readIndex(this.navigationMode);
+    final currentScreen = screens[localIndex];
 
     return Scaffold(
-      
       bottomNavigationBar: Container(
           width: MediaQuery.of(context).size.width+(MediaQuery.of(context).size.width/4),
           child: CurvedNavigationBar(
-          color: Colors.grey[900],
-          index: index,
-          backgroundColor: Colors.transparent,
-          items: <Widget>[
-            Icon(Icons.supervised_user_circle,size: 30,color: Colors.pink[200]),
-            Icon(Icons.pin_drop, size: 30, color: Colors.pink[200]),
-            Icon(Icons.monetization_on, size: 30, color: Colors.pink[200]),
-            Icon(Icons.monetization_on, size: 30, color: Colors.red[200]),
-          ],
-          onTap: (index) {
-            print("ontap: ${this.index}");
-            this.setState(() {this.index = index; });
-          },
-        ),
+            color: Colors.grey[900],
+            index: localIndex,
+            backgroundColor: Colors.transparent,
+            items: <Widget>[
+              Icon(Icons.supervised_user_circle,size: 30,color: Colors.pink[200]),
+              Icon(Icons.pin_drop, size: 30, color: Colors.pink[200]),
+              Icon(Icons.monetization_on, size: 30, color: Colors.pink[200]),
+              Icon(Icons.monetization_on, size: 30, color: Colors.red[200]),
+            ],
+            onTap: (index) {
+              print("Pressing navbar: ${this.localIndex}");
+              this.setState(() {
+                this.navigationMode = false;
+                this.localIndex = index;
+              });
+            },
+          ),
       ),
       drawer: Drawer(
         // Add a ListView to the drawer. This ensures the user can scroll
@@ -102,9 +107,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   icon: Icon(Icons.people),
                   onPressed: () {
                     this.setState(() {
-                     this.setState(() {this.index = 3; });
+                     this.setState(() {this.localIndex = 3; });
                     });
-                    
                   },
                 ),
                 Text('Profile')
@@ -137,5 +141,12 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Container(child: currentScreen),
     );
+  }
+
+  int readIndex(bool navigationMode) {
+    if (widget.index != null && widget.index != this.localIndex && this.navigationMode) {
+      return widget.index;
+    }
+    return this.localIndex;
   }
 }

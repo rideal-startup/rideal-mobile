@@ -70,9 +70,8 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar>
   @override
   void didUpdateWidget(CurvedNavigationBar oldWidget) {
     super.didUpdateWidget(oldWidget);
+    print("Update found " + oldWidget.index.toString());
     //if (oldWidget.index != widget.index) {
-    print("Hola buttonTap ${widget.index}");
-
       //if(widget.index == 3){print("index 3 detected"); return;}
       final newPosition = widget.index / (_length);
       _startingPos = _pos;
@@ -163,7 +162,6 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar>
   }
 
   void _buttonTap(int index) {
-    print("Hola buttonTap $index");
     if (widget.onTap != null) {
       widget.onTap(index);
     }
@@ -174,5 +172,9 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar>
       _animationController.animateTo(newPosition,
           duration: widget.animationDuration, curve: widget.animationCurve);
     });
+  }
+
+  CurvedNavigationBarState getInstance() {
+    return this;
   }
 }

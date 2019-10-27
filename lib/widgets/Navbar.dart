@@ -23,7 +23,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 //         items: <Widget>[
 //           Icon(Icons.supervised_user_circle,size: 30,color: Colors.pink[200]),
 //           Icon(Icons.pin_drop, size: 30, color: Colors.pink[200]),
-          Icon(FontAwesomeIcons.award, size: 30, color: Colors.pink[200]),
+//           Icon(FontAwesomeIcons.award, size: 30, color: Colors.pink[200]),
 //           Icon(Icons.monetization_on, size: 30, color: Colors.red[200]),
 //         ],
 //         onTap: this.widget.callback,
