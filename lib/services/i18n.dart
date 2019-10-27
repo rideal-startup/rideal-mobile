@@ -1,19 +1,18 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:yaml/yaml.dart';
 
-class AppLocalizations {
+class I18n {
   final Locale locale;
 
-  AppLocalizations(this.locale);
+  I18n(this.locale);
 
   // Helper method to keep the code in the widgets concise
   // Localizations are accessed using an InheritedWidget "of" syntax
-  static AppLocalizations of(BuildContext context) {
-    return Localizations.of<AppLocalizations>(context, AppLocalizations);
+  static I18n of(BuildContext context) {
+    return Localizations.of<I18n>(context, I18n);
   }
 
   Map<String, String> _localizedStrings;
@@ -38,12 +37,12 @@ class AppLocalizations {
     return str;
   }
 
-  static const LocalizationsDelegate<AppLocalizations> delegate =
+  static const LocalizationsDelegate<I18n> delegate =
       _AppLocalizationsDelegate();
 }
 
 class _AppLocalizationsDelegate
-    extends LocalizationsDelegate<AppLocalizations> {
+    extends LocalizationsDelegate<I18n> {
   const _AppLocalizationsDelegate();
 
   @override
@@ -53,9 +52,9 @@ class _AppLocalizationsDelegate
   }
 
   @override
-  Future<AppLocalizations> load(Locale locale) async {
+  Future<I18n> load(Locale locale) async {
     // AppLocalizations class is where the JSON loading actually runs
-    AppLocalizations localizations = new AppLocalizations(locale);
+    I18n localizations = new I18n(locale);
     await localizations.load();
     return localizations;
   }

@@ -1,2 +1,44 @@
 welcome: Hola mi nombre es {{name}}
+
+# Utils
+search-hint: Buscar...
 loading: Cargando Rideal...
+close: Cerrar
+
+# Rideal buttons
+i-am-in: Estoy viajando!
+
+# Navbar strings
+profile: Perfil
+setting-privacy: Ajustes y privacidad
+help-centre: Centro de ayuda
+sign-out: Cerrar sesión
+language: Cambiar de idioma
+
+# Profile
+Complete: Completado
+E-mail: Correo
+City: Ciudad
+Score: Puntuación
+Mobile: Móvil
+Friends: Amigos
+Trophys: Trofeos
+Trophy: Trofeo
+Transports-rided: Transportes utilizados
+
+# Leaderboard
+# Leaderboard filter
+dropdown-national: Nacional
+dropdown-friends: Amigos
+ranking: Clasificación
+
+# Feed
+# Feed Achievements
+feed-achievement-first-time: Ha utilizado rideal por primera vez!
+feed-achievement-50km: Ha recorrido 50km con rideal!
+feed-achievement-100km: Ha recorrido 100km con rideal!
+feed-achievement-200km: Ha recorrido 200km con rideal!
+
+# Languages
+spanish: Español
+english: Inglés
