@@ -17,18 +17,20 @@ class ProfileBody extends StatelessWidget {
         length: 3,
         child: Expanded(
           child: Scaffold(
-            appBar: AppBar(
-              
-              bottom: TabBar(
-                
-                isScrollable: true,
-                tabs: [
-                  Tab(icon: Icon(Icons.person)),
-                  Tab(icon: Icon(Icons.people)),
-                  Tab(icon: Icon(Icons.monetization_on))
-                ],
+            appBar: PreferredSize(
+              preferredSize: Size.fromHeight(10),
+              child: AppBar(
+              flexibleSpace: Center(
+                child: TabBar(  
+                  isScrollable: true,
+                  tabs: [
+                    Tab(icon: Icon(Icons.person)),
+                    Tab(icon: Icon(Icons.people)),
+                    Tab(icon: Icon(Icons.monetization_on))
+                  ],
+                ),
               ),
-            ),
+            )),
             body: TabBarView(
               children: [
               BasicINfoProfile(),
