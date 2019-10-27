@@ -2,6 +2,7 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:rideal/screens/profile/widgets/profile_trophy_popup.dart';
 
@@ -36,8 +37,8 @@ class ProfileTrophyEntry extends StatelessWidget {
                     });
                   }),*/
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
-                    child: Icon(Icons.train, size: 40),
+                    padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
+                    child: Icon(FontAwesomeIcons.award, size: 35),
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
@@ -55,9 +56,9 @@ class ProfileTrophyEntry extends StatelessWidget {
                     ),
                   if(_state=="Complete")
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
+                      padding: const EdgeInsets.fromLTRB(5, 5, 7, 7),
                       child:
-                      Icon(Icons.assignment_turned_in, size: 30),
+                      Icon(FontAwesomeIcons.checkCircle, size: 30),
                     ),
                   if(_state=="InProgress")
                     Padding(padding: const EdgeInsets.fromLTRB(5, 5, 20, 5),

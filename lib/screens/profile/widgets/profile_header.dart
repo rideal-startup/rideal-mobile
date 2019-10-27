@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rideal/widgets/circle_image.dart';
 
 class ProfileHeader extends StatelessWidget {
   const ProfileHeader({
@@ -16,13 +17,12 @@ class ProfileHeader extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-                child: Icon(
-              Icons.account_circle,
-              size: 150,
-            )),
+                child: CircleImage('assets/images/profile.jpg'),
+              
+            ),
             Container(
               child: Text(
-                'Harry Dickinson',
+                'Guillermo Diaz',
                 style: TextStyle(
                     fontSize: 30.0,
                     fontWeight: FontWeight.bold,
@@ -31,7 +31,7 @@ class ProfileHeader extends StatelessWidget {
             ),
             Container(
                 child: Text(
-              '#harrydson',
+              '@willyrexYT',
               style: TextStyle(
                   fontSize: 17.0,
                   fontStyle: FontStyle.italic,
