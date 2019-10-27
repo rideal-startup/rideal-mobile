@@ -8,15 +8,28 @@ class LeaderboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 30.0),
-      child: Column(
-        children: <Widget>[
-          LeaderboardHeader(),
-          LeaderboardFilter(),
-          LeaderboardBody(),
-        ],
-      ),
+    return NestedScrollView(
+      headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) { 
+        return [
+          SliverAppBar(
+            pinned: false,
+            floating: true,
+            snap: true,
+            expandedHeight: 230,
+            flexibleSpace: FlexibleSpaceBar(
+              background: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  LeaderboardHeader(),
+                  LeaderboardFilter(),
+                ],
+              ),
+            ),
+            actions: <Widget>[],
+          ),
+        ];
+      },
+      body: LeaderboardBody(),
     );
   }
 }

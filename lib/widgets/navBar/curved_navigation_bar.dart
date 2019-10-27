@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
-import 'package:rideal/widgets/navBar/navBarSrc/nav_button.dart';
-import 'package:rideal/widgets/navBar/navBarSrc/nav_custom_painter.dart';
+import 'package:rideal/widgets/navbar/widgets/nav_button.dart';
+import 'package:rideal/widgets/navbar/widgets/nav_custom_painter.dart';
 
 class CurvedNavigationBar extends StatefulWidget {
   final List<Widget> items;
@@ -70,15 +70,11 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar>
   @override
   void didUpdateWidget(CurvedNavigationBar oldWidget) {
     super.didUpdateWidget(oldWidget);
-    print("Update found " + oldWidget.index.toString());
-    //if (oldWidget.index != widget.index) {
-      //if(widget.index == 3){print("index 3 detected"); return;}
-      final newPosition = widget.index / (_length);
-      _startingPos = _pos;
-      _endingIndex = widget.index;
-      _animationController.animateTo(newPosition,
-          duration: widget.animationDuration, curve: widget.animationCurve);
-    //}
+    final newPosition = widget.index / (_length);
+    _startingPos = _pos;
+    _endingIndex = widget.index;
+    _animationController.animateTo(newPosition,
+        duration: widget.animationDuration, curve: widget.animationCurve);
   }
 
   @override
@@ -165,6 +161,7 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar>
     if (widget.onTap != null) {
       widget.onTap(index);
     }
+
     final newPosition = index / _length;
     setState(() {
       _startingPos = _pos;

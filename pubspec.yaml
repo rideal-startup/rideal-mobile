@@ -26,11 +26,13 @@ dependencies:
     sdk: flutter
   
   yaml: ^2.2.0
+  percent_indicator: ^2.1.1 #progress bar
   google_maps_flutter: 0.5.21+8
   flutter_cupertino_localizations: ^1.0.1
   font_awesome_flutter: ^8.5.0
   location: ^2.3.5
   permission_handler: ^3.3.0
+  rxdart: ^0.22.4
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
@@ -54,6 +56,7 @@ flutter:
   assets:
     - assets/i18n/en.yml
     - assets/i18n/es.yml
+    - assets/images/profile.jpg
 
   fonts:
     - family: Montserrat

@@ -1,4 +1,43 @@
 welcome: Hello! My name is {{name}}
+
+# Utils
 search-hint: Search...
 loading: Loading Rideal...
+close: Close
+
+# Rideal Buttons
 i-am-in: I'm in!
+
+# Navbar strings
+profile: Profile
+setting-privacy: Settings & privacy
+help-centre: Help Centre
+sign-out: Sign Out
+language: Change language
+
+# Profile
+Complete: Complete
+E-mail: E-mail
+City: City
+Score: Score
+Mobile: Mobile
+Friends: Friends
+Trophys: Trophys
+Trophy: Trophy
+Transports-rided: Transports rided
+# Leaderboard
+# Leaderboard filter
+dropdown-national: National
+dropdown-friends: Friends
+ranking: Ranking
+
+# Feed
+# Feed Achievements
+feed-achievement-first-time: Has rided with rideal for first time!
+feed-achievement-50km: Has rided 50km with rideal!
+feed-achievement-100km: Has rided 100km with rideal!
+feed-achievement-200km: Has rided 200km with rideal!
+
+# Languages
+spanish: Spanish
+english: English

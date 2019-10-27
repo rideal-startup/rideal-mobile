@@ -14,27 +14,22 @@ class _LeaderboardBodyState extends State<LeaderboardBody> {
   Widget build(BuildContext context) {
     final List<String> users = <String>[
       "Jorge Nitales",
-      "Jorge Nitales",
-      "Jorge Nitales",
     ];
     final List<String> punctuations = <String>[
       "15000",
-      "15000",
-      "15000",
     ];
-    return Expanded(
-      flex: 1,
+    return Container(
       child: ListView(
         shrinkWrap: true,
         physics: AlwaysScrollableScrollPhysics(),
         children: <Widget>[
           Column(
             children: <Widget>[
-              for (int index = 0; index < users.length; index++)
+              for (int index = 0; index < 20; index++)
                 LeaderboardEntry(
                     index: (index+1).toString(),
-                    userName: users[index],
-                    punctuation: punctuations[index])
+                    userName: users[0],
+                    punctuation: punctuations[0])
             ],
           ),
         ],

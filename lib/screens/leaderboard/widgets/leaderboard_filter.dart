@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rideal/services/i18n.dart';
 
 class LeaderboardFilter extends StatefulWidget {
   LeaderboardFilter({Key key}) : super(key: key);
@@ -8,7 +9,7 @@ class LeaderboardFilter extends StatefulWidget {
 }
 
 class _LeaderboardFilterState extends State<LeaderboardFilter> {
-  String dropdownValue = 'National';
+  String dropdownValue = 'dropdown-national';
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class _LeaderboardFilterState extends State<LeaderboardFilter> {
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.fromLTRB(40, 0, 0, 5),
-          child: Text("Ranking"),
+          child: Text(I18n.of(context).translate('ranking')),
         ),
         Padding(
           padding: const EdgeInsets.fromLTRB(170, 0, 0, 5),
@@ -35,11 +36,11 @@ class _LeaderboardFilterState extends State<LeaderboardFilter> {
                 dropdownValue = newValue;
               });
             },
-            items: <String>["National", "Friends"]
+            items: <String>["dropdown-national", "dropdown-friends"]
                 .map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(
                 value: value,
-                child: Text(value),
+                child: Text(I18n.of(context).translate(value)),
               );
             }).toList(),
           ),

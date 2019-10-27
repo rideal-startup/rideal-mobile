@@ -1,6 +1,7 @@
 // main.dart
 
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rideal/screens/profile/tabs/basic_info_profile.dart';
 import 'package:rideal/screens/profile/tabs/friends_list_profile.dart';
 import 'package:rideal/screens/profile/tabs/trophy_list_profile.dart';
@@ -17,15 +18,20 @@ class ProfileBody extends StatelessWidget {
         length: 3,
         child: Expanded(
           child: Scaffold(
-            appBar: AppBar(
-              bottom: TabBar(
-                tabs: [
-                  Tab(icon: Icon(Icons.person)),
-                  Tab(icon: Icon(Icons.people)),
-                  Tab(icon: Icon(Icons.monetization_on))
-                ],
+            appBar: PreferredSize(
+              preferredSize: Size.fromHeight(10),
+              child: AppBar(
+              flexibleSpace: Center(
+                child: TabBar(  
+                  isScrollable: true,
+                  tabs: [
+                    Tab(icon: Icon(Icons.person)),
+                    Tab(icon: Icon(Icons.people)),
+                    Tab(icon: Icon(FontAwesomeIcons.award))
+                  ],
+                ),
               ),
-            ),
+            )),
             body: TabBarView(
               children: [
               BasicINfoProfile(),

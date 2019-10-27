@@ -2,11 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:rideal/screens/home/home.dart';
 import 'package:rideal/screens/line_detail/widgets/line_header.dart';
 import 'package:rideal/services/i18n.dart';
 import 'package:rideal/widgets/navBar/curved_navigation_bar.dart';
-
-import '../../main.dart';
 
 class LineDetailScreen extends StatefulWidget {
   @override
@@ -142,25 +141,25 @@ class _LineDetailScreenState extends State<LineDetailScreen> {
                     case 0:
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => MyHomePage(index: 0,)),
+                        MaterialPageRoute(builder: (context) => HomePage(index: 0,)),
                       );
                       break;
                     case 1:
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => MyHomePage(index: 1,)),
+                        MaterialPageRoute(builder: (context) => HomePage(index: 1,)),
                       );
                     break;
                     case 2:
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => MyHomePage(index: 2,)),
+                        MaterialPageRoute(builder: (context) => HomePage(index: 2,)),
                       );
                     break;
                     default:
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => MyHomePage(index: 1,)),
+                        MaterialPageRoute(builder: (context) => HomePage(index: 1,)),
                       );
                     }
                   },
