@@ -53,43 +53,43 @@ class FriendsListProfile extends StatelessWidget {
     ),
           ProfileFriendEntry(
                     name: "Juan Lasousa",
-                    user_id:"123",
+                    userId:"123",
                     state:"Pending",
                     icon: Icons.account_circle,
                     ),
                     ProfileFriendEntry(
                     name: "Paquito Palotes",
-                    user_id:"465",
+                    userId:"465",
                     state:"WaitingResponce",
                     icon: Icons.account_circle
                     ),
                     ProfileFriendEntry(
                     name: "Oscar Toxic",
-                    user_id:"221",
+                    userId:"221",
                     state:"Friend",
                     icon: Icons.account_circle
                     ),
                     ProfileFriendEntry(
                     name: "Adrian Mereira",
-                    user_id:"555",
+                    userId:"555",
                     state:"Friend",
                     icon: Icons.account_circle
                     ),
                     ProfileFriendEntry(
                     name: "Octavi Lopez",
-                    user_id:"567",
+                    userId:"567",
                     state:"Friend",
                     icon: Icons.account_circle,
                     ),
                     ProfileFriendEntry(
                     name: "Yuri Smirnof",
-                    user_id:"567",
+                    userId:"567",
                     state:"Friend",
                     icon: Icons.account_circle,
                     ),
                     ProfileFriendEntry(
                     name: "Vostok Smirnof",
-                    user_id:"567",
+                    userId:"567",
                     state:"Friend",
                     icon: Icons.account_circle,
                     ),    

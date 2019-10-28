@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 
 class ProfileFriendEntry extends StatelessWidget {
   final String _name;
-  final String _user_id;
+  final String _userId;
   final IconData _icon;
   final String _state;//Pending, Friend, WaitingResponce
 
-  const ProfileFriendEntry({Key key, icon, name, user_id, state}) : this._icon = icon, this._name = name, this._user_id = user_id,this._state=state, super(key: key);
+  const ProfileFriendEntry({Key key, icon, name, userId, state}) : this._icon = icon, this._name = name, this._userId = userId,this._state=state, super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class ProfileFriendEntry extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                    child: Text("#"+this._user_id),
+                    child: Text("#"+this._userId),
                   ),
                   Expanded(child: SizedBox()),
                   if(_state=="Friend")
