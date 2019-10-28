@@ -32,8 +32,7 @@ class _ProfileState extends State<Profile> {
             SliverPersistentHeader(
               delegate: SliverAppBarDelegate(
                 TabBar(
-                  // labelColor: Colors.black87,
-                  // unselectedLabelColor: Colors.grey,
+                  indicatorWeight: 4,
                   tabs: [
                     Tab(icon: Icon(Icons.person)),
                     Tab(icon: Icon(Icons.people)),
@@ -41,6 +40,7 @@ class _ProfileState extends State<Profile> {
                   ],
                 ),
               ),
+              floating: false,
               pinned: true,
             ),
           ];

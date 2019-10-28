@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:rideal/screens/home/home.dart';
 import 'package:rideal/screens/line_detail/widgets/line_header.dart';
+import 'package:rideal/screens/line_detail/widgets/suggestion.dart';
 import 'package:rideal/services/i18n.dart';
 import 'package:rideal/widgets/navBar/curved_navigation_bar.dart';
 
@@ -106,6 +107,7 @@ class _LineDetailScreenState extends State<LineDetailScreen> {
             ),
           ),
           LineHeader(),
+          Suggestion(),
           GestureDetector(
             onTap: () {
               setState(() {
