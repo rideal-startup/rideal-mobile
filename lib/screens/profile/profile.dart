@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:rideal/screens/profile/widgets/profile_body.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:rideal/screens/profile/tabs/basic_info_profile.dart';
+import 'package:rideal/screens/profile/tabs/friends_list_profile.dart';
+import 'package:rideal/screens/profile/tabs/trophy_list_profile.dart';
 import 'package:rideal/screens/profile/widgets/profile_header.dart';
+import 'package:rideal/utils.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -10,19 +14,45 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
-
-      return Padding(
-      padding: const EdgeInsets.only(top: 30.0),
-      child: Column(
-        children: <Widget>[
-          ProfileHeader(),
-          ProfileBody(),
-          
-        ],
+    return DefaultTabController(
+      length: 3,
+      child: NestedScrollView(
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return [
+            SliverAppBar(
+              pinned: false,
+              floating: true,
+              snap: true,
+              expandedHeight: 220,
+              flexibleSpace: FlexibleSpaceBar(
+                background: ProfileHeader(),
+              ),
+              actions: <Widget>[],
+            ),
+            SliverPersistentHeader(
+              delegate: SliverAppBarDelegate(
+                TabBar(
+                  // labelColor: Colors.black87,
+                  // unselectedLabelColor: Colors.grey,
+                  tabs: [
+                    Tab(icon: Icon(Icons.person)),
+                    Tab(icon: Icon(Icons.people)),
+                    Tab(icon: Icon(FontAwesomeIcons.award))
+                  ],
+                ),
+              ),
+              pinned: true,
+            ),
+          ];
+        },
+        body: TabBarView(
+          children: [
+            BasicINfoProfile(),
+            FriendsListProfile(),
+            TrophyListProfile(),
+          ],
+        ),
       ),
     );
-
   }
 }
-
-
