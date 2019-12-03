@@ -1,12 +1,16 @@
 import 'package:dio/dio.dart';
-import 'package:rideal/enviroment/eniroment.dart';
+import 'package:rideal/enviroment/enviroment.dart';
 
 class LineService {
   
+  final _baseUrl = "${Enviroment.apiBaseUrl}${Enviroment.linesUrl}";
   void getLinesByCity(String cityId) async {
     try {
       Response response = await Dio()
-      .get(Enviroment.apiBaseUrl + Enviroment.linesUrl + "/search/findByCity?city=/cities/" + '5dd043e25043225f571cc6ef');
+      .get(
+        this._baseUrl + '/search/findByCity',
+        queryParameters: { 'city': '/cities/$cityId'}
+      );
       print(response);
     } catch (e) {
       print(e);
