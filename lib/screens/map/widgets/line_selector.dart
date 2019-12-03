@@ -62,6 +62,7 @@ class _LineSelectorState extends State<LineSelector>
         crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.end,
+        // TODO: Get lines with an specific stop
         children: this.widget.stop.lines.map((l) {
           return Transform.translate(
             offset: Offset(offset, 0 ), 

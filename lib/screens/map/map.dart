@@ -32,7 +32,7 @@ class _MapScreenState extends State<MapScreen> {
   bool showFilter = false;
   bool selectLine = false;
   List<StopType> toShow = [
-    StopType.Bus, StopType.Metro, StopType.Tram
+    StopType.Bus, StopType.Metro, StopType.Train
   ];
 
   @override
@@ -42,21 +42,11 @@ class _MapScreenState extends State<MapScreen> {
         Stop(
         name: 'Pont de la Universitat',
         position: LatLng(41.609185325821, 0.6244279816746712),
-        lines: [
-          Line(color: Colors.orangeAccent, name: 'Linia 3', icon: FontAwesomeIcons.bus),
-          Line(color: Colors.blueGrey[600], name: 'Linia 6', icon: FontAwesomeIcons.bus),
-        ],
         onTap: _enableLineSelector,
       ),
       Stop(
         name: 'Pont de la Universitat',
         position: LatLng(41.60921465574387, 0.6248443946242332),
-        lines: [
-          Line(color: Colors.pink, name: 'Linia 2', icon: FontAwesomeIcons.bus),
-          Line(color: Colors.green, name: 'Linia 5', icon: FontAwesomeIcons.bus),
-          Line(color: Colors.blueGrey[600], name: 'Linia 6', icon: FontAwesomeIcons.bus),
-          Line(color: Colors.black, name: 'Linia 9', icon: FontAwesomeIcons.bus),
-        ],
         onTap: _enableLineSelector,
       ),
     ]);
@@ -91,8 +81,8 @@ class _MapScreenState extends State<MapScreen> {
             mapToolbarEnabled: false,
             onMapCreated: _onMapCreated,
             trafficEnabled: true,
-            markers: _stops
-                      .where((s) => toShow.contains(s.type))
+            markers: _stops // TODO
+                      .where((s) => toShow.contains(s))
                       .map((s) => s.marker)
                       .toSet(),
             myLocationEnabled: true,
