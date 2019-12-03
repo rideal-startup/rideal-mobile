@@ -9,6 +9,7 @@ import 'package:rideal/screens/map/widgets/filter.dart';
 import 'package:rideal/screens/map/widgets/line_selector.dart';
 import 'package:rideal/screens/map/widgets/search_bar.dart';
 import 'package:rideal/services/lines.service.dart';
+import 'package:rideal/services/cities.service.dart';
 
 
 // Reference: https://medium.com/flutter/google-maps-and-flutter-cfb330f9a245
@@ -19,12 +20,14 @@ class MapScreen extends StatefulWidget {
 
 class _MapScreenState extends State<MapScreen> {
   final LineService lineService = LineService();
+  final CitiesService citiesService = CitiesService();
   
   // Google Map variables
   Completer<GoogleMapController> _controller = Completer();
   final List<Stop> _stops = [];
   Stop selectedStop;
   final location = Location();
+  final currentCity = "";
   var currentLocation = LatLng(0, 0);
   var loadedMap = false;
 
@@ -37,7 +40,7 @@ class _MapScreenState extends State<MapScreen> {
 
   @override
   void initState() {
-    lineService.getLinesByCity('Lleida');
+    citiesService.getAllCities();
     _stops.addAll([
         Stop(
         name: 'Pont de la Universitat',
@@ -132,5 +135,16 @@ class _MapScreenState extends State<MapScreen> {
     selectLine = true;
     selectedStop = s;
     setState(() {});
+  }
+
+  void _findCurrentCity() {
+    location.getLocation().then((ld) {
+      // ld.latitude
+      // ld.longitude
+
+      
+      final List<String> citiesList = citiesService.getAllCities();
+      currentCity
+    });
   }
 }
