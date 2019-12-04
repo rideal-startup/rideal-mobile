@@ -107,7 +107,7 @@ class _LineSelectorState extends State<LineSelector>
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => LineDetailScreen()),
+                MaterialPageRoute(builder: (context) => LineDetailScreen(line: l)),
               );
             },
             child: Padding(
