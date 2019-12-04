@@ -39,7 +39,7 @@ class CitiesService {
   Future<City> findCurrentCity() async {
     final location = await this.location.getLocation();
     final latLngLocation = LatLng(location.latitude, 
-                                  location.latitude);
+                                  location.longitude);
     final cities = await this.getAllCities();
 
     double distance = 9999.9;

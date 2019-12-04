@@ -93,8 +93,6 @@ class _LineDetailScreenState extends State<LineDetailScreen> {
 
   void _createPolylines() {
     lineStops = this.widget.line.stops;
-    print("lineStops");
-    print(lineStops);
     _polylines.clear();
     _polylines.add(Polyline(
         jointType: JointType.round,
