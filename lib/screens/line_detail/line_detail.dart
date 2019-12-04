@@ -81,8 +81,8 @@ class _LineDetailScreenState extends State<LineDetailScreen> {
           markerId: MarkerId(stop.name.toString()),
           position: stop.position,
           infoWindow: InfoWindow(
-            title: 'Custom Marker',
-            snippet: 'Inducesmile.com',
+            title: stop.name,
+            snippet: stop.order.toString(),
           ),
         icon: BitmapDescriptor.defaultMarker,
         ));
