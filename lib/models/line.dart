@@ -10,7 +10,7 @@ class Line {
   final String id;
   final String name;
   final Color color;
-  final int length;
+  final double length;
   final String transportationMode;
   final String routeType;
   final List<Stop> stops;
@@ -34,8 +34,8 @@ class Line {
       color: HexColor.fromHex(json['color']),
       name: json['name'],
       id: json['id'],
-      stops: json['stops'].map((o) { return Stop.fromJson(o); }),
-      city: City.fromJson(json['city']),
+      stops: json['stops'].map<Stop>((o) { return Stop.fromJson(o); }).toList(),
+      city: json['city'] != null ?  City.fromJson(json['city']) : null,
       available: json['available'],
       onFreeDays: json['onFreeDays'],
       routeType: json['routeType'],

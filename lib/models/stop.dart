@@ -11,13 +11,11 @@ class Stop {
   final String name;
   final int order;
 
-  final Function onTap;
   final BitmapDescriptor bitmap;
 
   Stop({this.position, 
         this.order,
         this.name, 
-        this.onTap, 
         this.bitmap = BitmapDescriptor.defaultMarker });
 
   factory Stop.fromJson(Map<String, dynamic> json) {
@@ -28,18 +26,4 @@ class Stop {
     );
   }
 
-  Marker get marker {
-    return Marker(
-      position: position,
-      markerId: MarkerId(position.toString()),
-      infoWindow: InfoWindow(
-        title: name,
-      ),
-      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueMagenta),
-      onTap: () { 
-        if (onTap != null)
-          onTap(this); 
-      },
-    );
-  }
 }
