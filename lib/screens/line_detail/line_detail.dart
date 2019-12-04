@@ -131,8 +131,8 @@ class _LineDetailScreenState extends State<LineDetailScreen> {
               zoom: 14.0,
             ),
           ),
-          LineHeader(),
-          Suggestion(),
+          LineHeader(line: this.widget.line),
+          //Suggestion(),
           GestureDetector(
             onTap: () {
               setState(() {
