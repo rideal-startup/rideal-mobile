@@ -86,8 +86,7 @@ class _MapScreenState extends State<MapScreen> {
           onMapCreated: _onMapCreated,
           trafficEnabled: true,
           markers: _stops.values // TODO
-              // .where((s) => toShow.contains(s))
-              .map((s) => s.marker)
+              .map(_markerFromStop)
               .toSet(),
           myLocationEnabled: true,
           myLocationButtonEnabled: false,
@@ -148,5 +147,23 @@ class _MapScreenState extends State<MapScreen> {
     });
 
     return closeCity;
+  }
+
+  Marker _markerFromStop(Stop stop) {
+    return Marker(
+      position: stop.position,
+      markerId: MarkerId(stop.position.toString()),
+      infoWindow: InfoWindow(
+        title: stop.name,
+      ),
+      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueMagenta),
+      onTap: () async { 
+        this.selectedStop = stop;
+        this.selectLine = true;
+        setState(() {
+          
+        });
+      },
+    );
   }
 }

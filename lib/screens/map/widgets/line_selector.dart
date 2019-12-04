@@ -3,11 +3,14 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rideal/models/line.dart';
 import 'package:rideal/models/stop.dart';
 import 'package:rideal/screens/line_detail/line_detail.dart';
+import 'package:rideal/services/lines.service.dart';
 
 
 class LineSelector extends StatefulWidget {
+  LineService lineService = LineService();
   final bool show;
   final Stop stop;
+  List<Line> lines = [];
 
   LineSelector({this.stop, this.show = false});
 
@@ -38,8 +41,17 @@ class _LineSelectorState extends State<LineSelector>
   @override
   void didUpdateWidget(LineSelector oldWidget) {
     if (this.widget.show) {
-      _controller.reset();
-      _controller.forward();
+      print('widget.stop.name');
+      print(widget.stop.name);
+      widget.lineService.linesContaining(widget.stop).then((linesList){
+        
+        print("linesList: ");
+        print(linesList);
+        
+        widget.lines = linesList;
+        _controller.reset();
+       _controller.forward();
+      });
     }
     
     super.didUpdateWidget(oldWidget);
@@ -57,19 +69,19 @@ class _LineSelectorState extends State<LineSelector>
       return Container();
     
     return Container(
-      /*alignment: Alignment.bottomRight,
+      alignment: Alignment.bottomRight,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.end,
         // TODO: Get lines with an specific stop
-        children: this.widget.stop.lines.map((l) {
+        children: this.widget.lines.map((l) {
           return Transform.translate(
             offset: Offset(offset, 0 ), 
             child: _drawLine(l)
           );
         }).toList()
-      ), todo: uncomment*/
+      ),
     );
   }
 
