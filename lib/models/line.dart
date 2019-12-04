@@ -54,4 +54,17 @@ class Line {
     if (transportationMode == 'BUS')
       return FontAwesomeIcons.bus;
   }
+
+  get shortName {
+    var shortName = name;
+    
+    if (name.length > 25) {
+      shortName = shortName.substring(0, 25) + '...';
+    
+      if (name.endsWith('- EXT'))
+        shortName = 'EXT - ' + shortName;
+    }
+
+    return shortName;
+  }
 }

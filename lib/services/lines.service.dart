@@ -14,22 +14,20 @@ class LineService {
   // }
 
   Future<List<Line>> linesContaining(Stop stop) async {
-    final stopName = stop.name;//Uri.encodeFull(stop.name);
-    print("stop.name");
-    print(stop.name);
     Response response = await Dio()
       .get(
         this._baseUrl + '/containStop',
-        queryParameters: { 'stopName': '$stopName' }
+        queryParameters: { 'stopName': '${stop.name}' }
       );
       
     if(response.statusCode != 200){
       print(response);
     }
-    print(response.data.runtimeType);
-    final resBody = response.data;
 
-    return resBody.map<Line>((l) { return Line.fromJson(l); }).toList();
+    final resBody = response.data;
+    return resBody
+             .map<Line>((l) => Line.fromJson(l))
+          .  toList();
   }
 
   Future<List<Line>> getLinesByCity(String cityId) async {
@@ -45,12 +43,13 @@ class LineService {
       }
       
       final resBody = jsonDecode(response.data);
-      return resBody['_embedded']['lines'].map<Line>((l) { return Line.fromJson(l); }).toList();
+      return resBody['_embedded']['lines']
+              .map<Line>((l) => Line.fromJson(l))
+              .toList();
 
     } catch (e) {
       print(e);
       return null;
     }
   }
-  
 }
