@@ -2,27 +2,35 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:rideal/models/line.dart';
+import 'package:rideal/models/stop.dart';
 import 'package:rideal/screens/home/home.dart';
 import 'package:rideal/screens/line_detail/widgets/line_header.dart';
 import 'package:rideal/screens/line_detail/widgets/suggestion.dart';
 import 'package:rideal/services/i18n.dart';
+import 'package:rideal/services/lines.service.dart';
 import 'package:rideal/widgets/navBar/curved_navigation_bar.dart';
 
 class LineDetailScreen extends StatefulWidget {
+  final Line line;
+
+  const LineDetailScreen({Key key, this.line}) : super(key: key);
+
   @override
   _LineDetailScreenState createState() => _LineDetailScreenState();
 }
 
 class _LineDetailScreenState extends State<LineDetailScreen> {
+  LineService lineService = LineService();
   bool selected = false;
 
   Completer<GoogleMapController> _controller = Completer();
-  static const LatLng _center = const LatLng(45.521563, -122.677433);
+  LatLng _center;// = const LatLng(45.521563, -122.677433);
   final Set<Marker> _markers = {};
   final Set<Polyline> _polylines = {};
   LatLng _lastMapPosition;
 
-  List<LatLng> latlng = [
+  List<Stop> lineStops = [];/*[
     LatLng(45.521563, -122.677433),
     LatLng(45.521563, -122.607433),
     LatLng(45.510563, -122.609433),
@@ -32,11 +40,25 @@ class _LineDetailScreenState extends State<LineDetailScreen> {
     LatLng(45.470563, -122.750000),
     LatLng(45.570000, -122.750000),
     LatLng(45.521563, -122.677433),
-  ];
+  ];*/
 
   @override
   void initState() {
+    double focusResultLong = 0.0;
+    double focusResultLat = 0.0;
+    int numStops = 0;
+    this.widget.line.stops.forEach((stop){
+      focusResultLat += stop.position.latitude;
+      focusResultLong += stop.position.longitude;
+      numStops +=1;
+    });
+    if(numStops!=0){
+      _center = new LatLng(focusResultLat/numStops, focusResultLong/numStops);
+    }
+    
     _lastMapPosition = _center;
+    _createPolylines();
+    
     super.initState();
   }
 
@@ -53,11 +75,11 @@ class _LineDetailScreenState extends State<LineDetailScreen> {
     _controller.complete(controller);
 
     setState(() {
-      for (var marker in latlng) {
+      for (var stop in lineStops) {
         _markers.add( Marker(
           // This marker id can be anything that uniquely identifies each marker.
-          markerId: MarkerId(marker.toString()),
-          position: marker,
+          markerId: MarkerId(stop.name.toString()),
+          position: stop.position,
           infoWindow: InfoWindow(
             title: 'Custom Marker',
             snippet: 'Inducesmile.com',
@@ -70,6 +92,9 @@ class _LineDetailScreenState extends State<LineDetailScreen> {
   }
 
   void _createPolylines() {
+    lineStops = this.widget.line.stops;
+    print("lineStops");
+    print(lineStops);
     _polylines.clear();
     _polylines.add(Polyline(
         jointType: JointType.round,
@@ -77,7 +102,7 @@ class _LineDetailScreenState extends State<LineDetailScreen> {
         endCap: Cap.roundCap,
         polylineId: PolylineId(_lastMapPosition.toString()),
         visible: true,
-        points: latlng,
+        points: lineStops.map((s)=>s.position).toList(),
         color: !selected ? Colors.blue : Colors.green,
         width: 5,
       ));
@@ -97,13 +122,13 @@ class _LineDetailScreenState extends State<LineDetailScreen> {
             polylines: _polylines,
             onMapCreated: _onMapCreated,
             onCameraMove: _onCameraMove,
-            rotateGesturesEnabled: false,
-            scrollGesturesEnabled: false,
-            zoomGesturesEnabled: false,
+            //rotateGesturesEnabled: false,
+            //scrollGesturesEnabled: false,
+            //zoomGesturesEnabled: false,
             markers: _markers,
             initialCameraPosition: CameraPosition(
               target: _center,
-              zoom: 11.0,
+              zoom: 14.0,
             ),
           ),
           LineHeader(),
