@@ -6,7 +6,7 @@ import 'package:rideal/screens/line_detail/line_detail.dart';
 
 
 class LineSelector extends StatefulWidget {
-  bool show;
+  final bool show;
   final Stop stop;
 
   LineSelector({this.stop, this.show = false});
@@ -57,18 +57,19 @@ class _LineSelectorState extends State<LineSelector>
       return Container();
     
     return Container(
-      alignment: Alignment.bottomRight,
+      /*alignment: Alignment.bottomRight,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.end,
+        // TODO: Get lines with an specific stop
         children: this.widget.stop.lines.map((l) {
           return Transform.translate(
             offset: Offset(offset, 0 ), 
             child: _drawLine(l)
           );
         }).toList()
-      ),
+      ), todo: uncomment*/
     );
   }
 

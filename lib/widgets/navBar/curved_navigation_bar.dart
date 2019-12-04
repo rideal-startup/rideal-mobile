@@ -170,4 +170,8 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar>
           duration: widget.animationDuration, curve: widget.animationCurve);
     });
   }
+
+  CurvedNavigationBarState getInstance() {
+    return this;
+  }
 }

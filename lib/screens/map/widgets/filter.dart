@@ -48,7 +48,7 @@ class _PublicTransportEnablerState extends State<PublicTransportEnabler> {
 
 class FilterTransport extends StatelessWidget {
   final List<StopType> _toShow = [
-    StopType.Bus, StopType.Metro, StopType.Tram
+    StopType.Bus, StopType.Metro, StopType.Train
   ];
   final Function onChange;
 
@@ -77,7 +77,7 @@ class FilterTransport extends StatelessWidget {
           PublicTransportEnabler(
             FontAwesomeIcons.tram,
             onChange: (val) {
-              _updateToShow(StopType.Tram, val);
+              _updateToShow(StopType.Train, val);
             },
           ),
         ],

@@ -7,9 +7,10 @@ import 'package:rideal/screens/map/map.dart';
 import 'package:rideal/screens/profile/profile.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key key, this.title}) : super(key: key);
-
   final String title;
+  final int index;
+
+  HomePage({Key key, this.title, this.index}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -21,31 +22,41 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
-  int index = 1;
+  int localIndex = 1;
+  bool navigationMode = true;
 
   final screens = [FeedScreen(), MapScreen(), LeaderboardScreen(), Profile()];
 
   @override
   Widget build(BuildContext context) {
-    final currentScreen = screens[index];
+    this.localIndex = readIndex();
+    final currentScreen = screens[localIndex];
 
     return Scaffold(
       bottomNavigationBar: BottomNavbar(
-        index: index,
-        callback: (index) {
+        index: localIndex,
+        callback: (localIndex) {
           setState(() {
-            this.index = index;
+            this.navigationMode = false;
+            this.localIndex = localIndex;
           });
         },
       ),
       drawer: RidealDrawer(
         onProfileNavigation: () {
           setState(() {
-            index = 3;
+            localIndex = 3;
           });
         }
       ),
       body: Container(child: currentScreen),
     );
+  }
+
+  int readIndex() {
+    if (widget.index != null && widget.index != this.localIndex && this.navigationMode) {
+      return widget.index;
+    }
+    return this.localIndex;
   }
 }
