@@ -2,13 +2,16 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 import 'package:rideal/models/line.dart';
+import 'package:rideal/models/location_message.dart';
 import 'package:rideal/models/stop.dart';
 import 'package:rideal/screens/home/home.dart';
 import 'package:rideal/screens/line_detail/widgets/line_header.dart';
 import 'package:rideal/screens/line_detail/widgets/suggestion.dart';
 import 'package:rideal/services/i18n.dart';
 import 'package:rideal/services/lines.service.dart';
+import 'package:rideal/services/rabbit_mq.service.dart';
 import 'package:rideal/widgets/navBar/curved_navigation_bar.dart';
 
 class LineDetailScreen extends StatefulWidget {
@@ -21,54 +24,42 @@ class LineDetailScreen extends StatefulWidget {
 }
 
 class _LineDetailScreenState extends State<LineDetailScreen> {
-  LineService lineService = LineService();
+  // Services
+  final lineService = LineService();
+  final rabbitService = RabbitService();
+  final locationService = Location();
+
+  bool readyMap = false;
   bool selected = false;
 
   Completer<GoogleMapController> _controller = Completer();
-  LatLng _center;// = const LatLng(45.521563, -122.677433);
+  LatLng _center;
   final Set<Marker> _markers = {};
   final Set<Polyline> _polylines = {};
-  LatLng _lastMapPosition;
 
-  List<Stop> lineStops = [];/*[
-    LatLng(45.521563, -122.677433),
-    LatLng(45.521563, -122.607433),
-    LatLng(45.510563, -122.609433),
-    LatLng(45.500563, -122.624533),
-    LatLng(45.500563, -122.677433),
-    LatLng(45.470563, -122.700000),
-    LatLng(45.470563, -122.750000),
-    LatLng(45.570000, -122.750000),
-    LatLng(45.521563, -122.677433),
-  ];*/
+  List<Stop> lineStops = [];
 
   @override
   void initState() {
-    double focusResultLong = 0.0;
-    double focusResultLat = 0.0;
-    int numStops = 0;
-    this.widget.line.stops.forEach((stop){
-      focusResultLat += stop.position.latitude;
-      focusResultLong += stop.position.longitude;
-      numStops +=1;
-    });
-    if(numStops!=0){
-      _center = new LatLng(focusResultLat/numStops, focusResultLong/numStops);
-    }
-    
-    _lastMapPosition = _center;
+    _center = this.widget.line.location;
     _createPolylines();
     
+    Timer.periodic(Duration(seconds: 1), (_) async {
+      final pos = await locationService.getLocation();
+      rabbitService.publish(
+        LocationMessage(
+          lineId: this.widget.line.id,
+          lat: pos.latitude,
+          lng: pos.longitude,
+        )
+      );
+    });
     super.initState();
   }
 
   @override
   void dispose() {
     super.dispose();
-  }
-
-  void _onCameraMove(CameraPosition position) {
-    _lastMapPosition = position.target;
   }
 
   void _onMapCreated(GoogleMapController controller) {
@@ -81,8 +72,7 @@ class _LineDetailScreenState extends State<LineDetailScreen> {
           markerId: MarkerId(stop.name.toString()),
           position: stop.position,
           infoWindow: InfoWindow(
-            title: 'Custom Marker',
-            snippet: 'Inducesmile.com',
+            title: stop.name,
           ),
         icon: BitmapDescriptor.defaultMarker,
         ));
@@ -98,9 +88,9 @@ class _LineDetailScreenState extends State<LineDetailScreen> {
         jointType: JointType.round,
         startCap: Cap.roundCap,
         endCap: Cap.roundCap,
-        polylineId: PolylineId(_lastMapPosition.toString()),
+        polylineId: PolylineId('routes'),
         visible: true,
-        points: lineStops.map((s)=>s.position).toList(),
+        points: lineStops.map((s) => s.position).toList(),
         color: !selected ? Colors.blue : Colors.green,
         width: 5,
       ));
@@ -119,7 +109,6 @@ class _LineDetailScreenState extends State<LineDetailScreen> {
           GoogleMap(
             polylines: _polylines,
             onMapCreated: _onMapCreated,
-            onCameraMove: _onCameraMove,
             //rotateGesturesEnabled: false,
             //scrollGesturesEnabled: false,
             //zoomGesturesEnabled: false,

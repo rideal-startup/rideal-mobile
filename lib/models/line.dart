@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:rideal/models/stop.dart';
 import 'package:rideal/utils.dart';
 
@@ -66,5 +67,19 @@ class Line {
     }
 
     return shortName;
+  }
+
+  get location {
+    double focusResultLong = 0.0;
+    double focusResultLat = 0.0;
+    
+    stops.forEach((stop) {
+      focusResultLat += stop.position.latitude;
+      focusResultLong += stop.position.longitude;
+    });
+
+    return LatLng(
+      focusResultLat / stops.length, 
+      focusResultLong / stops.length);
   }
 }
