@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:rideal/enviroment/eniroment.dart';
+import 'package:rideal/enviroment/enviroment.dart';
 
 class LineService {
   
