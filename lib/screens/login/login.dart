@@ -13,6 +13,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   User user = User();
+  String dropdownValue = "/cities/5dd043e25043225f571cc6ef";
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
@@ -35,6 +36,12 @@ class _LoginPageState extends State<LoginPage> {
                 onSaved: (String username) {
                   user.username = username;
                 },
+                validator: (value) {
+                  if(value.isEmpty) {
+                    return "Please enter a username";
+                  }
+                  return null;
+                },
               ),
               new TextFormField(
                 keyboardType: TextInputType.text,
@@ -44,6 +51,12 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 onSaved: (String name) {
                   user.name = name;
+                },
+                validator: (value) {
+                  if(value.isEmpty) {
+                    return "Please enter a name";
+                  }
+                  return null;
                 },
               ),
               new TextFormField(
@@ -55,17 +68,29 @@ class _LoginPageState extends State<LoginPage> {
                 onSaved: (String surname) {
                   user.surname = surname;
                 },
+                validator: (value) {
+                  if(value.isEmpty) {
+                    return "Please enter a Surname";
+                  }
+                  return null;
+                },
               ),
               new DropdownButtonFormField(
                 items: Cities.cities.map(
                   (key,value) {
                     return MapEntry(
-                      value,
+                      key,
                       DropdownMenuItem<String>(
                         value: value,
                         child: Text(key),
                         ));
                   }).values.toList(),
+                value: dropdownValue,
+                onChanged: (String newValue) {
+                  setState(() {
+                    dropdownValue = newValue;
+                  });
+                },
                 onSaved: (String city) {
                   user.city = city;
                 },
@@ -79,6 +104,17 @@ class _LoginPageState extends State<LoginPage> {
                 onSaved: (String email) {
                   user.email = email;
                 },
+                validator: (value) {
+                  Pattern pattern =r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+                  RegExp regex = new RegExp(pattern);
+                  if(value.isEmpty) {
+                    return "Please enter an e-mail";
+                  }
+                  if (!regex.hasMatch(value)) {
+                    return 'Enter Valid Email';
+                  }
+                  return null;
+                },
               ),
               new TextFormField(
                 obscureText: true,
@@ -88,6 +124,15 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 onSaved: (String password) {
                   user.password = password;
+                },
+                validator: (value) {
+                  if(value.isEmpty) {
+                    return "Please enter a password";
+                  }
+                  if(value.length < 8) {
+                    return "Password is too short";
+                  }
+                  return null;
                 },
               ),
               new Container(
@@ -114,9 +159,11 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _submit() async {
-    _formKey.currentState.save();
-    LoginService loginService = new LoginService();
-    bool resp = await loginService.login(this.user);
-    print(resp);
+    if (_formKey.currentState.validate()) {
+      _formKey.currentState.save();
+      LoginService loginService = new LoginService();
+      bool resp = await loginService.login(this.user);
+      print(resp);
+    }
   }
 }
