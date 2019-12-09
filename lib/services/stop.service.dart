@@ -9,7 +9,6 @@ class StopService {
     contentType: 'application/json',
   ));
 
-  
   final baseUrl = '${Enviroment.apiBaseUrl}/stops';
 
   Future<List<Stop>> findStopsByNameLike(String name) async {

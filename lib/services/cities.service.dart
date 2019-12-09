@@ -21,7 +21,9 @@ class CitiesService {
       }
 
       final responseBody = jsonDecode(response.data)['_embedded']['cities'];
-      return responseBody.map<City>((l) => City.fromJson(l)).toList();
+      return responseBody
+              .map<City>((l) => City.fromJson(l))
+              .toList();
     } catch (e) {
       print(e);
       return null;

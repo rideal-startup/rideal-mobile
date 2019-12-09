@@ -1,9 +1,24 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:dart_amqp/dart_amqp.dart';
+import 'package:location/location.dart';
 import 'package:rideal/models/location_message.dart';
+
 
 class RabbitService {
   Client _client;
+  Timer _timer;
+  
+  final Location _locationService = Location();
+  static RabbitService _instance;
+  
+  // Singleton
+  static RabbitService get instance {
+    if (_instance != null) return _instance;
+    
+    _instance = RabbitService();
+    return _instance;  
+  }
 
   // Lazy client
   Client get client {
@@ -27,5 +42,26 @@ class RabbitService {
     final queue = await channel.queue("hello", durable: true);
     print(" [x] Sent Message");
     queue.publish(jsonMsg);
+  }
+
+  void sendLocationEvery({final Duration duration, final String lineId}) {
+    _timer = Timer.periodic(Duration(seconds: 1), (_) async {
+      final pos = await _locationService.getLocation();
+      publish(
+        LocationMessage(
+          lineId: lineId,
+          lat: pos.latitude,
+          lng: pos.longitude,
+        )
+      );
+    });
+  }
+
+  void stopTransmission() {
+    if (_timer != null)
+      this._timer.cancel();
+    else
+      print('[WARN] Timer was not stopped because it was null');
+    this._client = null;
   }
 }

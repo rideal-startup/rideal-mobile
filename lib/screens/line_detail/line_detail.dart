@@ -7,6 +7,7 @@ import 'package:rideal/models/line.dart';
 import 'package:rideal/models/location_message.dart';
 import 'package:rideal/models/stop.dart';
 import 'package:rideal/screens/home/home.dart';
+import 'package:rideal/screens/line_detail/widgets/bottom_button.dart';
 import 'package:rideal/screens/line_detail/widgets/line_header.dart';
 import 'package:rideal/screens/line_detail/widgets/suggestion.dart';
 import 'package:rideal/services/i18n.dart';
@@ -26,14 +27,13 @@ class LineDetailScreen extends StatefulWidget {
 class _LineDetailScreenState extends State<LineDetailScreen> {
   // Services
   final lineService = LineService();
-  final rabbitService = RabbitService();
+  final rabbitService = RabbitService.instance;
   final locationService = Location();
 
   bool readyMap = false;
   bool selected = false;
 
   Completer<GoogleMapController> _controller = Completer();
-  LatLng _center;
   final Set<Marker> _markers = {};
   final Set<Polyline> _polylines = {};
 
@@ -41,24 +41,17 @@ class _LineDetailScreenState extends State<LineDetailScreen> {
 
   @override
   void initState() {
-    _center = this.widget.line.location;
+    rabbitService.sendLocationEvery(
+      duration: Duration(seconds: 1), 
+      lineId: this.widget.line.id
+    );
     _createPolylines();
-    
-    Timer.periodic(Duration(seconds: 1), (_) async {
-      final pos = await locationService.getLocation();
-      rabbitService.publish(
-        LocationMessage(
-          lineId: this.widget.line.id,
-          lat: pos.latitude,
-          lng: pos.longitude,
-        )
-      );
-    });
     super.initState();
   }
 
   @override
   void dispose() {
+    this.rabbitService.stopTransmission();
     super.dispose();
   }
 
@@ -109,33 +102,16 @@ class _LineDetailScreenState extends State<LineDetailScreen> {
           GoogleMap(
             polylines: _polylines,
             onMapCreated: _onMapCreated,
-            //rotateGesturesEnabled: false,
-            //scrollGesturesEnabled: false,
-            //zoomGesturesEnabled: false,
             markers: _markers,
             initialCameraPosition: CameraPosition(
-              target: _center,
+              target: this.widget.line.location,
               zoom: 14.0,
             ),
           ),
           LineHeader(),
           Suggestion(),
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                selected = !selected;
-                _createPolylines();
-              });
-            },
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: <Widget>[
-                _imInButton(),
-                _ridealingButton()
-              ],
-            ),
-          ),
+          RidealingButton(onTap: _createPolylines,),
+          
           Positioned(
             child: Align(
               alignment: FractionalOffset.bottomCenter,
@@ -150,32 +126,11 @@ class _LineDetailScreenState extends State<LineDetailScreen> {
                   Icon(Icons.monetization_on, size: 30, color: Colors.red[200]),
                 ],
                 onTap: (index) {
-                  switch(index) {
-                    case 0:
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => HomePage(index: 0,)),
-                      );
-                      break;
-                    case 1:
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => HomePage(index: 1,)),
-                      );
-                    break;
-                    case 2:
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => HomePage(index: 2,)),
-                      );
-                    break;
-                    default:
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => HomePage(index: 1,)),
-                      );
-                    }
-                  },
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => HomePage(index: 0,)),
+                  );
+                }
               ),
             ),
           ),
@@ -198,52 +153,6 @@ class _LineDetailScreenState extends State<LineDetailScreen> {
           ),
         ],
       )
-    );
-  }
-
-  Widget _imInButton() {
-    return AnimatedContainer(
-      height: selected ? 000.0 : 125.0,
-      color: selected ? Colors.green : Colors.blue,
-      alignment: 
-        selected ? Alignment.center : AlignmentDirectional.topCenter,
-        duration: Duration(seconds: 2),
-        curve: Curves.fastOutSlowIn,
-        child: Padding(
-          padding: const EdgeInsets.only(top: 22.5),
-          child: Text(
-            I18n.of(context).translate('i-am-in'),
-            textAlign: TextAlign.center,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold
-            ),
-          ),
-        ),
-    );
-  }
-
-  Widget _ridealingButton() {
-    return AnimatedContainer(
-      height: selected ? 125.0 : 0.0,
-      color: selected ? Colors.green : Colors.blue,
-      alignment:
-      selected ? Alignment.topCenter : AlignmentDirectional.topCenter,
-      duration: Duration(seconds: 2),
-      curve: Curves.fastOutSlowIn,
-      child: Padding(
-        padding: const EdgeInsets.only(top: 22.5),
-        child: Text(
-          "Ridealing!",
-          textAlign: TextAlign.center,
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold
-          ),
-        ),
-      ),
     );
   }
 }
