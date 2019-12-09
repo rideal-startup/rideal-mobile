@@ -3,13 +3,21 @@ import 'package:rideal/services/i18n.dart';
 
 class SearchBar extends StatefulWidget {
   final Function onFilterPress;
+  final Function onTextUpdate;
+  final TextEditingController controller;
 
-  const SearchBar({Key key, this.onFilterPress}) : super(key: key);
+  const SearchBar({
+    Key key, 
+    this.onFilterPress,
+    this.onTextUpdate,
+    this.controller}) : super(key: key);
+
   @override
   _SearchBarState createState() => _SearchBarState();
 }
 
 class _SearchBarState extends State<SearchBar> {
+  
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -28,8 +36,11 @@ class _SearchBarState extends State<SearchBar> {
             ),
             Expanded(
               child: TextField(
+                controller: widget.controller,
+                textCapitalization: TextCapitalization.characters,
                 cursorColor: Colors.white,
                 keyboardType: TextInputType.text,
+                onChanged: this.widget.onTextUpdate,
                 textInputAction: TextInputAction.go,
                 decoration: InputDecoration(
                     border: InputBorder.none,

@@ -41,13 +41,7 @@ class _LineSelectorState extends State<LineSelector>
   @override
   void didUpdateWidget(LineSelector oldWidget) {
     if (this.widget.show) {
-      print('widget.stop.name');
-      print(widget.stop.name);
-      widget.lineService.linesContaining(widget.stop).then((linesList){
-        
-        print("linesList: ");
-        print(linesList);
-        
+      widget.lineService.linesContaining(widget.stop).then((linesList) {
         widget.lines = linesList;
         _controller.reset();
        _controller.forward();
@@ -87,6 +81,7 @@ class _LineSelectorState extends State<LineSelector>
 
 
   Widget _drawLine(Line l) {
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(
@@ -99,7 +94,7 @@ class _LineSelectorState extends State<LineSelector>
               color: Colors.black38,
             ),
             child: Text(
-              l.name, 
+              l.shortName, 
               style: TextStyle(
                 fontWeight: FontWeight.bold, 
                 color: Colors.white, 
