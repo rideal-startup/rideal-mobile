@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rideal/models/user.dart';
-import 'package:rideal/services/login.service.dart';
 import 'package:rideal/enviroment/cities.dart';
+import 'package:rideal/services/sign_in_up.service.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -161,9 +161,11 @@ class _LoginPageState extends State<LoginPage> {
   void _submit() async {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
-      LoginService loginService = new LoginService();
-      bool resp = await loginService.login(this.user);
-      print(resp);
+      SignInUpService loginService = new SignInUpService();
+      bool signUpResp = await loginService.signUp(this.user);
+      print(signUpResp);
+      bool logInRespo = await loginService.login(this.user);
+      print(logInRespo);
     }
   }
 }

@@ -22,7 +22,7 @@ class User {
     return {
       'username': this.username, 
       'name': this.name,
-      'surname': this.username,
+      'surname': this.surname,
       'city': this.city,
       'email': this.email,
       'password': this.password };
