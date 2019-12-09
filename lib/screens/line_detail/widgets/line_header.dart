@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:rideal/models/line.dart';
+
+
 
 class LineHeader extends StatelessWidget {
+  final Line line;
+  const LineHeader({Key key, this.line}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Align(
@@ -21,11 +26,11 @@ class LineHeader extends StatelessWidget {
                     Column(
                       children: <Widget>[
                         Text(
-                          'Barcelona',
+                          this.line?.city?.name,//'Barcelona',
                           style: TextStyle(fontSize: 24),
                         ),
                         Text(
-                          'La Rambla',
+                          this.line?.name,//'La Rambla',
                           style: TextStyle(fontSize: 15),
                         )
                       ],
@@ -34,7 +39,7 @@ class LineHeader extends StatelessWidget {
                       backgroundColor: Colors.orangeAccent,
                       foregroundColor: Colors.indigo,
                       child: Text(
-                        'L2',
+                         this.line?.name?.substring(0,2),// TODO: FIND LINE NUMBER'L2',
                         style: TextStyle(fontSize: 20),
                       ),
                     ),
