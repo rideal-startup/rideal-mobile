@@ -73,6 +73,9 @@ class _LineDetailScreenState extends State<LineDetailScreen> {
           position: stop.position,
           infoWindow: InfoWindow(
             title: stop.name,
+            //si no tire borra la linia de devall
+            snippet: stop.order.toString(),
+
           ),
         icon: BitmapDescriptor.defaultMarker,
         ));
@@ -118,8 +121,8 @@ class _LineDetailScreenState extends State<LineDetailScreen> {
               zoom: 14.0,
             ),
           ),
-          LineHeader(),
-          Suggestion(),
+          LineHeader(line: this.widget.line),
+          //Suggestion(),
           GestureDetector(
             onTap: () {
               setState(() {
