@@ -25,17 +25,23 @@ class _PublicTransportEnablerState extends State<PublicTransportEnabler> {
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Row(
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                child: Icon(this.widget.icon, size: 30,),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                  child: Icon(
+                    this.widget.icon,
+                    size: 30,
+                  ),
+                ),
               ),
               Switch(
                 value: enabled,
                 activeColor: Colors.pink[200],
                 onChanged: (val) {
-                  setState(() { this.enabled = val; });
-                  if (this.widget.onChange != null) 
-                    this.widget.onChange(val);
+                  setState(() {
+                    this.enabled = val;
+                  });
+                  if (this.widget.onChange != null) this.widget.onChange(val);
                 },
               )
             ],
@@ -86,11 +92,11 @@ class FilterTransport extends StatelessWidget {
   }
 
   void _updateToShow(StopType type, bool val) {
-    if (!val) 
+    if (!val)
       _toShow.remove(type);
-    else 
+    else
       _toShow.add(type);
-    
+
     onChange(_toShow);
   }
 }
