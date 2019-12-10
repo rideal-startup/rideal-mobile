@@ -5,6 +5,7 @@ import 'package:rideal/screens/home/widgets/rideal_drawer.dart';
 import 'package:rideal/screens/leaderboard/leaderboard_screen.dart';
 import 'package:rideal/screens/map/map.dart';
 import 'package:rideal/screens/profile/profile.dart';
+import 'package:rideal/services/users.service.dart';
 
 class HomePage extends StatefulWidget {
   final String title;
@@ -21,6 +22,8 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
   }
+
+  
 
   int localIndex = 1;
   bool navigationMode = true;

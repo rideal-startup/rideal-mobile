@@ -1,3 +1,5 @@
+import 'package:rideal/models/city.dart';
+
 class User {
   String username;
   String name;
@@ -26,5 +28,18 @@ class User {
       'city': this.city,
       'email': this.email,
       'password': this.password };
+  }
+
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      username: json['username'],
+      name: json['name'],
+      surname: json['surname'],
+      city: json['city'] != null ?  City.fromJson(json['city']).name : null,
+      email: json['email'],
+      points: json['points'],
+      friends: json['friends'].map<User>((o) { return User.fromJson(o); }).toList(),
+      password: json['password']
+    );
   }
 }
