@@ -4,14 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:rideal/models/line.dart';
-import 'package:rideal/models/location_message.dart';
 import 'package:rideal/models/stop.dart';
 import 'package:rideal/screens/home/home.dart';
 import 'package:rideal/screens/line_detail/widgets/bottom_button.dart';
 import 'package:rideal/screens/line_detail/widgets/line_header.dart';
 import 'package:rideal/screens/line_detail/widgets/suggestion.dart';
-import 'package:rideal/services/i18n.dart';
 import 'package:rideal/services/lines.service.dart';
+import 'package:rideal/services/location_ws.service.dart';
 import 'package:rideal/services/rabbit_mq.service.dart';
 import 'package:rideal/widgets/navBar/curved_navigation_bar.dart';
 
@@ -29,6 +28,7 @@ class _LineDetailScreenState extends State<LineDetailScreen> {
   final lineService = LineService();
   final rabbitService = RabbitService.instance;
   final locationService = Location();
+  final wsLocationService = RealTimeLocationWS();
 
   bool readyMap = false;
   bool selected = false;
@@ -38,12 +38,15 @@ class _LineDetailScreenState extends State<LineDetailScreen> {
   final Set<Polyline> _polylines = {};
 
   List<Stop> lineStops = [];
+  StreamSubscription _subscription;
 
   @override
   void initState() {
-    rabbitService.sendLocationEvery(
-      duration: Duration(seconds: 1), 
-      lineId: this.widget.line.id
+    wsLocationService.subscribeToLine(
+      lineId: this.widget.line.id,
+      onRecieve: (msg) {
+        print(msg.lineId);
+      }
     );
     _createPolylines();
     super.initState();
@@ -51,6 +54,10 @@ class _LineDetailScreenState extends State<LineDetailScreen> {
 
   @override
   void dispose() {
+    // wsLocationService.channel.then((channel) {
+    //   channel.unsubscribe(this.widget.line.id);
+    // });
+
     this.rabbitService.stopTransmission();
     super.dispose();
   }
@@ -113,8 +120,7 @@ class _LineDetailScreenState extends State<LineDetailScreen> {
           ),
           LineHeader(line: this.widget.line),
           Suggestion(),
-          RidealingButton(onTap: _createPolylines,),
-          
+          RidealingButton(onTap: this._triggerSelect),
           Positioned(
             child: Align(
               alignment: FractionalOffset.bottomCenter,
@@ -137,25 +143,21 @@ class _LineDetailScreenState extends State<LineDetailScreen> {
               ),
             ),
           ),
-          Positioned(
-            child: Padding(
-              padding: const EdgeInsets.only(bottom:11.0),
-              child: Align(
-                alignment: FractionalOffset.bottomCenter,
-                child: Container(
-                  width: 50,
-                  height: 50,
-                  child: FloatingActionButton(
-                    elevation: 0,
-                    backgroundColor: Colors.transparent,
-                    onPressed: () => {Navigator.pop(context)}
-                  ),
-                ),
-              ),
-            ),
-          ),
         ],
       )
     );
+  }
+
+  void _triggerSelect() {
+    this.selected = !this.selected;
+    _createPolylines();
+
+    if (selected)
+      rabbitService.sendLocationEvery(
+        duration: Duration(seconds: 1), 
+        lineId: this.widget.line.id
+      );
+    else 
+      rabbitService.stopTransmission();
   }
 }
