@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:rideal/models/line.dart';
+import 'package:rideal/models/location_message.dart';
 import 'package:rideal/models/stop.dart';
 import 'package:rideal/screens/home/home.dart';
 import 'package:rideal/screens/line_detail/widgets/bottom_button.dart';
@@ -28,7 +29,7 @@ class _LineDetailScreenState extends State<LineDetailScreen> {
   final lineService = LineService();
   final rabbitService = RabbitService.instance;
   final locationService = Location();
-  final wsLocationService = RealTimeLocationWS();
+  final wsLocationService = RealTimeLocation();
 
   bool readyMap = false;
   bool selected = false;
@@ -38,26 +39,36 @@ class _LineDetailScreenState extends State<LineDetailScreen> {
   final Set<Polyline> _polylines = {};
 
   List<Stop> lineStops = [];
-  StreamSubscription _subscription;
+  LocationMessage lm;
 
   @override
   void initState() {
+
     wsLocationService.subscribeToLine(
       lineId: this.widget.line.id,
-      onRecieve: (msg) {
-        print(msg.lineId);
+      onMessage: (msg) async {
+        final bitmap = await BitmapDescriptor.fromAssetImage(
+          ImageConfiguration(size: Size(5, 5)), 'assets/images/medal.png');
+        if (lm != null && msg.timestamp != lm.timestamp) {
+          setState(() {
+            _markers.add(Marker(
+              position: msg.location,
+              markerId: MarkerId('current-loc'),
+              icon: bitmap,
+              infoWindow: InfoWindow(title: 'Line location')
+            ));
+          });
+        }
+        lm = msg;
       }
     );
+
     _createPolylines();
     super.initState();
   }
 
   @override
   void dispose() {
-    // wsLocationService.channel.then((channel) {
-    //   channel.unsubscribe(this.widget.line.id);
-    // });
-
     this.rabbitService.stopTransmission();
     super.dispose();
   }
@@ -67,7 +78,7 @@ class _LineDetailScreenState extends State<LineDetailScreen> {
 
     setState(() {
       for (var stop in lineStops) {
-        _markers.add( Marker(
+        _markers.add(Marker(
           // This marker id can be anything that uniquely identifies each marker.
           markerId: MarkerId(stop.name.toString()),
           position: stop.position,
@@ -75,7 +86,6 @@ class _LineDetailScreenState extends State<LineDetailScreen> {
             title: stop.name,
             //si no tire borra la linia de devall
             snippet: stop.order.toString(),
-
           ),
         icon: BitmapDescriptor.defaultMarker,
         ));
@@ -119,7 +129,7 @@ class _LineDetailScreenState extends State<LineDetailScreen> {
             ),
           ),
           LineHeader(line: this.widget.line),
-          Suggestion(),
+          // Suggestion(),
           RidealingButton(onTap: this._triggerSelect),
           Positioned(
             child: Align(

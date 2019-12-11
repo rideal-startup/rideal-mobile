@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1022392575918",
+    "firebase_url": "https://rideal-startup.firebaseio.com",
+    "project_id": "rideal-startup",
+    "storage_bucket": "rideal-startup.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1022392575918:android:bf322e82f6ce5810e78a3f",
+        "android_client_info": {
+          "package_name": "com.example.rideal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1022392575918-8va50htev24sp07p2mg3ahqsqeob8g9k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbllIL4heKyD3-hRogSQdjqI2M1YPpZFE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1022392575918-8va50htev24sp07p2mg3ahqsqeob8g9k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

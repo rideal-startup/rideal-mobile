@@ -83,6 +83,7 @@ class _MapScreenState extends State<MapScreen> {
 
     return Container(
       child: Stack(
+      overflow: Overflow.visible,
       children: <Widget>[
         GoogleMap(
           compassEnabled: false,

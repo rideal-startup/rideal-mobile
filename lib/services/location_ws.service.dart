@@ -1,35 +1,18 @@
-import 'dart:async';
-
-import 'package:rideal/enviroment/enviroment.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rideal/models/location_message.dart';
-import 'package:web_socket_channel/io.dart';
 
+class RealTimeLocation {
+  final db  = Firestore.instance;
 
-class RealTimeLocationWS {
-  final socketUrl = Enviroment.apiBaseUrl
-                      .replaceFirst('https', 'ws')
-                      .replaceFirst('/api', '/socket');
-
-  IOWebSocketChannel _channel; 
-  
-  IOWebSocketChannel get channel {
-    if (_channel != null) return _channel;
-    print('Socket ' + socketUrl);
-    _channel = IOWebSocketChannel.connect(socketUrl + '/chat', headers: {
-      'Upgrade': 'websocket',
-      'Connection': 'upgrade',
-      "Content-Length": 0
-    });
-    return _channel;
-  }
-
-  void subscribeToLine({String lineId, Function onRecieve}) async {
-    final cChannel = this.channel;
-
-    cChannel.stream.listen((msg) {
-      final message = LocationMessage.fromJson(msg);
-      if (message.lineId == lineId)
-        onRecieve(message);
-    });
+  void subscribeToLine({String lineId, Function onMessage}) {
+    this.db
+      .collection('lines-location')
+      .document(lineId)
+      .snapshots()
+      .listen((msg) {
+        final data = LocationMessage.fromJson(msg.data);
+        onMessage(data);
+      });
   }
 }
+

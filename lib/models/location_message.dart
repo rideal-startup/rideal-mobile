@@ -1,16 +1,16 @@
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+
 class LocationMessage {
   final String lineId;
-  final double lat;
-  final double lng;
+  final LatLng location;
   final int timestamp;
 
-  LocationMessage({this.lineId, this.lat, this.lng}) : 
+  LocationMessage({this.lineId, this.location}) : 
     this.timestamp = new DateTime.now().millisecondsSinceEpoch;
 
   factory LocationMessage.fromJson(Map<String, dynamic> json) {
     return LocationMessage(
-      lng: json['lng'],
-      lat: json['lat'], 
+      location: LatLng(json['lat'], json['lng']),
       lineId: json['lineId']
     );
   }
@@ -18,8 +18,8 @@ class LocationMessage {
   Map<String, dynamic> toJson() {
     return {
       'lineId': this.lineId,
-      'lat': this.lat,
-      'lng': this.lng,
+      'lat': this.location.latitude,
+      'lng': this.location.longitude,
       'timestamp': this.timestamp
     };
   }
