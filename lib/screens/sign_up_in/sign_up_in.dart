@@ -17,6 +17,7 @@ class _SignUpInPageState extends State<SignUpInPage> {
     return new Scaffold(
       appBar: new AppBar(
         title: new Text('Welcome to Rideal!'),
+        centerTitle: true,
       ),
       body: Container(
         padding: new EdgeInsets.all(20.0),

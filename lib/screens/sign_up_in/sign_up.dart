@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rideal/models/user.dart';
 import 'package:rideal/enviroment/cities.dart';
 import 'package:rideal/screens/loading/loading.dart';
+import 'package:rideal/screens/sign_up_in/sign_up_in.dart';
 import 'package:rideal/services/sign_in_up.service.dart';
 import 'package:rideal/utils.dart';
 
@@ -21,7 +22,18 @@ class _SignUpPageState extends State<SignUpPage> {
     final Size screenSize = MediaQuery.of(context).size;
     return new Scaffold(
       appBar: new AppBar(
+        iconTheme: IconThemeData(
+          color: Colors.white, //change your color here
+        ),
+        leading: IconButton(icon:Icon(Icons.arrow_back),
+          onPressed:() => Navigator.pushReplacement(
+            context,
+            FadingRoute(builder: (context) => SignUpInPage()),
+          ),
+        ),
+        automaticallyImplyLeading: true,
         title: new Text('Sign Up'),
+        centerTitle: true,
       ),
       body: new Container(
         padding: new EdgeInsets.all(20.0),
@@ -165,13 +177,9 @@ class _SignUpPageState extends State<SignUpPage> {
       _formKey.currentState.save();
       SignInUpService loginService = new SignInUpService();
       bool signUpResponse = await loginService.signUp(this.user);
-      print(signUpResponse);
       if(signUpResponse){
-        print("IM IN1");
         bool logInResponse = await loginService.login(this.user);
-        print(logInResponse);
         if(logInResponse){
-          print("IM IN2");
           Navigator.pushReplacement(
             context,
             FadingRoute(builder: (context) => LoadingScreen()),

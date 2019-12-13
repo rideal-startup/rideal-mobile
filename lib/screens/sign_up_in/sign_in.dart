@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rideal/models/user.dart';
 import 'package:rideal/screens/loading/loading.dart';
+import 'package:rideal/screens/sign_up_in/sign_up_in.dart';
 import 'package:rideal/services/sign_in_up.service.dart';
 import 'package:rideal/utils.dart';
 
@@ -19,7 +20,18 @@ class _SignInPageState extends State<SignInPage> {
     final Size screenSize = MediaQuery.of(context).size;
     return new Scaffold(
       appBar: new AppBar(
+        iconTheme: IconThemeData(
+          color: Colors.white, //change your color here
+        ),
+        leading: IconButton(icon:Icon(Icons.arrow_back),
+          onPressed:() => Navigator.pushReplacement(
+            context,
+            FadingRoute(builder: (context) => SignUpInPage()),
+          ),
+        ),
+        automaticallyImplyLeading: true,
         title: new Text('Sign In'),
+        centerTitle: true,
       ),
       body: new Container(
         padding: new EdgeInsets.all(20.0),

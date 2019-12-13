@@ -24,14 +24,8 @@ class SignInUpService {
       final response = await Dio(BaseOptions(
           headers: { 'Authorization': auth.trim() })).get(Enviroment.apiBaseUrl + '/identity', 
       );
-
-      print("STATUS CODE");
-      print(response.statusCode);
       if(response.statusCode >= 200 && response.statusCode < 300){
-        print("HELLOOOO");
-        print(response.data);
         SignedUser.setSignedUser(User.fromJson(response.data));
-        print("HELLOOOO");
         return true;
       } else {
         return false;
