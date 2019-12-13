@@ -3,6 +3,8 @@ import 'package:rideal/enviroment/enviroment.dart';
 import 'package:rideal/models/user.dart';
 import 'dart:convert';
 
+import 'package:rideal/services/signed_user.service.dart';
+
 class SignInUpService {
   Future<bool> signUp(User user) async {
     try {
@@ -22,9 +24,16 @@ class SignInUpService {
       final response = await Dio(BaseOptions(
           headers: { 'Authorization': auth.trim() })).get(Enviroment.apiBaseUrl + '/identity', 
       );
-      return (response.statusCode >= 200 && response.statusCode < 300);
+      if(response.statusCode >= 200 && response.statusCode < 300){
+        SignedUser.setSignedUser(User.fromJson(response.data));
+        return true;
+      } else {
+        return false;
+      }
     } catch(e) {
+      print(e.toString());
       return false;
     }
   }
+
 }
