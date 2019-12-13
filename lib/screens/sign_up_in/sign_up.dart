@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:rideal/models/user.dart';
 import 'package:rideal/enviroment/cities.dart';
+import 'package:rideal/screens/loading/loading.dart';
 import 'package:rideal/services/sign_in_up.service.dart';
+import 'package:rideal/utils.dart';
 
-class LoginPage extends StatefulWidget {
-  LoginPage({Key key}) : super(key: key);
+class SignUpPage extends StatefulWidget {
+  SignUpPage({Key key}) : super(key: key);
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _SignUpPageState createState() => _SignUpPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _SignUpPageState extends State<SignUpPage> {
   final _formKey = GlobalKey<FormState>();
   User user = User();
   String dropdownValue = "/cities/5dd043e25043225f571cc6ef";
@@ -19,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
     final Size screenSize = MediaQuery.of(context).size;
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text('Login'),
+        title: new Text('Sign Up'),
       ),
       body: new Container(
         padding: new EdgeInsets.all(20.0),
@@ -162,10 +164,20 @@ class _LoginPageState extends State<LoginPage> {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
       SignInUpService loginService = new SignInUpService();
-      bool signUpResp = await loginService.signUp(this.user);
-      print(signUpResp);
-      bool logInRespo = await loginService.login(this.user);
-      print(logInRespo);
+      bool signUpResponse = await loginService.signUp(this.user);
+      print(signUpResponse);
+      if(signUpResponse){
+        print("IM IN1");
+        bool logInResponse = await loginService.login(this.user);
+        print(logInResponse);
+        if(logInResponse){
+          print("IM IN2");
+          Navigator.pushReplacement(
+            context,
+            FadingRoute(builder: (context) => LoadingScreen()),
+          );
+        }
+      }
     }
   }
 }
