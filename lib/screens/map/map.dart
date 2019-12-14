@@ -190,7 +190,6 @@ class _MapScreenState extends State<MapScreen> {
     }
 
     final duration = Duration(milliseconds: 300);
-    
     _queryTimeout = Timer(duration, () async {
       _autoCompleteStops = await stopService.findStopsByNameLike(text);
       setState(() {});

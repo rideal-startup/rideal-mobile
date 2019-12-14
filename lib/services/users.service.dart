@@ -116,6 +116,34 @@ class UserService {
       
     return cancelOk;
   }
+
+  Future<bool> sendRequest(String userId) async {
+    final user = await this.authService.currentUser;
+    final authHeaders = this.authService.getAuthHeaders(user);
+    final requests = Dio(BaseOptions(headers: authHeaders));
+
+    final res = await requests.post('$_baseUrl/sendRequest/$userId');
+
+    final sendOk = res.statusCode >= 200 && res.statusCode < 300;
+    if (!sendOk)
+      print(res.data);
+      
+    return sendOk;
+  }
+
+  Future<List<User>> findByUsername(String username) async {
+    final user = await this.authService.currentUser;
+    final authHeaders = this.authService.getAuthHeaders(user);
+    final requests = Dio(BaseOptions(headers: authHeaders));
+
+    final res = await requests.get(
+      '$_baseUrl/findByUsernameLike',
+      queryParameters: { 'username': username });
+    
+    return res.data
+      .map<User>((u) => User.fromJson(u))
+      .toList();
+  }
 }
 
 

@@ -7,11 +7,24 @@ class ProfileFriendEntry extends StatelessWidget {
   final String state;
   final User user;
 
-  const ProfileFriendEntry({Key key, this.state, this.user}) : super(key: key);
+  final Function onAdd;
+  final Function onAccept;
+  final Function onCancel;
+  
+  const ProfileFriendEntry({
+    Key key, 
+    this.state, 
+    this.user, 
+    this.onAdd, 
+    this.onAccept, 
+    this.onCancel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-  
+    String fullName = user.name + ' ' + user.surname;
+    if (state == 'Pending' && fullName.length > 10)
+      fullName = fullName.substring(0, 10) + '...';
+
     return InkWell(
       onTap: () {},
       child: Padding(
@@ -34,7 +47,7 @@ class ProfileFriendEntry extends StatelessWidget {
                   child: Text(user.username),
                 ),
                 Text(
-                  user.name + ' '+ user.surname,
+                  fullName,
                   style: TextStyle(fontWeight: FontWeight.bold),
                 )
               ],
@@ -54,10 +67,24 @@ class ProfileFriendEntry extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
-            _raisedButton("Accept", Colors.pink[200], () {}),
-            _raisedButton("Cancel", Colors.transparent, () {}),
+            _raisedButton("Accept", Colors.pink[200], () {
+              if (this.onAccept != null)
+                this.onAccept();
+            }),
+            _raisedButton("Cancel", Colors.transparent, () {
+              if (this.onCancel != null)
+                this.onCancel();
+            }),
           ],
         ),
+      );
+    if (state == 'None')
+      return Padding(
+        padding: const EdgeInsets.only(left: 30.0),
+        child: _raisedButton("Add", Colors.pink[200], () {
+          if (this.onAdd != null)
+            this.onAdd();
+        }),
       );
     return Container();
     
@@ -69,7 +96,7 @@ class ProfileFriendEntry extends StatelessWidget {
       child: SizedBox(
         height: 30,
         width: 80,
-            child: RaisedButton(
+        child: RaisedButton(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(5)),
             side: BorderSide(color: Colors.grey[50])

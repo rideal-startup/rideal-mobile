@@ -92,7 +92,14 @@ class _ProfileState extends State<Profile> {
         },
         body: TabBarView(
           children: [
-            FriendsListProfile(),
+            FriendsListProfile(
+              requests: this.requests, 
+              updateState: () {
+                _fetchData().then((_) {
+                  setState(() {
+                  });
+                });
+              },),
             TrophyListProfile(),
           ],
         ),
