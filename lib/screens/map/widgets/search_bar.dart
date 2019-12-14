@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:rideal/services/i18n.dart';
 
 class SearchBar extends StatefulWidget {
-  final Function onFilterPress;
   final Function onTextUpdate;
   final TextEditingController controller;
 
   const SearchBar({
     Key key, 
-    this.onFilterPress,
     this.onTextUpdate,
     this.controller}) : super(key: key);
 
@@ -31,8 +29,10 @@ class _SearchBarState extends State<SearchBar> {
           children: <Widget>[
             IconButton(
               splashColor: Colors.grey,
-              icon: Icon(Icons.filter_list),
-              onPressed: this.widget.onFilterPress,
+              icon: Icon(Icons.menu),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
             ),
             Expanded(
               child: TextField(

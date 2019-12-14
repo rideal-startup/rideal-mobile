@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:rideal/screens/feed/feed_screen.dart';
 import 'package:rideal/screens/home/widgets/bottom_bar.dart';
@@ -17,15 +21,40 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  @override
-  void initState() {
-    super.initState();
-  }
 
   int localIndex = 1;
   bool navigationMode = true;
+  final _fcm = FirebaseMessaging();
+  final _db = Firestore.instance;
 
   final screens = [FeedScreen(), MapScreen(), LeaderboardScreen(), Profile()];
+
+  @override
+  void initState() {
+    _saveDeviceToken();
+    super.initState();
+  }
+
+  _saveDeviceToken() async {
+    // Get the current user
+    String uid = 'guillem'; // TODO: Logged user
+
+    // Get the token for this device
+    String fcmToken = await _fcm.getToken();
+    _fcm.subscribeToTopic('rideal');
+    
+    // Save it to Firestore
+    if (fcmToken != null) {
+      await _db
+          .collection('users')
+          .document(uid)
+          .setData({
+            'token': fcmToken,
+            'createdAt': FieldValue.serverTimestamp(), // optional
+            'platform': Platform.operatingSystem // optional
+          });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

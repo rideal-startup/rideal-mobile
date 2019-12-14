@@ -3,33 +3,35 @@ import 'package:rideal/models/user.dart';
 import 'package:rideal/enviroment/cities.dart';
 import 'package:rideal/services/sign_in_up.service.dart';
 
-class LoginPage extends StatefulWidget {
-  LoginPage({Key key}) : super(key: key);
+class LoginScreen extends StatefulWidget {
+  LoginScreen({Key key}) : super(key: key);
 
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
+  
   User user = User();
   String dropdownValue = "/cities/5dd043e25043225f571cc6ef";
+
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text('Login'),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Login'),
       ),
-      body: new Container(
-        padding: new EdgeInsets.all(20.0),
-        child: new Form(
+      body: Container(
+        padding: EdgeInsets.all(20.0),
+        child: Form(
           key: this._formKey,
-          child: new ListView(
+          child: ListView(
             children: <Widget>[
-              new TextFormField(
+              TextFormField(
                 keyboardType: TextInputType.text,
-                decoration: new InputDecoration(
+                decoration: InputDecoration(
                   hintText: 'mRajoy',
                   labelText: 'Username'
                 ),
@@ -43,9 +45,9 @@ class _LoginPageState extends State<LoginPage> {
                   return null;
                 },
               ),
-              new TextFormField(
+              TextFormField(
                 keyboardType: TextInputType.text,
-                decoration: new InputDecoration(
+                decoration: InputDecoration(
                   hintText: 'Pablo',
                   labelText: 'Name'
                 ),
@@ -59,9 +61,9 @@ class _LoginPageState extends State<LoginPage> {
                   return null;
                 },
               ),
-              new TextFormField(
+              TextFormField(
                 keyboardType: TextInputType.text,
-                decoration: new InputDecoration(
+                decoration: InputDecoration(
                   hintText: 'Abascal',
                   labelText: 'Surname'
                 ),
@@ -75,7 +77,7 @@ class _LoginPageState extends State<LoginPage> {
                   return null;
                 },
               ),
-              new DropdownButtonFormField(
+              DropdownButtonFormField(
                 items: Cities.cities.map(
                   (key,value) {
                     return MapEntry(
@@ -95,9 +97,9 @@ class _LoginPageState extends State<LoginPage> {
                   user.city = city;
                 },
               ),
-              new TextFormField(
+              TextFormField(
                 keyboardType: TextInputType.emailAddress,
-                decoration: new InputDecoration(
+                decoration: InputDecoration(
                   hintText: 'you@example.com',
                   labelText: 'E-mail Address'
                 ),
@@ -106,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
                 },
                 validator: (value) {
                   Pattern pattern =r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-                  RegExp regex = new RegExp(pattern);
+                  RegExp regex = RegExp(pattern);
                   if(value.isEmpty) {
                     return "Please enter an e-mail";
                   }
@@ -116,9 +118,9 @@ class _LoginPageState extends State<LoginPage> {
                   return null;
                 },
               ),
-              new TextFormField(
+              TextFormField(
                 obscureText: true,
-                decoration: new InputDecoration(
+                decoration: InputDecoration(
                   hintText: 'Password',
                   labelText: 'Enter your password'
                 ),
@@ -126,28 +128,28 @@ class _LoginPageState extends State<LoginPage> {
                   user.password = password;
                 },
                 validator: (value) {
-                  if(value.isEmpty) {
+                  if (value.isEmpty) {
                     return "Please enter a password";
                   }
-                  if(value.length < 8) {
+                  if (value.length < 8) {
                     return "Password is too short";
                   }
                   return null;
                 },
               ),
-              new Container(
+              Container(
                 width: screenSize.width,
-                child: new RaisedButton(
-                  child: new Text(
+                child: RaisedButton(
+                  child: Text(
                     'Sign Up',
-                    style: new TextStyle(
+                    style: TextStyle(
                       color: Colors.white
                     ),
                   ),
                   onPressed: _submit,
                   color: Colors.blueGrey,
                 ),
-                margin: new EdgeInsets.only(
+                margin: EdgeInsets.only(
                   top: 20.0
                 ),
               )
@@ -161,7 +163,7 @@ class _LoginPageState extends State<LoginPage> {
   void _submit() async {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
-      SignInUpService loginService = new SignInUpService();
+      SignInUpService loginService = SignInUpService();
       bool signUpResp = await loginService.signUp(this.user);
       print(signUpResp);
       bool logInRespo = await loginService.login(this.user);

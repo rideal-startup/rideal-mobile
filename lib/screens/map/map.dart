@@ -5,7 +5,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:rideal/models/stop.dart';
 import 'package:rideal/screens/map/widgets/autocomplete.dart';
-import 'package:rideal/screens/map/widgets/filter.dart';
 import 'package:rideal/screens/map/widgets/line_selector.dart';
 import 'package:rideal/screens/map/widgets/search_bar.dart';
 import 'package:rideal/services/lines.service.dart';
@@ -33,10 +32,6 @@ class _MapScreenState extends State<MapScreen> {
   // Line selector
   Stop selectedStop;
   bool selectLine = false;
-
-  // Filter
-  bool showFilter = false;
-  List<StopType> toShow = [StopType.Bus, StopType.Metro, StopType.Train];
 
   // Stops autocomplete
   final textController = TextEditingController();
@@ -90,7 +85,7 @@ class _MapScreenState extends State<MapScreen> {
           mapToolbarEnabled: false,
           onMapCreated: _onMapCreated,
           trafficEnabled: true,
-          markers: _stops.values // TODO: filter stops
+          markers: _stops.values
               .map(_markerFromStop)
               .toSet(),
           myLocationEnabled: true,
@@ -137,22 +132,8 @@ class _MapScreenState extends State<MapScreen> {
       children: <Widget>[
         SearchBar(
           controller: textController,
-          onFilterPress: () {
-            setState(() {
-              selectLine = false;
-              showFilter = !showFilter;
-            });
-          },
           onTextUpdate: _lookForStops,
         ),
-        showFilter ? FilterTransport(
-            onChange: (toShow) {
-              setState(() {
-                this.toShow = toShow;
-              });
-            },
-          )
-        : Container(),
         StopAutoComplete(
           stops: _autoCompleteStops,
           onSelected: (Stop stop) async {
@@ -184,7 +165,7 @@ class _MapScreenState extends State<MapScreen> {
       return;
     }
 
-    final duration = Duration(milliseconds: 500);
+    final duration = Duration(milliseconds: 300);
     
     _queryTimeout = Timer(duration, () async {
       _autoCompleteStops = await stopService.findStopsByNameLike(text);

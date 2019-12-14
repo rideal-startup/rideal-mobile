@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rideal/screens/loading/loading.dart';
+import 'package:rideal/screens/login/login.dart';
 import 'package:rideal/theme/theme.dart';
 import 'package:rideal/services/i18n.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
           locale: snapshot.data,
           title: 'Rideal',
           theme: appTheme(),
-          home: LoadingScreen(),
+          home: LoginScreen(),
         );
       }
     );
