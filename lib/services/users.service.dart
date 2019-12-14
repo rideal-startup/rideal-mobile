@@ -4,8 +4,10 @@ import 'package:dio/dio.dart';
 import 'package:rideal/enviroment/enviroment.dart';
 import 'package:rideal/models/line.dart';
 import 'package:rideal/models/stop.dart';
+import 'package:rideal/models/user.dart';
 
 class UserService {
+  
   
   final _baseUrl = "${Enviroment.apiBaseUrl}${Enviroment.usersUrl}";
 
@@ -13,7 +15,7 @@ class UserService {
 
   // }
 
-  Future<List<Line>> getFirstTenRankingUsers() async {
+  Future<List<User>> getFirstTenRankingUsers() async {
     
     Response response = await Dio()
       .get(
@@ -27,7 +29,7 @@ class UserService {
     print(response.data.runtimeType);
     final resBody = response.data;
 
-    return resBody.map<Line>((l) { return Line.fromJson(l); }).toList();
+    return resBody.map<User>((l) { return User.fromJson(l); }).toList();
     
   }
 }

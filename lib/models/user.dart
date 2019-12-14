@@ -1,3 +1,5 @@
+import 'package:rideal/models/city.dart';
+
 class User {
   String id;
   String username;

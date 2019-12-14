@@ -15,18 +15,21 @@ class _LeaderboardFilterState extends State<LeaderboardFilter> {
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.fromLTRB(40, 0, 0, 5),
-          child: Text(I18n.of(context).translate('ranking')),
+        Expanded(
+          // padding: const EdgeInsets.fromLTRB(40, 0, 0, 5),
+          child: Text("  "+I18n.of(context).translate('ranking')),
         ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(170, 0, 0, 5),
+        Spacer(),
+        Expanded(
+          // padding: const EdgeInsets.fromLTRB(170, 0, 0, 5),
+          
           child: DropdownButton<String>(
             value: dropdownValue,
             icon: Icon(Icons.arrow_downward),
             iconSize: 24,
             elevation: 16,
             style: TextStyle(color: Colors.white),
+            
             underline: Container(
               height: 2,
               color: Colors.white,

@@ -81,6 +81,7 @@ class _HomePageState extends State<HomePage> {
           setState(() {
             this.navigationMode = false;
             this.localIndex = localIndex;
+          
           });
         },
       ),

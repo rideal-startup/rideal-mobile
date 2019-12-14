@@ -14,6 +14,8 @@ import 'package:rideal/services/stop.service.dart';
 class MapScreen extends StatefulWidget {
   @override
   _MapScreenState createState() => _MapScreenState();
+
+
 }
 
 class _MapScreenState extends State<MapScreen> {
@@ -49,6 +51,7 @@ class _MapScreenState extends State<MapScreen> {
     });
   }
 
+
   @override
   void initState() {
     location.getLocation().then((ld) {
@@ -80,6 +83,7 @@ class _MapScreenState extends State<MapScreen> {
       child: Stack(
       overflow: Overflow.visible,
       children: <Widget>[
+        
         GoogleMap(
           compassEnabled: false,
           mapToolbarEnabled: false,
@@ -102,7 +106,23 @@ class _MapScreenState extends State<MapScreen> {
         LineSelector(
           show: selectLine,
           stop: selectedStop,
-        )
+        ),
+        
+        Positioned(
+          left: 10,
+          bottom: 15,
+                  child: FloatingActionButton(
+
+          child: Icon(Icons.location_searching),
+          //Widget to display inside Floating Action Button, can be `Text`, `Icon` or any widget.
+          onPressed: () {
+            //Code to execute when Floating Action Button is clicked
+            //...
+            centerIntoUser2();
+          },
+          
+      ),
+        ),
       ],
     ));
   }
@@ -147,6 +167,10 @@ class _MapScreenState extends State<MapScreen> {
     );
   }
 
+  void centerIntoUser2(){
+    _updateCameraLocation(this.currentLocation);
+    setState(() {});
+  }
   void _updateCameraLocation(LatLng newPos) {
       _controller.future.then((mapController) {
         mapController.animateCamera(
