@@ -10,9 +10,12 @@ class RealTimeLocation {
       .document(lineId)
       .snapshots()
       .listen((msg) {
-        final data = LocationMessage.fromJson(msg.data);
-        onMessage(data);
-      });
+        if (msg != null) {
+          final data = LocationMessage.fromJson(msg.data);
+          onMessage(data);
+        }
+      }
+    );
   }
 }
 

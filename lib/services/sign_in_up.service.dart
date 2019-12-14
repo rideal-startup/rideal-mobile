@@ -46,16 +46,22 @@ class SignInUpService {
     }
   }
 
-  void logout() {
+  Future<void> logout() async {
+    await this._userStorage.ready;
     this._userStorage.deleteItem('user');
+    return;
   }
 
-  User get currentUser {
+  Future<User> get currentUser async {
+    await this._userStorage.ready;
     final userMap = this._userStorage.getItem('user');
+    if (userMap == null)
+      return null;
     return User.fromJson(userMap);
   }
 
-  bool get isLoggedIn {
+  Future<bool> get isLoggedIn async {
+    await this._userStorage.ready;
     return this._userStorage.getItem('user') != null;
   }
 }

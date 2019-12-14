@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:rideal/models/user.dart';
 import 'package:rideal/services/i18n.dart';
+import 'package:rideal/services/sign_in_up.service.dart';
 import 'package:rideal/utils.dart';
 import 'package:rideal/widgets/circle_image.dart';
 
 class RidealDrawer extends StatelessWidget {
   final Function onProfileNavigation;
+  final Function onLogOut;
 
-  const RidealDrawer({Key key, this.onProfileNavigation}) : super(key: key);
+  final User currentUser;
+
+  const RidealDrawer({Key key, this.onProfileNavigation, this.currentUser, this.onLogOut}) : super(key: key);
   
   @override
   Widget build(BuildContext context) {
@@ -33,11 +38,11 @@ class RidealDrawer extends StatelessWidget {
                 ),
                 Padding(padding: EdgeInsets.all(7),),
                 Text(
-                  'Guillermo Diaz', 
+                  '${currentUser.name} ${currentUser.surname}', 
                   style: TextStyle(fontWeight: FontWeight.w800, fontSize: 18),
                 ),
                 Text(
-                  '@willyrexYT', 
+                  '@${currentUser.username}', 
                   style: TextStyle(fontWeight: FontWeight.w300, fontSize: 15),
                 )
               ]
@@ -85,6 +90,7 @@ class RidealDrawer extends StatelessWidget {
             leading: Icon(FontAwesomeIcons.signOutAlt),
             title: Text(I18n.of(context).translate('sign-out')),
             onTap: () {
+              onLogOut();
               // Then close the drawer
               Navigator.pop(context);
             },
