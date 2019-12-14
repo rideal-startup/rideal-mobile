@@ -4,6 +4,8 @@ import 'package:rideal/enviroment/enviroment.dart';
 import 'package:rideal/models/user.dart';
 import 'dart:convert';
 
+import 'package:rideal/services/signed_user.service.dart';
+
 class SignInUpService {
 
   User _currentUser;

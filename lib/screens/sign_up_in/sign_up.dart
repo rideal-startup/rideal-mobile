@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:rideal/models/user.dart';
 import 'package:rideal/enviroment/cities.dart';
+import 'package:rideal/screens/loading/loading.dart';
+import 'package:rideal/screens/sign_up_in/sign_up_in.dart';
 import 'package:rideal/services/sign_in_up.service.dart';
+import 'package:rideal/utils.dart';
 
-class LoginScreen extends StatefulWidget {
-  LoginScreen({Key key}) : super(key: key);
+class SignUpPage extends StatefulWidget {
+  SignUpPage({Key key}) : super(key: key);
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _SignUpPageState createState() => _SignUpPageState();
 }
 
-class _LoginPageState extends State<LoginScreen> {
+class _SignUpPageState extends State<SignUpPage> {
   final _formKey = GlobalKey<FormState>();
   
   User user = User();
@@ -19,9 +22,20 @@ class _LoginPageState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Login'),
+    return new Scaffold(
+      appBar: new AppBar(
+        iconTheme: IconThemeData(
+          color: Colors.white, //change your color here
+        ),
+        leading: IconButton(icon:Icon(Icons.arrow_back),
+          onPressed:() => Navigator.pushReplacement(
+            context,
+            FadingRoute(builder: (context) => SignUpInPage()),
+          ),
+        ),
+        automaticallyImplyLeading: true,
+        title: new Text('Sign Up'),
+        centerTitle: true,
       ),
       body: Container(
         padding: EdgeInsets.all(20.0),
@@ -163,11 +177,17 @@ class _LoginPageState extends State<LoginScreen> {
   void _submit() async {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
-      SignInUpService loginService = SignInUpService();
-      bool signUpResp = await loginService.signUp(this.user);
-      print(signUpResp);
-      bool logInRespo = await loginService.login(this.user);
-      print(logInRespo);
+      SignInUpService loginService = new SignInUpService();
+      bool signUpResponse = await loginService.signUp(this.user);
+      if(signUpResponse){
+        bool logInResponse = await loginService.login(this.user);
+        if(logInResponse){
+          Navigator.pushReplacement(
+            context,
+            FadingRoute(builder: (context) => LoadingScreen()),
+          );
+        }
+      }
     }
   }
 }
