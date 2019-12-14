@@ -11,34 +11,25 @@ class User {
   String password;
 
   User({this.id,
-        this.username, 
-        this.name,
-        this.surname,
-        this.city,
-        this.cityName,
-        this.email,
-        this.points,
-        this.friends,
-        this.password});
-
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
-      username: json['username'],
-      email: json['email'],
-      name: json['name'],
-      surname: json['surname'],
-      city: json['city'],
-    );
-  }
+       this.username,
+       this.name,
+       this.surname,
+       this.city,
+       this.cityName,
+       this.email,
+       this.points,
+       this.friends,
+       this.password});
 
   Map<String, dynamic> toJson() {
     return {
-      'username': this.username, 
+      'username': this.username,
       'name': this.name,
       'surname': this.surname,
       'city': this.city,
       'email': this.email,
-      'password': this.password };
+      'password': this.password
+    };
   }
 
   static User fromJson(Map<String, dynamic> userJson) {
@@ -51,7 +42,9 @@ class User {
     user.cityName = userJson['city']['name'];
     user.email = userJson['email'];
     user.points = userJson['points'];
-    user.friends = userJson['friends'].map<User>((friend)=>User.fromJson(friend)).toList();
+    user.friends = userJson['friends']
+        .map<User>((friend) => User.fromJson(friend))
+        .toList();
     user.password = userJson['password'];
     return user;
   }

@@ -9,7 +9,7 @@ import 'package:rideal/screens/home/widgets/rideal_drawer.dart';
 import 'package:rideal/screens/leaderboard/leaderboard_screen.dart';
 import 'package:rideal/screens/map/map.dart';
 import 'package:rideal/screens/profile/profile.dart';
-import 'package:rideal/services/signed_user.service.dart';
+import 'package:rideal/services/sign_in_up.service.dart';
 
 class HomePage extends StatefulWidget {
   final String title;
@@ -25,8 +25,12 @@ class _HomePageState extends State<HomePage> {
 
   int localIndex = 1;
   bool navigationMode = true;
+
+  // Notifications
   final _fcm = FirebaseMessaging();
   final _db = Firestore.instance;
+
+  final authService = SignInUpService();
 
   final screens = [FeedScreen(), MapScreen(), LeaderboardScreen(), Profile()];
 
@@ -84,7 +88,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   int readIndex() {
-    print(SignedUser.getSignedUser().username);
     if (widget.index != null && widget.index != this.localIndex && this.navigationMode) {
       return widget.index;
     }

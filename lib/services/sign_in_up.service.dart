@@ -4,20 +4,16 @@ import 'package:rideal/enviroment/enviroment.dart';
 import 'package:rideal/models/user.dart';
 import 'dart:convert';
 
-import 'package:rideal/services/signed_user.service.dart';
-
 class SignInUpService {
 
   User _currentUser;
   final _userStorage = LocalStorage('authStorage');
 
-  Map<String, dynamic> getAuthHeaders(final User user, 
-                                      {Map<String, dynamic> existingHeaders = const {}}) {
+  Map<String, dynamic> getAuthHeaders(final User user) {
     final username = user.username;
     final password = user.password; 
     final auth = 'Basic ' + base64.encode(latin1.encode('$username:$password'));
-    existingHeaders['Authorization'] = auth.trim();
-    return existingHeaders;
+    return {'Authorization' : auth.trim()};
   }
 
   Future<bool> signUp(User user) async {
