@@ -39,7 +39,7 @@ class LineHeader extends StatelessWidget {
                       backgroundColor: Colors.orangeAccent,
                       foregroundColor: Colors.indigo,
                       child: Text(
-                         this.line?.name?.substring(0,2),// TODO: FIND LINE NUMBER'L2',
+                         this.line?.name?.substring(0, 2),// TODO: FIND LINE NUMBER'L2',
                         style: TextStyle(fontSize: 20),
                       ),
                     ),

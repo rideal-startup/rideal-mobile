@@ -16,7 +16,7 @@ class LeaderboardBody extends StatefulWidget {
 
 class _LeaderboardBodyState extends State<LeaderboardBody> {
 
-  List<Widget> users = null;
+  List<Widget> users;
 
   @override
   void initState() {

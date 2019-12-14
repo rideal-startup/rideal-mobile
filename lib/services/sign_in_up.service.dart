@@ -6,7 +6,6 @@ import 'dart:convert';
 
 class SignInUpService {
 
-  User _currentUser;
   final _userStorage = LocalStorage('authStorage');
 
   Map<String, dynamic> getAuthHeaders(final User user) {

@@ -50,8 +50,8 @@ class _HomePageState extends State<HomePage> {
 
   _saveDeviceToken() async {
     // Get the current user
-    String uid = (await  authService.currentUser).id; // TODO: Logged user
-
+    String uid = (await  authService.currentUser).id;
+    
     // Get the token for this device
     String fcmToken = await _fcm.getToken();
     _fcm.subscribeToTopic('rideal');

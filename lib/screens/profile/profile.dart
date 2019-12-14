@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rideal/models/user.dart';
-import 'package:rideal/screens/profile/tabs/basic_info_profile.dart';
 import 'package:rideal/screens/profile/tabs/friends_list_profile.dart';
 import 'package:rideal/screens/profile/tabs/trophy_list_profile.dart';
 import 'package:rideal/screens/profile/widgets/profile_editor.dart';

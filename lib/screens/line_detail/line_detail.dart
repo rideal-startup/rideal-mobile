@@ -9,7 +9,6 @@ import 'package:rideal/models/stop.dart';
 import 'package:rideal/screens/home/home.dart';
 import 'package:rideal/screens/line_detail/widgets/bottom_button.dart';
 import 'package:rideal/screens/line_detail/widgets/line_header.dart';
-import 'package:rideal/screens/line_detail/widgets/suggestion.dart';
 import 'package:rideal/services/lines.service.dart';
 import 'package:rideal/services/location_ws.service.dart';
 import 'package:rideal/services/rabbit_mq.service.dart';
