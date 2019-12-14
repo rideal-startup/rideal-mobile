@@ -37,9 +37,6 @@ class _LeaderboardBodyState extends State<LeaderboardBody> {
             punctuation: user.points.toString()
             )
           ),
-
-          print('user.name: '),
-          print(this.users),
         });
         setState(() {});
       });

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:rideal/models/city.dart';
 import 'package:rideal/models/user.dart';
-import 'package:rideal/enviroment/cities.dart';
 import 'package:rideal/screens/loading/loading.dart';
 import 'package:rideal/screens/sign_up_in/sign_up_in.dart';
+import 'package:rideal/services/cities.service.dart';
 import 'package:rideal/services/sign_in_up.service.dart';
 import 'package:rideal/utils.dart';
 
@@ -15,12 +16,31 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   final _formKey = GlobalKey<FormState>();
-  
+  final cityService = CitiesService();
+    
   User user = User();
-  String dropdownValue = "/cities/5dd043e25043225f571cc6ef";
+  List<City> cities = [];
+  String dropdownValue;
+
+  @override
+  void initState() {
+    this.cityService.getAllCities().then((res) {
+      this.cities = res;
+      dropdownValue = cities[0].id;
+      setState(() {});
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    if (cities.length == 0)
+      return Center(
+        child: CircularProgressIndicator(
+          valueColor: AlwaysStoppedAnimation<Color>(Colors.pink[200]),
+        ),
+      );
+
     final Size screenSize = MediaQuery.of(context).size;
     return new Scaffold(
       appBar: new AppBar(
@@ -92,15 +112,12 @@ class _SignUpPageState extends State<SignUpPage> {
                 },
               ),
               DropdownButtonFormField(
-                items: Cities.cities.map(
-                  (key,value) {
-                    return MapEntry(
-                      key,
-                      DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(key),
-                        ));
-                  }).values.toList(),
+                items: this.cities.map((c) {
+                  return DropdownMenuItem<String>(
+                    value: c.id,
+                    child: Text(c.name),
+                  );
+                }).toList(),
                 value: dropdownValue,
                 onChanged: (String newValue) {
                   setState(() {
@@ -108,7 +125,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   });
                 },
                 onSaved: (String city) {
-                  user.city = city;
+                  user.city = cities.firstWhere((c) => c.id == city);
                 },
               ),
               TextFormField(

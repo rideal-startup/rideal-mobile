@@ -12,8 +12,12 @@ class SignInUpService {
   Map<String, dynamic> getAuthHeaders(final User user) {
     final username = user.username;
     final password = user.password; 
+    print(username + ':' + password);
     final auth = 'Basic ' + base64.encode(latin1.encode('$username:$password'));
-    return {'Authorization' : auth.trim()};
+    return {
+      'Authorization' : auth.trim(),
+      'accept': 'application/json'
+    };
   }
 
   Future<bool> signUp(User user) async {
@@ -34,6 +38,7 @@ class SignInUpService {
       
       final response = await request.get(Enviroment.apiBaseUrl + '/identity');
       final loginOk = response.statusCode >= 200 && response.statusCode < 300;
+      response.data['password'] = user.password;
 
       if (loginOk)
         this._userStorage.setItem('user', response.data);
@@ -63,5 +68,11 @@ class SignInUpService {
   Future<bool> get isLoggedIn async {
     await this._userStorage.ready;
     return this._userStorage.getItem('user') != null;
+  }
+
+  Future<void> updateUser(User newUser) async {
+    final previousUser = await this.currentUser;
+    newUser.password = previousUser.password;
+    this._userStorage.setItem('user', newUser.toJson(cityToUri: false));
   }
 }

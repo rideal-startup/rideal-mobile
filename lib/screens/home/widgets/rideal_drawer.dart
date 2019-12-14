@@ -6,14 +6,30 @@ import 'package:rideal/services/sign_in_up.service.dart';
 import 'package:rideal/utils.dart';
 import 'package:rideal/widgets/circle_image.dart';
 
-class RidealDrawer extends StatelessWidget {
+class RidealDrawer extends StatefulWidget {
   final Function onProfileNavigation;
   final Function onLogOut;
 
-  final User currentUser;
-
-  const RidealDrawer({Key key, this.onProfileNavigation, this.currentUser, this.onLogOut}) : super(key: key);
+  const RidealDrawer({Key key, this.onProfileNavigation, this.onLogOut}) : super(key: key);
   
+  @override
+  _RidealDrawerState createState() => _RidealDrawerState();
+}
+
+class _RidealDrawerState extends State<RidealDrawer> {
+  final authService = SignInUpService();
+
+  User currentUser;
+
+  @override
+  void initState() {
+    this.authService.currentUser.then((user) {
+      this.currentUser = user;
+      setState(() {});
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -32,17 +48,17 @@ class RidealDrawer extends StatelessWidget {
                 GestureDetector(
                   onTap: () {
                     Navigator.pop(context);
-                    onProfileNavigation();
+                    widget.onProfileNavigation();
                   },
                   child: CircleImage('assets/images/profile.jpg'),
                 ),
                 Padding(padding: EdgeInsets.all(7),),
                 Text(
-                  '${currentUser.name} ${currentUser.surname}', 
+                  '${currentUser?.name} ${currentUser?.surname}', 
                   style: TextStyle(fontWeight: FontWeight.w800, fontSize: 18),
                 ),
                 Text(
-                  '@${currentUser.username}', 
+                  '@${currentUser?.username}', 
                   style: TextStyle(fontWeight: FontWeight.w300, fontSize: 15),
                 )
               ]
@@ -56,7 +72,7 @@ class RidealDrawer extends StatelessWidget {
             title: Text(I18n.of(context).translate('profile')),
             onTap: () {
               Navigator.pop(context);
-              onProfileNavigation();
+              widget.onProfileNavigation();
             },
           ),
           ListTile(
@@ -90,7 +106,7 @@ class RidealDrawer extends StatelessWidget {
             leading: Icon(FontAwesomeIcons.signOutAlt),
             title: Text(I18n.of(context).translate('sign-out')),
             onTap: () {
-              onLogOut();
+              widget.onLogOut();
               // Then close the drawer
               Navigator.pop(context);
             },

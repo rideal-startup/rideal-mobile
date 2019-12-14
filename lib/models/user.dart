@@ -5,11 +5,11 @@ class User {
   String username;
   String name;
   String surname;
-  String city;
-  String cityName;
+  City city;
   String email;
   int points = 0;
-  List<User> friends = [];
+  List<String> requests = [];
+  List<String> friends = [];
   String password;
 
   User({this.id,
@@ -17,36 +17,39 @@ class User {
        this.name,
        this.surname,
        this.city,
-       this.cityName,
        this.email,
        this.points,
        this.friends,
        this.password});
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({bool cityToUri = true}) {
     return {
+      'id': this.id,
       'username': this.username,
       'name': this.name,
+      'points': this.points,
       'surname': this.surname,
-      'city': this.city,
+      'city': cityToUri ? '/cities/' + this.city.id : this.city.toJson(),
       'email': this.email,
       'password': this.password
     };
   }
 
-  static User fromJson(Map<String, dynamic> userJson) {
+  factory User.fromJson(Map<String, dynamic> userJson) {
     User user = User();
     user.id = userJson['id'];
     user.username = userJson['username'];
     user.name = userJson['name'];
     user.surname = userJson['surname'];
-    user.city = userJson['city']['id'];
-    user.cityName = userJson['city']['name'];
+    if (userJson.containsKey('city'))
+      user.city = City.fromJson(userJson['city']);
     user.email = userJson['email'];
     user.points = userJson['points'];
-    user.friends = userJson['friends']
-        .map<User>((friend) => User.fromJson(friend))
-        .toList();
+    user.friends = userJson.containsKey('friends') ? userJson['friends'].cast<String>() : <String>[];
+    user.requests = userJson.containsKey('requests') ? userJson['requests'].cast<String>() : <String>[];
+
+        // .map<User>((friend) => User.fromJson(friend))
+        // .toList();
     user.password = userJson['password'];
     return user;
   }

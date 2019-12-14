@@ -11,34 +11,37 @@ class ProfileFriendEntry extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
-    return Padding(
-      padding: const EdgeInsets.only(left: 15, top: 10),
-      child: Row(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(right: 15.0),
-            child: CircleImage(
-              'assets/images/profile.jpg',
-              size: 60,
-            ),
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5.0),
-                child: Text(user.username),
+  
+    return InkWell(
+      onTap: () {},
+      child: Padding(
+        padding: const EdgeInsets.only(left: 15, top: 10, bottom: 10),
+        child: Row(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(right: 15.0),
+              child: CircleImage(
+                'assets/images/profile.jpg',
+                size: 60,
               ),
-              Text(
-                user.name + ' '+ user.surname,
-                style: TextStyle(fontWeight: FontWeight.bold),
-              )
-            ],
-          ),
-          _button()
-        ],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 5.0),
+                  child: Text(user.username),
+                ),
+                Text(
+                  user.name + ' '+ user.surname,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                )
+              ],
+            ),
+            _button()
+          ],
+        ),
       ),
     );
   }
@@ -56,6 +59,7 @@ class ProfileFriendEntry extends StatelessWidget {
           ],
         ),
       );
+    return Container();
     
   }
 

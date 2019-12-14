@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rideal/models/user.dart';
+import 'package:rideal/services/users.service.dart';
 import 'package:rideal/widgets/circle_image.dart';
 
 class ProfileEditor extends StatefulWidget {
@@ -12,7 +13,9 @@ class ProfileEditor extends StatefulWidget {
 }
 
 class _ProfileEditorState extends State<ProfileEditor> {
+  final userService = UserService(); 
   final _formKey = GlobalKey<FormState>();
+  
   User user;
 
   @override
@@ -27,12 +30,17 @@ class _ProfileEditorState extends State<ProfileEditor> {
       appBar: AppBar(
         title: Text("Editing profile"),
         actions: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: InkWell(
-              onTap: () {
-                // TODO: Update profile
-              },
+          InkWell(
+            onTap: () {
+              if (_formKey.currentState.validate()) {
+                _formKey.currentState.save();
+                this.userService.update(user).then((_) {
+                  Navigator.pop(context);
+                });
+              }
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
               child: Icon(Icons.save),
             ),
           )
@@ -76,7 +84,7 @@ class _ProfileEditorState extends State<ProfileEditor> {
 
   Widget _form() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 20),
       child: Form(
         key: this._formKey,
         child: ListView(

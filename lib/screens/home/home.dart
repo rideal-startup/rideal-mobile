@@ -97,7 +97,6 @@ class _HomePageState extends State<HomePage> {
             context, 
             FadingRoute(builder: (context) => SignUpInPage()));
         },
-        currentUser: this.user,
       ) : Container(),
       body: Container(child: currentScreen),
     );

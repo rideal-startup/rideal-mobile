@@ -30,9 +30,6 @@ class MyApp extends StatelessWidget {
           locale: snapshot.data,
           title: 'Rideal',
           theme: appTheme(),
-          routes: {
-            '/login-signup': (BuildContext context) => SignUpInPage()
-          },
           home: SignUpInPage(),
         );
       }

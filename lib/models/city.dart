@@ -9,6 +9,19 @@ class City {
 
   City({this.id, this.name, this.country, this.postalCode, this.location});
 
+  Map<String, dynamic> toJson() {
+    return {
+      'id': this.id,
+      'name': this.name,
+      'country': this.country,
+      'postalCode': this.postalCode,
+      'location': {
+        'lat': this.location.latitude,
+        'lng': this.location.longitude
+      }
+    };
+  }
+  
   factory City.fromJson(Map<String, dynamic> json) {
     return City(
       country: json['country'],
