@@ -20,25 +20,33 @@ dependencies:
   flutter:
     sdk: flutter
   # curved_navigation_bar: ^0.3.1
-  flutter_spinkit: ^2.1.0
 
   flutter_localizations:
     sdk: flutter
   
-  yaml: ^2.2.0
-  dio:  ^3.0.7
-  percent_indicator: ^2.1.1 #progress bar
-  google_maps_flutter: 0.5.21+8
-  flutter_cupertino_localizations: ^1.0.1
-  font_awesome_flutter: ^8.5.0
+  # Firebase
+  firebase_core: ^0.4.0  # add dependency for Firebase Core
+  firebase_messaging: ^5.0.2
+  cloud_firestore: ^0.13.0+1
+  
+  # Localization
   location: ^2.3.5
   permission_handler: ^3.3.0
+  google_maps_flutter: 0.5.21+8
+  flutter_cupertino_localizations: ^1.0.1
+
+  # UI
+  fluttertoast: ^3.1.3
+  flutter_spinkit: ^2.1.0
+  cupertino_icons: ^0.1.2
+  percent_indicator: ^2.1.1 #progress bar
+  font_awesome_flutter: ^8.5.0
+  # Http Requests
+  yaml: ^2.2.0
+  dio:  ^3.0.7
   rxdart: ^0.22.4
   dart_amqp: ^0.1.4
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^0.1.2
+  localstorage: ^3.0.0
 
 dev_dependencies:
   flutter_test:

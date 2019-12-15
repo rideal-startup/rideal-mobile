@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:rideal/enviroment/enviroment.dart';
 import 'package:rideal/models/stop.dart';

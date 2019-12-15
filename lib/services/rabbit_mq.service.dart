@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:dart_amqp/dart_amqp.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:rideal/models/location_message.dart';
 
@@ -50,8 +51,7 @@ class RabbitService {
       publish(
         LocationMessage(
           lineId: lineId,
-          lat: pos.latitude,
-          lng: pos.longitude,
+          location: LatLng(pos.latitude, pos.longitude)
         )
       );
     });

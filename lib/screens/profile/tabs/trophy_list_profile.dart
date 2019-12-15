@@ -4,7 +4,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:rideal/services/i18n.dart';
 import 'package:rideal/widgets/icon_card.dart';
 
 class TrophyListProfile extends StatelessWidget {

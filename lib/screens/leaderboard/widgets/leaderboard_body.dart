@@ -16,7 +16,7 @@ class LeaderboardBody extends StatefulWidget {
 
 class _LeaderboardBodyState extends State<LeaderboardBody> {
 
-  List<Widget> users = null;
+  List<Widget> users;
 
   @override
   void initState() {
@@ -37,9 +37,6 @@ class _LeaderboardBodyState extends State<LeaderboardBody> {
             punctuation: user.points.toString()
             )
           ),
-
-          print('user.name: '),
-          print(this.users),
         });
         setState(() {});
       });
