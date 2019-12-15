@@ -121,6 +121,7 @@ class _LineDetailScreenState extends State<LineDetailScreen> {
           GoogleMap(
             polylines: _polylines,
             onMapCreated: _onMapCreated,
+            myLocationEnabled: true,
             markers: _markers,
             initialCameraPosition: CameraPosition(
               target: this.widget.line.location,

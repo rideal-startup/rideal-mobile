@@ -60,7 +60,7 @@ class _LineSelectorState extends State<LineSelector>
 
   @override
   Widget build(BuildContext context) {
-    if (!this.widget.show)
+    if (!this.widget.show || this._lines == null)
       return Container();
     
     return Container(
