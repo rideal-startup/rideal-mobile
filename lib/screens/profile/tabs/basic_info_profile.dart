@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:rideal/models/city.dart';
 import 'package:rideal/models/user.dart';
 import 'package:rideal/screens/profile/widgets/profile_info_entry.dart';
 import 'package:rideal/services/i18n.dart';
@@ -11,9 +12,9 @@ class BasicINfoProfile extends StatelessWidget {
   User currentUser = User(
     email: 'fsadf',
     name: 'fasdfas',
-    city: 'fasdfas',
+    city: City(),
     points: 99,
-    friends: List<User>(),
+    friends: List<String>(),
 
   ); // TODO: LOAD USER
 

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rideal/models/user.dart';
@@ -110,6 +112,12 @@ class _RidealDrawerState extends State<RidealDrawer> {
               // Then close the drawer
               Navigator.pop(context);
             },
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(FontAwesomeIcons.signOutAlt),
+            title: Text(I18n.of(context).translate('close app')),
+            onTap: ()=> exit(0),
           ),
         ],
       ),
