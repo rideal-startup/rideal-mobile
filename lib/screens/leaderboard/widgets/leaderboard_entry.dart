@@ -32,10 +32,16 @@ class LeaderboardEntry extends StatelessWidget {
                     padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
                     child: Text(this._userName),
                   ),
+                  Spacer(),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
-                    child: Text(this._punctuation),
+                    padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+                    child: new Text(this._punctuation),
                   ),
+                  
+                  /*new Expanded(
+                    //padding: const EdgeInsets.fromLTRB(50, 0, 5, 0),
+                    child: Text("this._punctuation"),
+                  ),*/
                 ],
               ),
             ),

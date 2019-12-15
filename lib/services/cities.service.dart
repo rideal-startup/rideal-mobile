@@ -26,7 +26,7 @@ class CitiesService {
               .toList();
     } catch (e) {
       print(e);
-      return null;
+      return [];
     }
   }
 

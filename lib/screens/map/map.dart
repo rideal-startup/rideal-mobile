@@ -5,7 +5,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:rideal/models/stop.dart';
 import 'package:rideal/screens/map/widgets/autocomplete.dart';
-import 'package:rideal/screens/map/widgets/filter.dart';
 import 'package:rideal/screens/map/widgets/line_selector.dart';
 import 'package:rideal/screens/map/widgets/search_bar.dart';
 import 'package:rideal/services/lines.service.dart';
@@ -15,6 +14,8 @@ import 'package:rideal/services/stop.service.dart';
 class MapScreen extends StatefulWidget {
   @override
   _MapScreenState createState() => _MapScreenState();
+
+
 }
 
 class _MapScreenState extends State<MapScreen> {
@@ -34,10 +35,6 @@ class _MapScreenState extends State<MapScreen> {
   Stop selectedStop;
   bool selectLine = false;
 
-  // Filter
-  bool showFilter = false;
-  List<StopType> toShow = [StopType.Bus, StopType.Metro, StopType.Train];
-
   // Stops autocomplete
   final textController = TextEditingController();
   Timer _queryTimeout;
@@ -53,6 +50,7 @@ class _MapScreenState extends State<MapScreen> {
       });
     });
   }
+
 
   @override
   void initState() {
@@ -85,12 +83,13 @@ class _MapScreenState extends State<MapScreen> {
       child: Stack(
       overflow: Overflow.visible,
       children: <Widget>[
+        
         GoogleMap(
           compassEnabled: false,
           mapToolbarEnabled: false,
           onMapCreated: _onMapCreated,
           trafficEnabled: true,
-          markers: _stops.values // TODO: filter stops
+          markers: _stops.values
               .map(_markerFromStop)
               .toSet(),
           myLocationEnabled: true,
@@ -107,7 +106,23 @@ class _MapScreenState extends State<MapScreen> {
         LineSelector(
           show: selectLine,
           stop: selectedStop,
-        )
+        ),
+        
+        Positioned(
+          left: 10,
+          bottom: 15,
+                  child: FloatingActionButton(
+
+          child: Icon(Icons.location_searching),
+          //Widget to display inside Floating Action Button, can be `Text`, `Icon` or any widget.
+          onPressed: () {
+            //Code to execute when Floating Action Button is clicked
+            //...
+            centerIntoUser2();
+          },
+          
+      ),
+        ),
       ],
     ));
   }
@@ -137,22 +152,8 @@ class _MapScreenState extends State<MapScreen> {
       children: <Widget>[
         SearchBar(
           controller: textController,
-          onFilterPress: () {
-            setState(() {
-              selectLine = false;
-              showFilter = !showFilter;
-            });
-          },
           onTextUpdate: _lookForStops,
         ),
-        showFilter ? FilterTransport(
-            onChange: (toShow) {
-              setState(() {
-                this.toShow = toShow;
-              });
-            },
-          )
-        : Container(),
         StopAutoComplete(
           stops: _autoCompleteStops,
           onSelected: (Stop stop) async {
@@ -166,6 +167,10 @@ class _MapScreenState extends State<MapScreen> {
     );
   }
 
+  void centerIntoUser2(){
+    _updateCameraLocation(this.currentLocation);
+    setState(() {});
+  }
   void _updateCameraLocation(LatLng newPos) {
       _controller.future.then((mapController) {
         mapController.animateCamera(
@@ -184,8 +189,7 @@ class _MapScreenState extends State<MapScreen> {
       return;
     }
 
-    final duration = Duration(milliseconds: 500);
-    
+    final duration = Duration(milliseconds: 300);
     _queryTimeout = Timer(duration, () async {
       _autoCompleteStops = await stopService.findStopsByNameLike(text);
       setState(() {});

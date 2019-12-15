@@ -7,10 +7,8 @@ import 'package:rideal/services/lines.service.dart';
 
 
 class LineSelector extends StatefulWidget {
-  LineService lineService = LineService();
   final bool show;
   final Stop stop;
-  List<Line> lines = [];
 
   LineSelector({this.stop, this.show = false});
 
@@ -25,6 +23,9 @@ class _LineSelectorState extends State<LineSelector>
   Animation<double> animation;
   double offset = 100;
   
+  final LineService lineService = LineService();
+  List<Line> _lines;
+
   @override
   void initState() {
     _controller =
@@ -41,8 +42,8 @@ class _LineSelectorState extends State<LineSelector>
   @override
   void didUpdateWidget(LineSelector oldWidget) {
     if (this.widget.show) {
-      widget.lineService.linesContaining(widget.stop).then((linesList) {
-        widget.lines = linesList;
+      lineService.linesContaining(widget.stop).then((linesList) {
+        _lines = linesList;
         _controller.reset();
        _controller.forward();
       });
@@ -68,8 +69,7 @@ class _LineSelectorState extends State<LineSelector>
         crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.end,
-        // TODO: Get lines with an specific stop
-        children: this.widget.lines.map((l) {
+        children: this._lines.map((l) {
           return Transform.translate(
             offset: Offset(offset, 0 ), 
             child: _drawLine(l)
