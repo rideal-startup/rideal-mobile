@@ -1,15 +1,9 @@
+
 import 'package:rideal/models/city.dart';
 
-class User {
-  String id;
-  String username;
-  String name;
-  String surname;
-  String city;
-  String email;
-  int points = 0;
-  List<User> friends = [];
-  String password;
+class Friend {
+  Enum id;
+  User friends;
 
   User({this.username, 
         this.name,

@@ -32,6 +32,28 @@ class UserService {
     return resBody.map<User>((l) { return User.fromJson(l); }).toList();
     
   }
+
+
+  void saveUser(User currentUser) async{
+      if(currentUser != null){
+        print("CurrentUser is null when we try to save!");
+        return;
+      }
+      Response response = await Dio()
+      .patch(
+        this._baseUrl+"/"+currentUser.id,
+         data: {"id": currentUser.id,
+               "city": currentUser.city,
+               "email": currentUser.email,
+          }
+      );
+      
+    if(response.statusCode != 200){
+      print(response);
+    }
+  }
+
+
 }
 
 

@@ -115,17 +115,16 @@ class _MapScreenState extends State<MapScreen> {
         Positioned(
           left: 10,
           bottom: 15,
-                  child: FloatingActionButton(
+          child: FloatingActionButton(
 
-          child: Icon(Icons.location_searching),
-          //Widget to display inside Floating Action Button, can be `Text`, `Icon` or any widget.
-          onPressed: () {
-            //Code to execute when Floating Action Button is clicked
-            //...
-            centerIntoUser2();
-          },
-          
-      ),
+            child: Icon(Icons.location_searching),
+            //Widget to display inside Floating Action Button, can be `Text`, `Icon` or any widget.
+            onPressed: () {
+              //Code to execute when Floating Action Button is clicked
+              //...
+              centerIntoUser2();
+            },
+          ),
         ),
       ],
     ));
