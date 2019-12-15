@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:rideal/services/i18n.dart';
 
 class LeaderboardFilter extends StatefulWidget {
-  LeaderboardFilter({Key key}) : super(key: key);
+  final void Function(String) callback;
 
+  LeaderboardFilter({Key key, this.dropDownSelection, this.callback}) : super(key: key);
+  String dropDownSelection;
+  void callCallaback(String selectedOption) { callback(selectedOption); }
   @override
   _LeaderboardFilterState createState() => _LeaderboardFilterState();
 }
@@ -13,6 +16,7 @@ class _LeaderboardFilterState extends State<LeaderboardFilter> {
 
   @override
   Widget build(BuildContext context) {
+    
     return Row(
       children: <Widget>[
         Expanded(
@@ -37,6 +41,10 @@ class _LeaderboardFilterState extends State<LeaderboardFilter> {
             onChanged: (String newValue) {
               setState(() {
                 dropdownValue = newValue;
+                this.widget.dropDownSelection = newValue;
+                print("selected: "+this.widget.dropDownSelection);
+                this.widget.callCallaback(this.widget.dropDownSelection);
+                //Navigator.pop(context, this.widget.dropDownSelection);
               });
             },
             items: <String>["dropdown-national", "dropdown-friends"]
