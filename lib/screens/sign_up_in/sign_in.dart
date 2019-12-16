@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:rideal/models/user.dart';
 import 'package:rideal/screens/loading/loading.dart';
 import 'package:rideal/screens/sign_up_in/sign_up_in.dart';
@@ -18,8 +19,8 @@ class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
-    return new Scaffold(
-      appBar: new AppBar(
+    return Scaffold(
+      appBar: AppBar(
         iconTheme: IconThemeData(
           color: Colors.white, //change your color here
         ),
@@ -30,18 +31,18 @@ class _SignInPageState extends State<SignInPage> {
           ),
         ),
         automaticallyImplyLeading: true,
-        title: new Text('Sign In'),
+        title: Text('Sign In'),
         centerTitle: true,
       ),
-      body: new Container(
-        padding: new EdgeInsets.all(20.0),
-        child: new Form(
+      body: Container(
+        padding: EdgeInsets.all(20.0),
+        child: Form(
           key: this._formKey,
-          child: new ListView(
+          child: ListView(
             children: <Widget>[
-              new TextFormField(
+              TextFormField(
                 keyboardType: TextInputType.text,
-                decoration: new InputDecoration(
+                decoration: InputDecoration(
                   hintText: 'mRajoy',
                   labelText: 'Username'
                 ),
@@ -55,9 +56,9 @@ class _SignInPageState extends State<SignInPage> {
                   return null;
                 },
               ),
-              new TextFormField(
+              TextFormField(
                 obscureText: true,
-                decoration: new InputDecoration(
+                decoration: InputDecoration(
                   hintText: 'Password',
                   labelText: 'Enter your password'
                 ),
@@ -74,19 +75,19 @@ class _SignInPageState extends State<SignInPage> {
                   return null;
                 },
               ),
-              new Container(
+              Container(
                 width: screenSize.width,
-                child: new RaisedButton(
-                  child: new Text(
+                child: RaisedButton(
+                  child: Text(
                     'Sign In',
-                    style: new TextStyle(
+                    style: TextStyle(
                       color: Colors.white
                     ),
                   ),
                   onPressed: _submit,
                   color: Colors.blueGrey,
                 ),
-                margin: new EdgeInsets.only(
+                margin: EdgeInsets.only(
                   top: 20.0
                 ),
               )
@@ -100,12 +101,22 @@ class _SignInPageState extends State<SignInPage> {
   void _submit() async {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
-      SignInUpService loginService = new SignInUpService();
+      SignInUpService loginService = SignInUpService();
       bool logInResponse = await loginService.login(this.user);
-      if(logInResponse){
+      if (logInResponse){
         Navigator.pushReplacement(
           context,
           FadingRoute(builder: (context) => LoadingScreen()),
+        );
+      } else {
+        Fluttertoast.showToast(
+          msg: "Invalid credentials",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIos: 1,
+          backgroundColor: Colors.redAccent,
+          textColor: Colors.black,
+          fontSize: 16.0
         );
       }
     }

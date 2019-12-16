@@ -37,7 +37,8 @@ class _SuggestionState extends State<Suggestion>
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
+    return Container();
+    /*return Positioned(
         top: 200,
         right: -offset,
         child: Container(
@@ -66,7 +67,7 @@ class _SuggestionState extends State<Suggestion>
               )
             ],
           ),
-        ));
+        ));*/
   }
 
   Widget _line() {

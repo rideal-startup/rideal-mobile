@@ -1,68 +1,65 @@
 import 'dart:async';
+import 'dart:collection';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
-import 'package:rideal/models/line.dart';
 import 'package:rideal/models/stop.dart';
-import 'package:rideal/screens/map/widgets/filter.dart';
+import 'package:rideal/screens/map/widgets/autocomplete.dart';
 import 'package:rideal/screens/map/widgets/line_selector.dart';
 import 'package:rideal/screens/map/widgets/search_bar.dart';
 import 'package:rideal/services/lines.service.dart';
+import 'package:rideal/services/cities.service.dart';
+import 'package:rideal/services/stop.service.dart';
+import 'package:rideal/utils.dart';
 
-
-// Reference: https://medium.com/flutter/google-maps-and-flutter-cfb330f9a245
 class MapScreen extends StatefulWidget {
   @override
   _MapScreenState createState() => _MapScreenState();
+
+
 }
 
 class _MapScreenState extends State<MapScreen> {
-  final LineService lineService = LineService();
-  
+  // Services
+  final lineService = LineService();
+  final citiesService = CitiesService();
+  final stopService = StopService();
+  final location = Location();
+
   // Google Map variables
   Completer<GoogleMapController> _controller = Completer();
-  final List<Stop> _stops = [];
-  Stop selectedStop;
-  final location = Location();
+  final HashMap<String, Stop> _stops = HashMap();
+  BitmapDescriptor _bitmap;
+
   var currentLocation = LatLng(0, 0);
   var loadedMap = false;
 
-  // Filter
-  bool showFilter = false;
+  // Line selector
+  Stop selectedStop;
   bool selectLine = false;
-  List<StopType> toShow = [
-    StopType.Bus, StopType.Metro, StopType.Tram
-  ];
+
+  // Stops autocomplete
+  final textController = TextEditingController();
+  Timer _queryTimeout;
+  List<Stop> _autoCompleteStops = [];
+  
+  Future _fetchData() async {
+    final currentCity = await citiesService.findCurrentCity();
+    final lines = await this.lineService.getLinesByCity(currentCity.id);
+    final bytes = await getBytesFromAsset('assets/images/light_marker.png', 70);
+    _bitmap = BitmapDescriptor.fromBytes(bytes);
+
+    lines.forEach((line) {
+      line.stops.forEach((stop) {
+        this._stops[stop.name] = stop;
+      });
+    });
+  }
 
   @override
   void initState() {
-    lineService.getLinesByCity('Lleida');
-    _stops.addAll([
-        Stop(
-        name: 'Pont de la Universitat',
-        position: LatLng(41.609185325821, 0.6244279816746712),
-        lines: [
-          Line(color: Colors.orangeAccent, name: 'Linia 3', icon: FontAwesomeIcons.bus),
-          Line(color: Colors.blueGrey[600], name: 'Linia 6', icon: FontAwesomeIcons.bus),
-        ],
-        onTap: _enableLineSelector,
-      ),
-      Stop(
-        name: 'Pont de la Universitat',
-        position: LatLng(41.60921465574387, 0.6248443946242332),
-        lines: [
-          Line(color: Colors.pink, name: 'Linia 2', icon: FontAwesomeIcons.bus),
-          Line(color: Colors.green, name: 'Linia 5', icon: FontAwesomeIcons.bus),
-          Line(color: Colors.blueGrey[600], name: 'Linia 6', icon: FontAwesomeIcons.bus),
-          Line(color: Colors.black, name: 'Linia 9', icon: FontAwesomeIcons.bus),
-        ],
-        onTap: _enableLineSelector,
-      ),
-    ]);
     location.getLocation().then((ld) {
-      // this.currentLocation = LatLng(ld.latitude, ld.longitude);
-      currentLocation = LatLng(41.60921465574387, 0.6248443946242332);
+      this.currentLocation = LatLng(ld.latitude, ld.longitude);
       setState(() {
         loadedMap = true;
       });
@@ -71,6 +68,9 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   void _onMapCreated(GoogleMapController controller) {
+    _fetchData().then((_) {
+      setState(() {});
+    });
     _controller.complete(controller);
   }
 
@@ -85,52 +85,113 @@ class _MapScreenState extends State<MapScreen> {
 
     return Container(
       child: Stack(
-        children: <Widget>[
-          GoogleMap(
-            compassEnabled: false,
-            mapToolbarEnabled: false,
-            onMapCreated: _onMapCreated,
-            trafficEnabled: true,
-            markers: _stops
-                      .where((s) => toShow.contains(s.type))
-                      .map((s) => s.marker)
-                      .toSet(),
-            myLocationEnabled: true,
-            myLocationButtonEnabled: false,
-            onTap: (_) {
-              this.setState(() {
-                this.selectLine = false;
-              });
+      overflow: Overflow.visible,
+      children: <Widget>[
+        
+        GoogleMap(
+          compassEnabled: false,
+          mapToolbarEnabled: false,
+          onMapCreated: _onMapCreated,
+          trafficEnabled: true,
+          markers: _stops.values
+              .map(_markerFromStop)
+              .toSet(),
+          myLocationEnabled: true,
+          myLocationButtonEnabled: false,
+          onTap: (_) {
+            this.setState(() {
+              this.selectLine = false;
+            });
+          },
+          initialCameraPosition:
+              CameraPosition(target: currentLocation, zoom: 18.0),
+        ),
+        _createSearchBar(),
+        LineSelector(
+          show: selectLine,
+          stop: selectedStop,
+        ),
+        
+        Positioned(
+          left: 10,
+          bottom: 15,
+          child: FloatingActionButton(
+            child: Icon(Icons.location_searching),
+            onPressed: () {
+              centerIntoUser2();
             },
-            initialCameraPosition: CameraPosition(
-              target: currentLocation, zoom: 18.0
-            ),
           ),
-          Column(children: <Widget>[
-            SearchBar(onFilterPress: () {
-              setState(() {
-                selectLine = false;
-                showFilter = !showFilter;
-              });
-            }),
-            showFilter ? FilterTransport(
-              onChange: (toShow) {
-               setState(() { this.toShow = toShow; });
-              },
-            ) : Container(),
-          ]),
-          LineSelector(
-            show: selectLine,
-            stop: selectedStop,
-          )
-        ],
-      )
-    );
+        ),
+      ],
+    ));
   }
 
   void _enableLineSelector(Stop s) {
     selectLine = true;
     selectedStop = s;
+    setState(() { });
+  }
+
+  Marker _markerFromStop(Stop stop) {
+    return Marker(
+      position: stop.position,
+      markerId: MarkerId(stop.position.toString()),
+      infoWindow: InfoWindow(
+        title: stop.name,
+      ),
+      icon: _bitmap,
+      onTap: () { 
+        _enableLineSelector(stop);
+      },
+    );
+  }
+
+  Widget _createSearchBar() {
+    return Column(
+      children: <Widget>[
+        SearchBar(
+          controller: textController,
+          onTextUpdate: _lookForStops,
+        ),
+        StopAutoComplete(
+          stops: _autoCompleteStops,
+          onSelected: (Stop stop) async {
+            _autoCompleteStops = [];
+            textController.text = stop.name;
+            _updateCameraLocation(stop.position);
+            setState(() {});
+          },
+        )
+      ]
+    );
+  }
+
+  void centerIntoUser2(){
+    _updateCameraLocation(this.currentLocation);
     setState(() {});
+  }
+  void _updateCameraLocation(LatLng newPos) {
+      _controller.future.then((mapController) {
+        mapController.animateCamera(
+          CameraUpdate.newCameraPosition(
+            CameraPosition(
+              target: newPos, zoom: 20.0),
+            ),
+          );
+        }
+      );
+  }
+  void _lookForStops(String text) {
+    _queryTimeout?.cancel();
+    if (text == '') {
+      _autoCompleteStops = [];
+      return;
+    }
+
+    final duration = Duration(milliseconds: 300);
+    _queryTimeout = Timer(duration, () async {
+      _autoCompleteStops = await stopService.findStopsByNameLike(text);
+      setState(() {});
+    });
   }
 }

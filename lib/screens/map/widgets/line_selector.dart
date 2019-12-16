@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rideal/models/line.dart';
 import 'package:rideal/models/stop.dart';
 import 'package:rideal/screens/line_detail/line_detail.dart';
+import 'package:rideal/services/lines.service.dart';
 
 
 class LineSelector extends StatefulWidget {
@@ -22,6 +23,9 @@ class _LineSelectorState extends State<LineSelector>
   Animation<double> animation;
   double offset = 100;
   
+  final LineService lineService = LineService();
+  List<Line> _lines;
+
   @override
   void initState() {
     _controller =
@@ -38,8 +42,11 @@ class _LineSelectorState extends State<LineSelector>
   @override
   void didUpdateWidget(LineSelector oldWidget) {
     if (this.widget.show) {
-      _controller.reset();
-      _controller.forward();
+      lineService.linesContaining(widget.stop).then((linesList) {
+        _lines = linesList;
+        _controller.reset();
+       _controller.forward();
+      });
     }
     
     super.didUpdateWidget(oldWidget);
@@ -53,7 +60,7 @@ class _LineSelectorState extends State<LineSelector>
 
   @override
   Widget build(BuildContext context) {
-    if (!this.widget.show)
+    if (!this.widget.show || this._lines == null)
       return Container();
     
     return Container(
@@ -62,7 +69,7 @@ class _LineSelectorState extends State<LineSelector>
         crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.end,
-        children: this.widget.stop.lines.map((l) {
+        children: this._lines.map((l) {
           return Transform.translate(
             offset: Offset(offset, 0 ), 
             child: _drawLine(l)
@@ -74,6 +81,7 @@ class _LineSelectorState extends State<LineSelector>
 
 
   Widget _drawLine(Line l) {
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(
@@ -86,7 +94,7 @@ class _LineSelectorState extends State<LineSelector>
               color: Colors.black38,
             ),
             child: Text(
-              l.name, 
+              l.shortName, 
               style: TextStyle(
                 fontWeight: FontWeight.bold, 
                 color: Colors.white, 
@@ -99,7 +107,7 @@ class _LineSelectorState extends State<LineSelector>
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => LineDetailScreen()),
+                MaterialPageRoute(builder: (context) => LineDetailScreen(line: l)),
               );
             },
             child: Padding(

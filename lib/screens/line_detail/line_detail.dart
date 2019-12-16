@@ -2,65 +2,89 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
+import 'package:rideal/models/line.dart';
+import 'package:rideal/models/location_message.dart';
+import 'package:rideal/models/stop.dart';
 import 'package:rideal/screens/home/home.dart';
+import 'package:rideal/screens/line_detail/widgets/bottom_button.dart';
 import 'package:rideal/screens/line_detail/widgets/line_header.dart';
-import 'package:rideal/screens/line_detail/widgets/suggestion.dart';
-import 'package:rideal/services/i18n.dart';
+import 'package:rideal/services/lines.service.dart';
+import 'package:rideal/services/location_ws.service.dart';
+import 'package:rideal/services/rabbit_mq.service.dart';
 import 'package:rideal/widgets/navBar/curved_navigation_bar.dart';
 
 class LineDetailScreen extends StatefulWidget {
+  final Line line;
+
+  const LineDetailScreen({Key key, this.line}) : super(key: key);
+
   @override
   _LineDetailScreenState createState() => _LineDetailScreenState();
 }
 
 class _LineDetailScreenState extends State<LineDetailScreen> {
+  // Services
+  final lineService = LineService();
+  final rabbitService = RabbitService.instance;
+  final locationService = Location();
+  final wsLocationService = RealTimeLocation();
+
+  bool readyMap = false;
   bool selected = false;
 
   Completer<GoogleMapController> _controller = Completer();
-  static const LatLng _center = const LatLng(45.521563, -122.677433);
   final Set<Marker> _markers = {};
   final Set<Polyline> _polylines = {};
-  LatLng _lastMapPosition;
 
-  List<LatLng> latlng = [
-    LatLng(45.521563, -122.677433),
-    LatLng(45.521563, -122.607433),
-    LatLng(45.510563, -122.609433),
-    LatLng(45.500563, -122.624533),
-    LatLng(45.500563, -122.677433),
-    LatLng(45.470563, -122.700000),
-    LatLng(45.470563, -122.750000),
-    LatLng(45.570000, -122.750000),
-    LatLng(45.521563, -122.677433),
-  ];
+  List<Stop> lineStops = [];
+  LocationMessage lm;
 
   @override
   void initState() {
-    _lastMapPosition = _center;
+
+    wsLocationService.subscribeToLine(
+      lineId: this.widget.line.id,
+      onMessage: (msg) async {
+        final bitmap = await BitmapDescriptor.fromAssetImage(
+          ImageConfiguration(size: Size(5, 5)), 'assets/images/medal.png');
+        if (lm != null && msg.timestamp != lm.timestamp) {
+          setState(() {
+            _markers.add(Marker(
+              position: msg.location,
+              markerId: MarkerId('current-loc'),
+              icon: bitmap,
+              infoWindow: InfoWindow(title: 'Line location')
+            ));
+          });
+        }
+        lm = msg;
+      }
+    );
+
+    _createPolylines();
     super.initState();
   }
 
   @override
   void dispose() {
+    this.rabbitService.stopTransmission();
     super.dispose();
-  }
-
-  void _onCameraMove(CameraPosition position) {
-    _lastMapPosition = position.target;
   }
 
   void _onMapCreated(GoogleMapController controller) {
     _controller.complete(controller);
 
     setState(() {
-      for (var marker in latlng) {
-        _markers.add( Marker(
+      for (var stop in lineStops) {
+        _markers.add(Marker(
           // This marker id can be anything that uniquely identifies each marker.
-          markerId: MarkerId(marker.toString()),
-          position: marker,
+          markerId: MarkerId(stop.name.toString()),
+          position: stop.position,
           infoWindow: InfoWindow(
-            title: 'Custom Marker',
-            snippet: 'Inducesmile.com',
+            title: stop.name,
+            //si no tire borra la linia de devall
+            snippet: stop.order.toString(),
           ),
         icon: BitmapDescriptor.defaultMarker,
         ));
@@ -70,14 +94,15 @@ class _LineDetailScreenState extends State<LineDetailScreen> {
   }
 
   void _createPolylines() {
+    lineStops = this.widget.line.stops;
     _polylines.clear();
     _polylines.add(Polyline(
         jointType: JointType.round,
         startCap: Cap.roundCap,
         endCap: Cap.roundCap,
-        polylineId: PolylineId(_lastMapPosition.toString()),
+        polylineId: PolylineId('routes'),
         visible: true,
-        points: latlng,
+        points: lineStops.map((s) => s.position).toList(),
         color: !selected ? Colors.blue : Colors.green,
         width: 5,
       ));
@@ -96,34 +121,16 @@ class _LineDetailScreenState extends State<LineDetailScreen> {
           GoogleMap(
             polylines: _polylines,
             onMapCreated: _onMapCreated,
-            onCameraMove: _onCameraMove,
-            rotateGesturesEnabled: false,
-            scrollGesturesEnabled: false,
-            zoomGesturesEnabled: false,
+            myLocationEnabled: true,
             markers: _markers,
             initialCameraPosition: CameraPosition(
-              target: _center,
-              zoom: 11.0,
+              target: this.widget.line.location,
+              zoom: 14.0,
             ),
           ),
-          LineHeader(),
-          Suggestion(),
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                selected = !selected;
-                _createPolylines();
-              });
-            },
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: <Widget>[
-                _imInButton(),
-                _ridealingButton()
-              ],
-            ),
-          ),
+          LineHeader(line: this.widget.line),
+          // Suggestion(),
+          RidealingButton(onTap: this._triggerSelect),
           Positioned(
             child: Align(
               alignment: FractionalOffset.bottomCenter,
@@ -138,49 +145,11 @@ class _LineDetailScreenState extends State<LineDetailScreen> {
                   Icon(Icons.monetization_on, size: 30, color: Colors.red[200]),
                 ],
                 onTap: (index) {
-                  switch(index) {
-                    case 0:
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => HomePage(index: 0,)),
-                      );
-                      break;
-                    case 1:
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => HomePage(index: 1,)),
-                      );
-                    break;
-                    case 2:
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => HomePage(index: 2,)),
-                      );
-                    break;
-                    default:
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => HomePage(index: 1,)),
-                      );
-                    }
-                  },
-              ),
-            ),
-          ),
-          Positioned(
-            child: Padding(
-              padding: const EdgeInsets.only(bottom:11.0),
-              child: Align(
-                alignment: FractionalOffset.bottomCenter,
-                child: Container(
-                  width: 50,
-                  height: 50,
-                  child: FloatingActionButton(
-                    elevation: 0,
-                    backgroundColor: Colors.transparent,
-                    onPressed: () => {Navigator.pop(context)}
-                  ),
-                ),
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => HomePage(index: 0,)),
+                  );
+                }
               ),
             ),
           ),
@@ -189,49 +158,16 @@ class _LineDetailScreenState extends State<LineDetailScreen> {
     );
   }
 
-  Widget _imInButton() {
-    return AnimatedContainer(
-      height: selected ? 000.0 : 125.0,
-      color: selected ? Colors.green : Colors.blue,
-      alignment: 
-        selected ? Alignment.center : AlignmentDirectional.topCenter,
-        duration: Duration(seconds: 2),
-        curve: Curves.fastOutSlowIn,
-        child: Padding(
-          padding: const EdgeInsets.only(top: 22.5),
-          child: Text(
-            I18n.of(context).translate('i-am-in'),
-            textAlign: TextAlign.center,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold
-            ),
-          ),
-        ),
-    );
-  }
+  void _triggerSelect() {
+    this.selected = !this.selected;
+    _createPolylines();
 
-  Widget _ridealingButton() {
-    return AnimatedContainer(
-      height: selected ? 125.0 : 0.0,
-      color: selected ? Colors.green : Colors.blue,
-      alignment:
-      selected ? Alignment.topCenter : AlignmentDirectional.topCenter,
-      duration: Duration(seconds: 2),
-      curve: Curves.fastOutSlowIn,
-      child: Padding(
-        padding: const EdgeInsets.only(top: 22.5),
-        child: Text(
-          "Ridealing!",
-          textAlign: TextAlign.center,
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold
-          ),
-        ),
-      ),
-    );
+    if (selected)
+      rabbitService.sendLocationEvery(
+        duration: Duration(seconds: 1), 
+        lineId: this.widget.line.id
+      );
+    else 
+      rabbitService.stopTransmission();
   }
 }

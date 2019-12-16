@@ -26,7 +26,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
       PermissionGroup.locationAlways,
       PermissionGroup.locationWhenInUse
     ]).then((val) {
-      Timer(Duration(seconds: 3), () {
+      Timer(Duration(seconds: 1), () {
         Navigator.pushReplacement(
           context,
           FadingRoute(builder: (context) => HomePage()),

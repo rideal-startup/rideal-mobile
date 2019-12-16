@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:rideal/models/city.dart';
 import 'package:rideal/models/user.dart';
-import 'package:rideal/enviroment/cities.dart';
 import 'package:rideal/screens/loading/loading.dart';
 import 'package:rideal/screens/sign_up_in/sign_up_in.dart';
+import 'package:rideal/services/cities.service.dart';
 import 'package:rideal/services/sign_in_up.service.dart';
 import 'package:rideal/utils.dart';
 
@@ -15,10 +16,31 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   final _formKey = GlobalKey<FormState>();
+  final cityService = CitiesService();
+    
   User user = User();
-  String dropdownValue = "/cities/5dd043e25043225f571cc6ef";
+  List<City> cities = [];
+  String dropdownValue;
+
+  @override
+  void initState() {
+    this.cityService.getAllCities().then((res) {
+      this.cities = res;
+      dropdownValue = cities[0].id;
+      setState(() {});
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (cities.length == 0)
+      return Center(
+        child: CircularProgressIndicator(
+          valueColor: AlwaysStoppedAnimation<Color>(Colors.pink[200]),
+        ),
+      );
+
     final Size screenSize = MediaQuery.of(context).size;
     return new Scaffold(
       appBar: new AppBar(
@@ -35,15 +57,15 @@ class _SignUpPageState extends State<SignUpPage> {
         title: new Text('Sign Up'),
         centerTitle: true,
       ),
-      body: new Container(
-        padding: new EdgeInsets.all(20.0),
-        child: new Form(
+      body: Container(
+        padding: EdgeInsets.all(20.0),
+        child: Form(
           key: this._formKey,
-          child: new ListView(
+          child: ListView(
             children: <Widget>[
-              new TextFormField(
+              TextFormField(
                 keyboardType: TextInputType.text,
-                decoration: new InputDecoration(
+                decoration: InputDecoration(
                   hintText: 'mRajoy',
                   labelText: 'Username'
                 ),
@@ -57,9 +79,9 @@ class _SignUpPageState extends State<SignUpPage> {
                   return null;
                 },
               ),
-              new TextFormField(
+              TextFormField(
                 keyboardType: TextInputType.text,
-                decoration: new InputDecoration(
+                decoration: InputDecoration(
                   hintText: 'Pablo',
                   labelText: 'Name'
                 ),
@@ -73,9 +95,9 @@ class _SignUpPageState extends State<SignUpPage> {
                   return null;
                 },
               ),
-              new TextFormField(
+              TextFormField(
                 keyboardType: TextInputType.text,
-                decoration: new InputDecoration(
+                decoration: InputDecoration(
                   hintText: 'Abascal',
                   labelText: 'Surname'
                 ),
@@ -89,16 +111,13 @@ class _SignUpPageState extends State<SignUpPage> {
                   return null;
                 },
               ),
-              new DropdownButtonFormField(
-                items: Cities.cities.map(
-                  (key,value) {
-                    return MapEntry(
-                      key,
-                      DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(key),
-                        ));
-                  }).values.toList(),
+              DropdownButtonFormField(
+                items: this.cities.map((c) {
+                  return DropdownMenuItem<String>(
+                    value: c.id,
+                    child: Text(c.name),
+                  );
+                }).toList(),
                 value: dropdownValue,
                 onChanged: (String newValue) {
                   setState(() {
@@ -106,12 +125,12 @@ class _SignUpPageState extends State<SignUpPage> {
                   });
                 },
                 onSaved: (String city) {
-                  user.city = city;
+                  user.city = cities.firstWhere((c) => c.id == city);
                 },
               ),
-              new TextFormField(
+              TextFormField(
                 keyboardType: TextInputType.emailAddress,
-                decoration: new InputDecoration(
+                decoration: InputDecoration(
                   hintText: 'you@example.com',
                   labelText: 'E-mail Address'
                 ),
@@ -120,7 +139,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 },
                 validator: (value) {
                   Pattern pattern =r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-                  RegExp regex = new RegExp(pattern);
+                  RegExp regex = RegExp(pattern);
                   if(value.isEmpty) {
                     return "Please enter an e-mail";
                   }
@@ -130,9 +149,9 @@ class _SignUpPageState extends State<SignUpPage> {
                   return null;
                 },
               ),
-              new TextFormField(
+              TextFormField(
                 obscureText: true,
-                decoration: new InputDecoration(
+                decoration: InputDecoration(
                   hintText: 'Password',
                   labelText: 'Enter your password'
                 ),
@@ -140,28 +159,28 @@ class _SignUpPageState extends State<SignUpPage> {
                   user.password = password;
                 },
                 validator: (value) {
-                  if(value.isEmpty) {
+                  if (value.isEmpty) {
                     return "Please enter a password";
                   }
-                  if(value.length < 8) {
+                  if (value.length < 8) {
                     return "Password is too short";
                   }
                   return null;
                 },
               ),
-              new Container(
+              Container(
                 width: screenSize.width,
-                child: new RaisedButton(
-                  child: new Text(
+                child: RaisedButton(
+                  child: Text(
                     'Sign Up',
-                    style: new TextStyle(
+                    style: TextStyle(
                       color: Colors.white
                     ),
                   ),
                   onPressed: _submit,
                   color: Colors.blueGrey,
                 ),
-                margin: new EdgeInsets.only(
+                margin: EdgeInsets.only(
                   top: 20.0
                 ),
               )
