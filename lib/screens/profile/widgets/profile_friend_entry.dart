@@ -34,8 +34,9 @@ class ProfileFriendEntry extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(right: 15.0),
               child: CircleImage(
-                'assets/images/profile.jpg',
+                user.photoLink,
                 size: 60,
+                isUrl: true
               ),
             ),
             Column(
