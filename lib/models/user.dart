@@ -1,3 +1,4 @@
+import 'package:rideal/enviroment/enviroment.dart';
 import 'package:rideal/models/city.dart';
 
 class User {
@@ -11,6 +12,9 @@ class User {
   List<String> requests = [];
   List<String> friends = [];
   String password;
+  String get photoLink {
+    return Enviroment.apiBaseUrl+Enviroment.usersUrl+"/"+id+"/profile/image";
+  }
 
   User({this.id,
        this.username,

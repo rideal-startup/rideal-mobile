@@ -13,10 +13,12 @@ profile: Perfil
 setting-privacy: Ajustes y privacidad
 help-centre: Centro de ayuda
 sign-out: Cerrar sesión
+close app: Cerrar app
 language: Cambiar de idioma
 
 # Profile
 Complete: Completado
+New-Challenge: Nuevo Reto
 E-mail: Correo
 City: Ciudad
 Score: Puntuación

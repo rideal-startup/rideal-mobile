@@ -29,12 +29,12 @@ class UserService {
 
   Future<List<User>> findFriends() async {
     final currentUser = await this.authService.currentUser;
-
+    print("currentUser: "+currentUser.id);
     final res = await Dio(BaseOptions(headers: {
       'accept': 'application/json'
     })).get('$_baseUrl/${currentUser.id}/friends');
     
-    return res.data['_embedded']['users']
+    return res.data
       .map<User>((u) => User.fromJson(u))
       .toList();
   }
@@ -144,6 +144,28 @@ class UserService {
       .map<User>((u) => User.fromJson(u))
       .toList();
   }
+
+
+  void saveUser(User currentUser) async{
+      if(currentUser != null){
+        print("CurrentUser is null when we try to save!");
+        return;
+      }
+      Response response = await Dio()
+      .patch(
+        this._baseUrl+"/"+currentUser.id,
+         data: {"id": currentUser.id,
+               "city": currentUser.city,
+               "email": currentUser.email,
+          }
+      );
+      
+    if(response.statusCode != 200){
+      print(response);
+    }
+  }
+
+
 }
 
 

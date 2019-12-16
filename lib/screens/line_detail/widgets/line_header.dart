@@ -30,7 +30,7 @@ class LineHeader extends StatelessWidget {
                           style: TextStyle(fontSize: 24),
                         ),
                         Text(
-                          this.line?.name,//'La Rambla',
+                          this.line?.shortName,//'La Rambla',
                           style: TextStyle(fontSize: 15),
                         )
                       ],
