@@ -5,5 +5,6 @@ class Enviroment {
   static String linesUrl = '/lines';
   static String citiesUrl = '/cities';
   static String usersUrl = '/users';
+  static String challengUrl = '/challenges';
   
 }
