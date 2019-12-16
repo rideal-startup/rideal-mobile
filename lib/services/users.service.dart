@@ -34,7 +34,7 @@ class UserService {
       'accept': 'application/json'
     })).get('$_baseUrl/${currentUser.id}/friends');
     
-    return res.data['_embedded']['users']
+    return res.data
       .map<User>((u) => User.fromJson(u))
       .toList();
   }

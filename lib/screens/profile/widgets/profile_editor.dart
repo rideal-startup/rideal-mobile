@@ -65,8 +65,9 @@ class _ProfileEditorState extends State<ProfileEditor> {
           child: Container(
             alignment: Alignment(0, 0),
             child: CircleImage(
-              'assets/images/profile.jpg',
+              user.photoLink,
               size: 120,
+              isUrl: true
             ),
           ),
         ),

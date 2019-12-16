@@ -10,6 +10,7 @@ import 'package:rideal/screens/map/widgets/search_bar.dart';
 import 'package:rideal/services/lines.service.dart';
 import 'package:rideal/services/cities.service.dart';
 import 'package:rideal/services/stop.service.dart';
+import 'package:rideal/utils.dart';
 
 class MapScreen extends StatefulWidget {
   @override
@@ -28,6 +29,8 @@ class _MapScreenState extends State<MapScreen> {
   // Google Map variables
   Completer<GoogleMapController> _controller = Completer();
   final HashMap<String, Stop> _stops = HashMap();
+  BitmapDescriptor _bitmap;
+
   var currentLocation = LatLng(0, 0);
   var loadedMap = false;
 
@@ -39,18 +42,19 @@ class _MapScreenState extends State<MapScreen> {
   final textController = TextEditingController();
   Timer _queryTimeout;
   List<Stop> _autoCompleteStops = [];
-
+  
   Future _fetchData() async {
     final currentCity = await citiesService.findCurrentCity();
     final lines = await this.lineService.getLinesByCity(currentCity.id);
-    
+    final bytes = await getBytesFromAsset('assets/images/light_marker.png', 70);
+    _bitmap = BitmapDescriptor.fromBytes(bytes);
+
     lines.forEach((line) {
       line.stops.forEach((stop) {
         this._stops[stop.name] = stop;
       });
     });
   }
-
 
   @override
   void initState() {
@@ -112,12 +116,8 @@ class _MapScreenState extends State<MapScreen> {
           left: 10,
           bottom: 15,
           child: FloatingActionButton(
-
             child: Icon(Icons.location_searching),
-            //Widget to display inside Floating Action Button, can be `Text`, `Icon` or any widget.
             onPressed: () {
-              //Code to execute when Floating Action Button is clicked
-              //...
               centerIntoUser2();
             },
           ),
@@ -139,7 +139,7 @@ class _MapScreenState extends State<MapScreen> {
       infoWindow: InfoWindow(
         title: stop.name,
       ),
-      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueMagenta),
+      icon: _bitmap,
       onTap: () { 
         _enableLineSelector(stop);
       },

@@ -9,6 +9,20 @@ class CircleImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if(path == null){
+      return Container(
+        width: size,
+      height: size,
+        child: CircleAvatar(
+                        backgroundColor: Colors.orangeAccent,
+                        foregroundColor: Colors.indigo,
+                        child: Text(
+                           "Rideal",
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ),
+      );
+    }
     final imageW = !isUrl ? AssetImage(path): NetworkImage(path);
 
     return Container(

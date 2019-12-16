@@ -52,7 +52,7 @@ class _RidealDrawerState extends State<RidealDrawer> {
                     Navigator.pop(context);
                     widget.onProfileNavigation();
                   },
-                  child: CircleImage('assets/images/profile.jpg'),
+                  child: CircleImage(currentUser?.photoLink, isUrl: true),
                 ),
                 Padding(padding: EdgeInsets.all(7),),
                 Text(

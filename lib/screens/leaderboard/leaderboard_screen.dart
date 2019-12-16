@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:rideal/models/user.dart';
 import 'package:rideal/screens/leaderboard/widgets/leaderboard_body.dart';
 import 'package:rideal/screens/leaderboard/widgets/leaderboard_entry.dart';
 import 'package:rideal/screens/leaderboard/widgets/leaderboard_filter.dart';
 import 'package:rideal/screens/leaderboard/widgets/leaderboard_header.dart';
+import 'package:rideal/services/sign_in_up.service.dart';
 import 'package:rideal/services/users.service.dart';
 
  class LeaderboardScreen extends StatefulWidget {
@@ -17,12 +19,18 @@ import 'package:rideal/services/users.service.dart';
  class _LeaderboardScreen extends State<LeaderboardScreen> {
    //const LeaderboardScreen({Key key}) : super(key: key);
   final UserService userService = new UserService();
+  User currentUser;
   List<Widget> users;
+    SignInUpService authService = SignInUpService();
 
   @override
   void initState() {
     super.initState(); 
-    refreshUserList("dropdown-national");  
+    refreshUserList("dropdown-national"); 
+
+    authService.currentUser.then((user) {
+      currentUser = user;
+    });
   }
 
    @override
@@ -58,7 +66,7 @@ import 'package:rideal/services/users.service.dart';
               background: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
-                  LeaderboardHeader(),
+                  LeaderboardHeader(currentUser: currentUser),
                   LeaderboardFilter(callback: transferInformationFromFilterToBody, dropDownSelection: dropDownSelection,
                   ),
                 ],

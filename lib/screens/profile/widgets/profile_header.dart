@@ -28,8 +28,9 @@ class ProfileHeader extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(right: 25, bottom: 10),
                 child: CircleImage(
-                  'assets/images/profile.jpg',
+                  currentUser.photoLink,
                   size: 90,
+                  isUrl: true
                 ),
               ),
               _textInfo(10, "Awards"),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:rideal/models/user.dart';
 import 'package:rideal/screens/loading/loading.dart';
 import 'package:rideal/screens/sign_up_in/sign_up_in.dart';
@@ -102,10 +103,20 @@ class _SignInPageState extends State<SignInPage> {
       _formKey.currentState.save();
       SignInUpService loginService = SignInUpService();
       bool logInResponse = await loginService.login(this.user);
-      if(logInResponse){
+      if (logInResponse){
         Navigator.pushReplacement(
           context,
           FadingRoute(builder: (context) => LoadingScreen()),
+        );
+      } else {
+        Fluttertoast.showToast(
+          msg: "Invalid credentials",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIos: 1,
+          backgroundColor: Colors.redAccent,
+          textColor: Colors.black,
+          fontSize: 16.0
         );
       }
     }
