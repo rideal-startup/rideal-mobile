@@ -1,51 +1,55 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:rideal/models/user.dart';
+import 'package:rideal/widgets/circle_image.dart';
 
 class LeaderboardEntry extends StatelessWidget {
-  final String _index;
-  final String _userName;
-  final String _punctuation;
+  final User user;
 
-  const LeaderboardEntry({Key key, index, userName, punctuation}) : this._index = index, this._userName = userName, this._punctuation = punctuation, super(key: key);
+  const LeaderboardEntry({Key key, this.user});
 
   @override
   Widget build(BuildContext context) {
+    String fullName = '${user.name} ${user.surname}';
+
     return Container(
-      child: Padding(
-            padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.grey[600],
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.circular(30),
+        child: Padding(
+      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      child: Row(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(right: 15.0),
+            child: CircleImage(user.photoLink, size: 60, isUrl: true),
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 5.0),
+                child: Text(user.username),
               ),
-              width: MediaQuery.of(context).size.width*0.95,
-                child: Row(children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
-                    child: Text(this._index.toString()),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(40, 0, 0, 0),
-                    child: Icon(Icons.account_circle, size: 70),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                    child: Text(this._userName),
-                  ),
-                  Spacer(),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
-                    child: new Text(this._punctuation),
-                  ),
-                  
-                  /*new Expanded(
-                    //padding: const EdgeInsets.fromLTRB(50, 0, 5, 0),
-                    child: Text("this._punctuation"),
-                  ),*/
-                ],
-              ),
+              Text(
+                fullName,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              )
+            ],
+          ),
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                Text(
+                  user.points.toString(),
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                CircleImage('assets/images/medal.png', size: 50)
+              ],
             ),
           ),
-    );
+        ],
+      ),
+    ));
   }
 }
