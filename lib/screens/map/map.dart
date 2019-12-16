@@ -46,7 +46,7 @@ class _MapScreenState extends State<MapScreen> {
   Future _fetchData() async {
     final currentCity = await citiesService.findCurrentCity();
     final lines = await this.lineService.getLinesByCity(currentCity.id);
-    final bytes = await getBytesFromAsset('assets/images/light_marker.png', 70);
+    final bytes = await getBytesFromAsset('assets/images/light_marker.png', 80);
     _bitmap = BitmapDescriptor.fromBytes(bytes);
 
     lines.forEach((line) {

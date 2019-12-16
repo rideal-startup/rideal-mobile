@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:rideal/enviroment/enviroment.dart';
@@ -49,6 +50,20 @@ class UserService {
     return res.data
       .map<User>((u) => User.fromJson(u))
       .toList();
+  }
+
+  Future<bool> updateProfilePic(File image) async {
+    final currentUser = await this.authService.currentUser;
+    final headers = this.authService.getAuthHeaders(currentUser);
+    final formData = FormData.fromMap({
+      "image": MultipartFile.fromBytes(
+          await image.readAsBytes(), filename: "upload.jpg")
+    });
+    
+    final res = await Dio(BaseOptions(headers: headers))
+                      .post('$_baseUrl/${currentUser.id}/profile/image?title=profile',
+                            data: formData);
+    return res.statusCode < 300;
   }
 
   Future<List<User>> findSentRequests() async {

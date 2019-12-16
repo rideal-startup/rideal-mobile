@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:rideal/models/user.dart';
 import 'package:rideal/services/users.service.dart';
 import 'package:rideal/widgets/circle_image.dart';
@@ -76,7 +77,7 @@ class _ProfileEditorState extends State<ProfileEditor> {
             "Update profile picture", 
             style: TextStyle(color: Colors.pink[200]),
           ),
-          onPressed: () {},
+          onPressed: getImage,
         )
       ],
     );
@@ -103,7 +104,7 @@ class _ProfileEditorState extends State<ProfileEditor> {
                   user.username = username;
                 },
                 validator: (value) {
-                  if(value.isEmpty) {
+                  if (value.isEmpty) {
                     return "Please enter a valid email";
                   }
                   return null;
@@ -151,5 +152,10 @@ class _ProfileEditorState extends State<ProfileEditor> {
         ),
       ),
     );
+  }
+
+  Future getImage() async {
+    final image = 
+      await ImagePicker.pickImage(source: ImageSource.gallery);
   }
 }

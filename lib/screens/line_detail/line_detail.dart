@@ -14,6 +14,8 @@ import 'package:rideal/services/location_ws.service.dart';
 import 'package:rideal/services/rabbit_mq.service.dart';
 import 'package:rideal/widgets/navBar/curved_navigation_bar.dart';
 
+import '../../utils.dart';
+
 class LineDetailScreen extends StatefulWidget {
   final Line line;
 
@@ -30,33 +32,29 @@ class _LineDetailScreenState extends State<LineDetailScreen> {
   final locationService = Location();
   final wsLocationService = RealTimeLocation();
 
-  bool readyMap = false;
   bool selected = false;
 
   Completer<GoogleMapController> _controller = Completer();
   final Set<Marker> _markers = {};
   final Set<Polyline> _polylines = {};
+  BitmapDescriptor _bitmap;
 
   List<Stop> lineStops = [];
   LocationMessage lm;
-
+  StreamSubscription _subs;
   @override
   void initState() {
-
-    wsLocationService.subscribeToLine(
+    _subs = wsLocationService.subscribeToLine(
       lineId: this.widget.line.id,
       onMessage: (msg) async {
-        final bitmap = await BitmapDescriptor.fromAssetImage(
-          ImageConfiguration(size: Size(5, 5)), 'assets/images/medal.png');
         if (lm != null && msg.timestamp != lm.timestamp) {
-          setState(() {
-            _markers.add(Marker(
-              position: msg.location,
-              markerId: MarkerId('current-loc'),
-              icon: bitmap,
-              infoWindow: InfoWindow(title: 'Line location')
-            ));
-          });
+          _markers.add(Marker(
+            position: msg.location,
+            markerId: MarkerId('current-loc'),
+            icon: _bitmap,
+            infoWindow: InfoWindow(title: 'Line location')
+          ));
+          setState(() {});
         }
         lm = msg;
       }
@@ -68,6 +66,7 @@ class _LineDetailScreenState extends State<LineDetailScreen> {
 
   @override
   void dispose() {
+    this._subs.cancel();
     this.rabbitService.stopTransmission();
     super.dispose();
   }
@@ -75,21 +74,22 @@ class _LineDetailScreenState extends State<LineDetailScreen> {
   void _onMapCreated(GoogleMapController controller) {
     _controller.complete(controller);
 
-    setState(() {
-      for (var stop in lineStops) {
-        _markers.add(Marker(
-          // This marker id can be anything that uniquely identifies each marker.
-          markerId: MarkerId(stop.name.toString()),
-          position: stop.position,
-          infoWindow: InfoWindow(
-            title: stop.name,
-            //si no tire borra la linia de devall
-            snippet: stop.order.toString(),
-          ),
-        icon: BitmapDescriptor.defaultMarker,
-        ));
-        _createPolylines(); 
-      }
+    getBytesFromAsset('assets/images/light_marker.png', 80).then((bytes) {
+      _bitmap = BitmapDescriptor.fromBytes(bytes);
+      setState(() {
+        for (var stop in lineStops) {
+          _markers.add(Marker(
+            markerId: MarkerId(stop.name.toString()),
+            position: stop.position,
+            infoWindow: InfoWindow(
+              title: stop.name,
+              snippet: stop.order.toString(),
+            ),
+          icon: _bitmap,
+          ));
+          _createPolylines(); 
+        }
+      });
     });
   }
 
