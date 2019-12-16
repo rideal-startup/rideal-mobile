@@ -29,7 +29,7 @@ class UserService {
 
   Future<List<User>> findFriends() async {
     final currentUser = await this.authService.currentUser;
-
+    print("currentUser: "+currentUser.id);
     final res = await Dio(BaseOptions(headers: {
       'accept': 'application/json'
     })).get('$_baseUrl/${currentUser.id}/friends');
