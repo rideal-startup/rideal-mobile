@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:rideal/utils.dart';
 
 class CircleImage extends StatelessWidget {
   final String path;
@@ -9,21 +12,24 @@ class CircleImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if(path == null){
+    if (path == null) {
       return Container(
         width: size,
-      height: size,
+        height: size,
         child: CircleAvatar(
-                        backgroundColor: Colors.orangeAccent,
-                        foregroundColor: Colors.indigo,
-                        child: Text(
-                           "Rideal",
-                          style: TextStyle(fontSize: 20),
-                        ),
-                      ),
+          backgroundColor: Colors.orangeAccent,
+          foregroundColor: Colors.indigo,
+          child: Text(
+            "Rideal",
+            style: TextStyle(fontSize: 20),
+          ),
+        ),
       );
     }
-    final imageW = !isUrl ? AssetImage(path): NetworkImage(path);
+    
+    final imageW = !isUrl ? 
+      AssetImage(path): 
+      NetworkImage(path + '?dummy=$COUNTER');
 
     return Container(
       width: size,

@@ -158,5 +158,9 @@ class _ProfileEditorState extends State<ProfileEditor> {
   Future getImage() async {
     final image = 
       await ImagePicker.pickImage(source: ImageSource.gallery);
+    
+    final res = await this.userService.updateProfilePic(image);
+    setState(() {
+    });
   }
 }
