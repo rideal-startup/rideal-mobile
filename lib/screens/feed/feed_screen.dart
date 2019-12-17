@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rideal/enviroment/enviroment.dart';
 import 'package:rideal/models/feed.dart';
 import 'package:rideal/models/user.dart';
 import 'package:rideal/screens/feed/widgets/feed_entry.dart';
@@ -46,10 +47,15 @@ class _FeedScreen extends State<FeedScreen> {
                     .map<Widget>((feed) => FeedEntry(
                         userName: feed.username,
                         title: feed.title,
+                        profileImageUrl: this.getProfileImage(feed.userId),
                         bodyText: feed.description))
                     .toList(),
               ),
             ),]
           ),);
+  }
+
+  String getProfileImage(String userId){
+    return Enviroment.apiBaseUrl+Enviroment.usersUrl+"/"+userId+Enviroment.profileImageUrl;
   }
 }

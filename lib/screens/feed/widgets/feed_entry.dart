@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rideal/services/i18n.dart';
+import 'package:rideal/widgets/circle_image.dart';
 
 class FeedEntry extends StatefulWidget {
   final String _userName;
   final String _title;
   final String _bodyText;
-
-  const FeedEntry({Key key, userName, title, bodyText})
-      : this._userName = userName, this._title = title, this._bodyText = bodyText, super(key: key);
+  final String _profileImageUrl;
+  const FeedEntry({Key key, userName, title, bodyText, profileImageUrl})
+      : this._userName = userName, this._title = title, this._bodyText = bodyText, this._profileImageUrl = profileImageUrl, super(key: key);
 
   @override
   _FeedEntryState createState() => _FeedEntryState();
@@ -21,7 +22,11 @@ class _FeedEntryState extends State<FeedEntry> {
       children: <Widget>[
         Padding(
           padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
-          child: new TopEntry(userName: this.widget._userName, title: this.widget._title),
+          child: new TopEntry(
+            userName: this.widget._userName,
+            title: this.widget._title,
+            profileUrl: this.widget._profileImageUrl
+            ),
         ),
         Padding(
           padding: EdgeInsets.fromLTRB(120, 0, 0, 0),
@@ -71,12 +76,14 @@ class _BodyEntryState extends State<BodyEntry> {
 class TopEntry extends StatefulWidget {
   final String _userName;
   final String _title;
+  final String _profileUrl;
 
   const TopEntry({
     Key key,
     userName,
+    profileUrl,
     title,
-  }) : this._userName = userName, this._title = title, super(key: key);
+  }) : this._userName = userName, this._title = title, this._profileUrl=profileUrl, super(key: key);
 
   @override
   _TopEntryState createState() => _TopEntryState();
@@ -89,10 +96,14 @@ class _TopEntryState extends State<TopEntry> {
       children: <Widget>[
         Column(
           children: <Widget>[
-            Icon(
-              Icons.account_circle,
-              size: 100,
-            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 10),
+              child: CircleImage(
+                this.widget._profileUrl, 
+                isUrl: true,
+                size: 100,
+              ),
+            )
           ],
         ),
         Column(
