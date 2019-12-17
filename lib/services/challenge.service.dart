@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:core';
+import 'dart:ffi';
 import 'dart:math';
 
 import 'package:dio/dio.dart';
@@ -37,5 +38,29 @@ class ChallengeService {
       return [];
     }
   }
+
+  Future<void> enrollChallenge(Challenge challenge) async {
+    try {
+      final currentUser = await this.authService.currentUser;
+      final headers = this.authService.getAuthHeaders(currentUser);
+
+      Response response  = await Dio(BaseOptions(headers: headers))
+      .post(Enviroment.apiBaseUrl + Enviroment.challengUrl + "/"+challenge.id+"/enroll");
+
+      if (response.statusCode != 200) {
+        print(response);
+      }
+
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  // TODO: IMPLEMENT IN BACKEND
+  Future<void> cancelChallenge(Challenge challenge) async {
+    
+  }
+
+  
 
 }

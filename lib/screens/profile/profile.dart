@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rideal/models/user.dart';
@@ -25,6 +27,7 @@ class _ProfileState extends State<Profile> {
   List<User> friends;
   List<User> requests;
 
+  Timer _updateTimer;
   bool loadedUser = false;
 
   @override
@@ -34,6 +37,12 @@ class _ProfileState extends State<Profile> {
       setState(() {});
     });
     super.initState();
+    _updateTimer = Timer.periodic(Duration(seconds: 2), (_) => 
+      this._fetchData().then((_) {
+        loadedUser = true;
+        setState(() {});
+      })
+    );
   }
 
   @override

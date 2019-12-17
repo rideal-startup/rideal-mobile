@@ -117,6 +117,23 @@ class UserService {
     return acceptOk;
   }
 
+    Future<bool> deleteFriend(String userId) async {
+    final user = await this.authService.currentUser;
+    final authHeaders = this.authService.getAuthHeaders(user);
+    final requests = Dio(BaseOptions(headers: authHeaders));
+
+    final res = await requests.put('$_baseUrl/deleteFriend/?id=$userId');
+
+    final acceptOk = res.statusCode >= 200 && res.statusCode < 300;
+    if (!acceptOk)
+      print(res.data);
+    else {
+      await this.authService.updateUser(User.fromJson(res.data));
+    }
+
+    return acceptOk;
+  }
+
   Future<bool> cancelRequest(String userId) async {
     final user = await this.authService.currentUser;
     final authHeaders = this.authService.getAuthHeaders(user);

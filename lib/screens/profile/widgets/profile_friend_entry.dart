@@ -53,6 +53,7 @@ class ProfileFriendEntry extends StatelessWidget {
                 )
               ],
             ),
+
             _button()
           ],
         ),
@@ -83,6 +84,14 @@ class ProfileFriendEntry extends StatelessWidget {
       return Padding(
         padding: const EdgeInsets.only(left: 30.0),
         child: _raisedButton("Add", Colors.pink[200], () {
+          if (this.onAdd != null)
+            this.onAdd();
+        }),
+      );
+    if (state == 'Friend')
+      return Padding(
+        padding: const EdgeInsets.only(left: 30.0),
+        child: _raisedButton("Delete", Colors.pink[200], () {
           if (this.onAdd != null)
             this.onAdd();
         }),

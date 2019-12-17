@@ -12,7 +12,7 @@ class ChallengePack{
     return ChallengePack(
       challenge: json['challenge'] != null ?  Challenge.fromJson(json['challenge']) : null,
       points: json['points'],
-      progres: json['progres'],
+      progres: json['progress'],
       start: json['start'],
     );
   }

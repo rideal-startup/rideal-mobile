@@ -26,10 +26,10 @@ class LeaderboardHeader extends StatelessWidget {
                 this.currentUser?.photoLink, 
                 isUrl: true,
                 size: 150,),
-              Text(
+              /*Text(
                 "#15",
                 style: TextStyle(fontSize: 45),
-              ),
+              ),*/
             ],
           ),
         ),
