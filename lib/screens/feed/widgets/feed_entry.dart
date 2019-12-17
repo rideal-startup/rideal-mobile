@@ -24,7 +24,7 @@ class _FeedEntryState extends State<FeedEntry> {
           child: new TopEntry(userName: this.widget._userName, title: this.widget._title),
         ),
         Padding(
-          padding: EdgeInsets.fromLTRB(120, 0, 0, 0),
+          padding: EdgeInsets.fromLTRB(100, 0, 0, 0),
           child: new BodyEntry(bodyText: this.widget._bodyText),
         )
       ],
