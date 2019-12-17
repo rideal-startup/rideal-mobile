@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:rideal/models/feed.dart';
+import 'package:rideal/models/user.dart';
 import 'package:rideal/screens/feed/widgets/feed_entry.dart';
+import 'package:rideal/services/feed.service.dart';
+import 'package:rideal/services/sign_in_up.service.dart';
 
 class FeedScreen extends StatefulWidget {
   FeedScreen({Key key}) : super(key: key);
@@ -9,41 +13,43 @@ class FeedScreen extends StatefulWidget {
 }
 
 class _FeedScreen extends State<FeedScreen> {
-  var users = [
-    {
-      "userName": "Apetusio Disousa",
-      "date": "10/10/1994",
-      "bodyText": "feed-achievement-first-time"
-    },
-    {
-      "userName": "Apetusio Disousa",
-      "date": "10/10/1994",
-      "bodyText": "feed-achievement-50km"
-    },
-    {
-      "userName": "Apetusio Disousa",
-      "date": "10/10/1994",
-      "bodyText": "feed-achievement-100km"
-    },
-    {
-      "userName": "Lazarito Disousa",
-      "date": "10/10/1994",
-      "bodyText": "feed-achievement-200km"
-    }
-  ];
+  final authService = SignInUpService();
+  final feedService = FeedService();
+  List<Feed> listFeed = [];
+  User user;
+  
+  @override
+  void initState() {
+    this.getCurrentUser();
+    super.initState();
+  }
+
+  Future<void> getCurrentUser() async{
+    User user = await this.authService.currentUser;
+    this.user = user;
+
+    List<Feed> feedList = await this.feedService.getUserFeed(this.user.id);    
+    this.listFeed = feedList;
+    setState(() { });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-        child: Padding(
-      padding: const EdgeInsets.only(top: 30.0),
-      child: Column(
-        children: users
-            .map<Widget>((user) => FeedEntry(
-                userName: user['userName'],
-                date: user['date'],
-                bodyText: user['bodyText']))
-            .toList(),
-      ),
-    ));
+        child: Wrap(
+          direction: Axis.horizontal,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(top: 30.0),
+              child: Column(
+                children: listFeed
+                    .map<Widget>((feed) => FeedEntry(
+                        userName: feed.username,
+                        title: feed.title,
+                        bodyText: feed.description))
+                    .toList(),
+              ),
+            ),]
+          ),);
   }
 }
