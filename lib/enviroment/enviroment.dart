@@ -5,10 +5,7 @@ class Enviroment {
   static String linesUrl = '/lines';
   static String citiesUrl = '/cities';
   static String usersUrl = '/users';
-<<<<<<< HEAD
   static String challengUrl = '/challenges';
-=======
   static String feedUrl = '/feeds/getMyFriendsFeedById?id=';
->>>>>>> develop
   
 }
