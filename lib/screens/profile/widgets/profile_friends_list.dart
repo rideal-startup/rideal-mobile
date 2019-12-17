@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rideal/models/user.dart';
 import 'package:rideal/screens/profile/widgets/profile_friend_entry.dart';
+import 'package:rideal/services/users.service.dart';
 
 class FriendsListScreen extends StatefulWidget {
   final List<User> friends;
@@ -30,9 +31,14 @@ class _FriendsListScreenState extends State<FriendsListScreen> {
       ),
       body: Column(
         children: this.widget.friends.map((f) {
-          return ProfileFriendEntry(user: f, state: 'List',);
+          return ProfileFriendEntry(user: f, state: 'Friend',onAdd: () => this.deleteUser(f),);
         }).toList()
       ),
     );
+  }
+
+  deleteUser(User user){
+    UserService userService = new UserService();
+    userService.deleteFriend(user.id);
   }
 }

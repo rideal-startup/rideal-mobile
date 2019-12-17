@@ -1,5 +1,7 @@
 // SecondScreen.dart
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rideal/models/challenge-pack.dart';
@@ -12,54 +14,62 @@ class TrophyListProfile extends StatefulWidget {
   _TrophyListProfileState createState() => _TrophyListProfileState();
 }
 
-
 class _TrophyListProfileState extends State<TrophyListProfile> {
   ChallengeService challengeService = ChallengeService();
   //List<ChallengePack> listChallengePack = [];
-  List<Widget> challengWidget;
+  List<Widget> challengWidget = [];
+  Timer _updateTimer;
 
   @override
   void initState() {
     super.initState();
-    this.challengWidget =  new List<Widget>();
-    challengeService.getAllChallengs().then((list) {
-      print("CHALLENG RECIEVED ");
-      list.forEach((challeng)=>{
-        print("ProfileTrophyEntry created: "+challeng.challenge.name),
-       
-        if(challeng.points == null){
-          challengWidget.add(ProfileTrophyEntry(
-                      name: challeng?.challenge?.name,
-                      trophyId: challeng?.challenge?.id,
-                      state: "New",
-                      progress: 11.toDouble(),//challeng.points,
-                      challenge: challeng.challenge,
-          ))
-        }else if(challeng.progres == 100){
-          challengWidget.add(ProfileTrophyEntry(
-                      name: challeng.challenge.name,
-                      trophyId: challeng.challenge.id,
-                      state: "Complete",
-                      progress: 11.0,//challeng.challenge.goal,
-                      challenge: challeng.challenge,
-          ))
-        }else{
-          challengWidget.add(ProfileTrophyEntry(
-                      name: challeng.challenge.name,
-                      trophyId: challeng.challenge.id,
-                      state: "InProgress",
-                      progress: 0.0,
-                      challenge: challeng.challenge,
-          ))
-        }
+    _fetchData();
+    _updateTimer = Timer.periodic(Duration(seconds: 2), (_) => _fetchData());
+  }
 
 
-      });
-      setState(() {
-        
-      });
+  @override
+  void dispose() {
+    _updateTimer.cancel();
+    super.dispose();
+  }
+  void _fetchData() {
+
+  challengeService.getAllChallengs().then((list) {
+      this.challengWidget = list.map((challeng) {
+            if (challeng.points == null)
+              {
+                 return ProfileTrophyEntry(
+                  name: challeng?.challenge?.name,
+                  trophyId: challeng?.challenge?.id,
+                  state: "New",
+                  progress: challeng.progres?.toDouble(),
+                  challenge: challeng.challenge,
+                );
+              }
+            else if (challeng.progres == 100)
+              {
+                 return ProfileTrophyEntry(
+                  name: challeng.challenge.name,
+                  trophyId: challeng.challenge.id,
+                  state: "Complete",
+                  progress: challeng.progres?.toDouble(),
+                  challenge: challeng.challenge,
+                );
+              }
+            else
+              {
+               return ProfileTrophyEntry(
+                  name: challeng.challenge.name,
+                  trophyId: challeng.challenge.id,
+                  state: "InProgress",
+                  progress: challeng.progres?.toDouble(),
+                  challenge: challeng.challenge,
+                );
+              }
+          }).toList();
+      setState(() {});
     });
-
   }
 
   @override
@@ -71,8 +81,8 @@ class _TrophyListProfileState extends State<TrophyListProfile> {
         children: <Widget>[
           Column(
             children: this.challengWidget,
-              
-              /*ProfileTrophyEntry(
+
+            /*ProfileTrophyEntry(
                     name: (I18n.of(context).translate("Trophy")).toString()+" 1",
                     trophyId:"124",
                     state:"Complete",
@@ -114,7 +124,6 @@ class _TrophyListProfileState extends State<TrophyListProfile> {
                     state:"InProgress",
                     progress: 0.9,
                     ),*/
-            
           ),
         ],
       ),

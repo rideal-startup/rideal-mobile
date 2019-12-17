@@ -66,7 +66,7 @@ class _SignUpPageState extends State<SignUpPage> {
               TextFormField(
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
-                  hintText: 'mRajoy',
+                  hintText: 'Username',
                   labelText: 'Username'
                 ),
                 onSaved: (String username) {
@@ -82,7 +82,7 @@ class _SignUpPageState extends State<SignUpPage> {
               TextFormField(
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
-                  hintText: 'Pablo',
+                  hintText: 'Name',
                   labelText: 'Name'
                 ),
                 onSaved: (String name) {
@@ -98,7 +98,7 @@ class _SignUpPageState extends State<SignUpPage> {
               TextFormField(
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
-                  hintText: 'Abascal',
+                  hintText: 'Surname',
                   labelText: 'Surname'
                 ),
                 onSaved: (String surname) {

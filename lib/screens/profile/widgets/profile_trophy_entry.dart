@@ -27,6 +27,7 @@ class ProfileTrophyEntry extends StatelessWidget {
               Navigator.of(context).push(MaterialPageRoute(
                 builder: (BuildContext _) => TrophyInfoScreen(
                   challenge: this.challenge,
+                  state: this.state,
                 )
               ));
             },
@@ -86,7 +87,7 @@ class ProfileTrophyEntry extends StatelessWidget {
                       child: LinearPercentIndicator(
                         width: 140.0,
                         lineHeight: 14.0,
-                        percent: 11,
+                        percent: this.progress/100?.toDouble(),
                         backgroundColor: Colors.grey,
                         progressColor: Colors.blue,
                       ),)

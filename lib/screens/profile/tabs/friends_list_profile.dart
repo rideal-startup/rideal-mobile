@@ -22,7 +22,7 @@ class FriendsListProfile extends StatefulWidget {
 class _FriendsListProfileState extends State<FriendsListProfile> {
   final userService = UserService();
   bool searchMode = false;
-
+  final ctrl = new TextEditingController();
   // Find new users
   Timer _queryTimeout;
   List<User> foundUsers = [];
@@ -72,6 +72,7 @@ class _FriendsListProfileState extends State<FriendsListProfile> {
             ),
             Expanded(
               child: TextField(
+                controller: ctrl,
                 cursorColor: Colors.white,
                 keyboardType: TextInputType.text,
                 textInputAction: TextInputAction.go,
@@ -124,7 +125,13 @@ class _FriendsListProfileState extends State<FriendsListProfile> {
                   textColor: Colors.white,
                   fontSize: 16.0
                 );
+                ctrl.text="";
+                this.searchMode = false;
+                setState(() {
+                  
+                });
                 this.widget.updateState();
+
               });
             },
           );

@@ -35,21 +35,29 @@ class _FeedScreen extends State<FeedScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-        child: Wrap(
-          direction: Axis.horizontal,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(top: 30.0),
-              child: Column(
-                children: listFeed
-                    .map<Widget>((feed) => FeedEntry(
-                        userName: feed.username,
-                        title: feed.title,
-                        bodyText: feed.description))
-                    .toList(),
-              ),
-            ),]
-          ),);
+    if(listFeed.length>0)
+      return SingleChildScrollView(
+          child: Wrap(
+            direction: Axis.horizontal,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(top: 30.0),
+                  child: 
+                  Column(
+                    children: listFeed
+                        .map<Widget>((feed) => FeedEntry(
+                            userName: feed.username,
+                            title: feed.title,
+                            bodyText: feed.description))
+                        .toList(),
+                  ),
+              ),]
+            ),
+      );
+    if(listFeed.length==0)
+      return  Container(
+        child: Center(child: Text("You have no Friends :(")));
+              
+      
   }
 }

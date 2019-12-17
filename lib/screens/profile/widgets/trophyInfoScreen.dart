@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rideal/models/challenge.dart';
-import 'package:rideal/models/user.dart';
-import 'package:rideal/screens/profile/widgets/profile_friend_entry.dart';
+import 'package:rideal/services/challenge.service.dart';
 
 class TrophyInfoScreen extends StatefulWidget {
   final Challenge challenge;
+  final String state;
 
-  const TrophyInfoScreen({Key key, this.challenge}) : super(key: key);
+  const TrophyInfoScreen({Key key, this.challenge, this.state}) : super(key: key);
   
   @override
   _TrophyInfoScreenState createState() => _TrophyInfoScreenState();
@@ -15,7 +15,7 @@ class TrophyInfoScreen extends StatefulWidget {
 }
 
 class _TrophyInfoScreenState extends State<TrophyInfoScreen> {
-  
+  final ChallengeService  challengeService = ChallengeService();
   int seconds;
   int minutes;
   int hours;
@@ -71,29 +71,78 @@ class _TrophyInfoScreenState extends State<TrophyInfoScreen> {
       body: Column(children: <Widget>[
       Padding(
         padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
-        child: Icon(FontAwesomeIcons.award, size: 35),
+        child: Icon(FontAwesomeIcons.award, size: 130),
       ),
       Padding(
+       padding: const EdgeInsets.all(10),
+       
+     ),
+      Padding(
         padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-        child: Text(this.widget.challenge?.name),
+        child: Text(this.widget.challenge?.name,
+                    style: new TextStyle(
+                    fontSize: 30.0,
+                    color: Colors.teal,
+                ),
+        ),
       ),
-     Padding(
+      
+     /*Padding(
        padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
        child: Text("#"+this.widget.challenge?.id),
+     ),*/
+     Padding(
+       padding: const EdgeInsets.all(20),
+       
      ),
      Padding(
        padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
        child: Text("Description: "+this.widget.challenge?.description),
      ),
-      // Padding(
-      //   padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-      //   child: Text("Difficulty: "+this.widget.challenge?.difficulty),
-      // ),
+    Padding(
+      padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+      child: Text("Prize: "+this.widget.challenge?.prize?.name),
+    ),
+    
      Padding(
        padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
        child: Text("Duration: "+ res),
      ),
+     Spacer(),
+     
+     if(this.widget.state == 'New')
+      Center(
+        child: RaisedButton(
+          
+          child: Text("Enrol the challenge"),
+          onPressed: () {
+          this.enroleChallenge();
+        },),
+      ),
+     if(this.widget.state == 'InProgress')
+      Center(
+        child: RaisedButton(
+          
+          child: Text("Cancell challenge"),
+          onPressed: () {
+          this.cancelChallenge();
+        },),
+      ),
+     Padding(
+       padding: const EdgeInsets.all(10),
+       
+     ),
       ]
     ));
+  }
+
+  void enroleChallenge(){
+    this.challengeService.enrollChallenge(this.widget.challenge);
+    Navigator.pop(context);
+  }
+
+  void cancelChallenge(){
+    this.challengeService.cancelChallenge(this.widget.challenge);
+    Navigator.pop(context);
   }
 }
