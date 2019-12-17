@@ -6,6 +6,8 @@ import 'package:rxdart/rxdart.dart';
 import 'package:rideal/widgets/language_changer.dart';
 import 'dart:ui' as ui;
 
+int COUNTER = 0;
+
 class FadingRoute<T> extends MaterialPageRoute<T> {
   FadingRoute({ WidgetBuilder builder, RouteSettings settings })
       : super(builder: builder, settings: settings);

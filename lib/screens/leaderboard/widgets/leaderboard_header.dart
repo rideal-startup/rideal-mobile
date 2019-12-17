@@ -22,7 +22,10 @@ class LeaderboardHeader extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
-              CircleImage(this.currentUser?.photoLink, isUrl: true),
+              CircleImage(
+                this.currentUser?.photoLink, 
+                isUrl: true,
+                size: 150,),
               Text(
                 "#15",
                 style: TextStyle(fontSize: 45),

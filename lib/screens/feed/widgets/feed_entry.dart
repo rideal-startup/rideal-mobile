@@ -2,35 +2,47 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rideal/services/i18n.dart';
 
-class FeedEntry extends StatelessWidget {
+class FeedEntry extends StatefulWidget {
   final String _userName;
-  final String _date;
+  final String _title;
   final String _bodyText;
 
-  const FeedEntry({Key key, userName, date, bodyText})
-      : this._userName = userName, this._date = date, this._bodyText = bodyText, super(key: key);
+  const FeedEntry({Key key, userName, title, bodyText})
+      : this._userName = userName, this._title = title, this._bodyText = bodyText, super(key: key);
 
+  @override
+  _FeedEntryState createState() => _FeedEntryState();
+}
+
+class _FeedEntryState extends State<FeedEntry> {
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
         Padding(
-          padding: EdgeInsets.fromLTRB(20, 10, 70, 0),
-          child: new TopEntry(userName: this._userName, date: this._date),
+          padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
+          child: new TopEntry(userName: this.widget._userName, title: this.widget._title),
         ),
         Padding(
           padding: EdgeInsets.fromLTRB(120, 0, 0, 0),
-          child: new BodyEntry(bodyText: this._bodyText,),
+          child: new BodyEntry(bodyText: this.widget._bodyText),
         )
       ],
     );
   }
 }
 
-class BodyEntry extends StatelessWidget {
+class BodyEntry extends StatefulWidget {
   final String _bodyText;
-  const BodyEntry({Key key, bodyText}) : this._bodyText = bodyText, super(key: key);
 
+  const BodyEntry({Key key, bodyText, title}) : 
+    this._bodyText = bodyText, super(key: key);
+
+  @override
+  _BodyEntryState createState() => _BodyEntryState();
+}
+
+class _BodyEntryState extends State<BodyEntry> {
   @override
   Widget build(BuildContext context) {
     return Row(children: <Widget>[
@@ -45,7 +57,7 @@ class BodyEntry extends StatelessWidget {
                 size: 50,
               ),
               Expanded(
-                child: Text(I18n.of(context).translate(this._bodyText)),
+                child: Text(this.widget._bodyText),
               ),
               Text("  "),
             ],
@@ -56,15 +68,21 @@ class BodyEntry extends StatelessWidget {
   }
 }
 
-class TopEntry extends StatelessWidget {
+class TopEntry extends StatefulWidget {
   final String _userName;
-  final String _date;
+  final String _title;
+
   const TopEntry({
     Key key,
     userName,
-    date,
-  }) : this._userName = userName, this._date = date, super(key: key);
+    title,
+  }) : this._userName = userName, this._title = title, super(key: key);
 
+  @override
+  _TopEntryState createState() => _TopEntryState();
+}
+
+class _TopEntryState extends State<TopEntry> {
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -82,13 +100,17 @@ class TopEntry extends StatelessWidget {
           children: <Widget>[
             Row(
               children: <Widget>[
-                Text(this._userName),
-              ],
+                FittedBox(
+                  fit: BoxFit.contain,
+                  child: Text(this.widget._userName),
+                ),],
             ),
             Row(
               children: <Widget>[
-                Text(this._date),
-              ],
+                FittedBox(
+                  fit: BoxFit.contain,
+                  child: Text(this.widget._title),
+                ),],
             ),
           ],
         ),

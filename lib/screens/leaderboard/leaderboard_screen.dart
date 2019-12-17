@@ -17,11 +17,11 @@ import 'package:rideal/services/users.service.dart';
  }
 
  class _LeaderboardScreen extends State<LeaderboardScreen> {
-   //const LeaderboardScreen({Key key}) : super(key: key);
+
   final UserService userService = new UserService();
   User currentUser;
   List<Widget> users;
-    SignInUpService authService = SignInUpService();
+  final authService = SignInUpService();
 
   @override
   void initState() {
@@ -37,23 +37,13 @@ import 'package:rideal/services/users.service.dart';
     Widget build(BuildContext context) {
     String dropDownSelection = 'dropdown-national';
 
-    
-    //LeaderboardBody leaderboardBody = LeaderboardBody(userService: this.userService,
-    //   dropDownSelection: dropDownSelection);
-
-    void transferInformationFromFilterToBody(String selectedOption){
-      print("Hola mastodontes!");
-      
+    void transferInformationFromFilterToBody(String selectedOption) {
       setState(() {
         dropDownSelection = selectedOption;
+        refreshUserList(selectedOption); 
       });
-      
-      refreshUserList(selectedOption); 
-
     }
 
-    
-    
     return NestedScrollView(
       headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) { 
         return [
@@ -76,25 +66,20 @@ import 'package:rideal/services/users.service.dart';
           ),
         ];
       },
-      //body: leaderboardBody,
       body: ListView(
         shrinkWrap: true,
         physics: AlwaysScrollableScrollPhysics(),
         children: <Widget>[
           Column(
-            children: 
-              this.users,
+            children: this.users,
           ),
         ],
       ),
     );
-  
-    
   }
 
-
   void refreshUserList(String optionSelected){
-    this.users =  new List<Widget>();
+    this.users = List<Widget>();
     int index = 0;
 
     if(optionSelected == 'dropdown-friends'){
@@ -105,18 +90,14 @@ import 'package:rideal/services/users.service.dart';
         print("usersList list: "+usersList.length.toString());
         // Order friednds by score 
         usersList.sort((a, b) => a.points.compareTo(b.points));
-        usersList.forEach((user)=>{
-          print("Friend name: "+user.name),
-          index = index + 1,
+        usersList.forEach((user) {
+          print("Friend name: "+user.name);
+          index = index + 1;
           if(index < 11){
             this.users.add(
-              LeaderboardEntry(
-              index: (index).toString(),
-              userName: user.name,
-              punctuation: user.points.toString()
-              )
-            ),
-          }else{
+              LeaderboardEntry(user: user)
+            );
+          } else {
             //break;
           }
         });
@@ -129,15 +110,10 @@ import 'package:rideal/services/users.service.dart';
       this.userService.getFirstTenRankingUsers().then((usersList) {
         print("usersList list: "+usersList.length.toString());
         index = 0;
-        usersList.forEach((user)=>{
-          index = index + 1,
-          this.users.add(
-            LeaderboardEntry(
-            index: (index).toString(),
-            userName: user.name,
-            punctuation: user.points.toString()
-            )
-          ),
+        print(usersList);
+
+        usersList.forEach((user) {
+          this.users.add(LeaderboardEntry(user: user));
         });
         setState(() {});
       });

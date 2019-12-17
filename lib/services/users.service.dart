@@ -1,9 +1,11 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:rideal/enviroment/enviroment.dart';
 import 'package:rideal/models/user.dart';
 import 'package:rideal/services/sign_in_up.service.dart';
+import 'package:rideal/utils.dart';
 
 class UserService {
   
@@ -49,6 +51,21 @@ class UserService {
     return res.data
       .map<User>((u) => User.fromJson(u))
       .toList();
+  }
+
+  Future<bool> updateProfilePic(File image) async {
+    final currentUser = await this.authService.currentUser;
+    final formData = FormData.fromMap({
+      "image": MultipartFile.fromBytes(
+          await image.readAsBytes(), filename: "upload.jpg")
+    });
+    
+    final res = await Dio()
+                      .post('$_baseUrl/${currentUser.id}/profile/image?title=profile',
+                            data: formData);
+    COUNTER++;
+    
+    return res.statusCode < 300;
   }
 
   Future<List<User>> findSentRequests() async {
