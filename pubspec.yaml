@@ -45,7 +45,7 @@ dependencies:
 
   # Http Requests
   yaml: ^2.2.0
-  dio:  ^3.0.7
+  dio: ">=3.0.7 <6.0.0"
   rxdart: ^0.22.4
   dart_amqp: ^0.1.4
   localstorage: ^3.0.0
